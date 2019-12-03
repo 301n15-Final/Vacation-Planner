@@ -35,8 +35,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Specifying route
 app.get('/', (req, res) => res.status(200).send('Hello World'));
 
-
-
 app.get('*', (req, res) => res.status(404).send('404'));
 
 
