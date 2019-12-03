@@ -8,8 +8,9 @@
 
 ## Project Description:
   ### MVP wireframe:
-  ![Main page wireframe](./public/img/wireframe(mvp_main).jpg =200)
-  ![Result page wireframe](./public/imgwireframe(mvp_results_about).jpg =200)
+  ![Main_page_wireframe](./public/img/wireframe(mvp_main).jpg =200x)
+
+  ![Result_page_wireframe](./public/imgwireframe(mvp_results_about).jpg =200x)
 
 ## Problem Domain:
 
