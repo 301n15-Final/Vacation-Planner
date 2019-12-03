@@ -9,9 +9,8 @@
 ## Project Description:
   ### MVP wireframe:
 
-  <img src="./public/img/wireframe(mvp_main).jpg" alt="Main_page_wireframe" width="200"/>
-  
-  <img src="./public/imgwireframe(mvp_results_about).jpg" alt="Result_page_wireframe" width="200"/>
+  <img src="./public/img/wireframe(mvp_main).jpg" alt="Main_page_wireframe" width="400"/>
+  <img src="./public/img/wireframe(mvp_results_about).jpg" alt="Result_page_wireframe" width="400"/>
 
 
 ## Problem Domain:
