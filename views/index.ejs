@@ -13,32 +13,34 @@
       <p>
         <!-- welcome message goes here -->
       </p>
-      <button class="button">START</button>
+      <button id="start" class="button">START</button>
     </section>
     <section class="modal">
       <!-- this section is hidden when the page loads and is shown only when user clicks on START button as a modal form -->
-
-      <form action="/" %> method="POST">
-        <label for="city">Enter the location</label>
-        <input type="text" name="city" placeholder="Enter city of your destination" required>
-        <label for="date">Enter the dates of your vacation</label>
-        <input type="text" name="date" placeholder="Enter the dates of your vacation in format..." required>
-        <label for="vacation_type"></label>
-        <select name="vacation_type" >
-          <option value="staycation">staycation</option>
-          <option value="long_vacation">long_vacation</option>
-        </select>
-        <label for="activities">pick the activities you're planning on doing</label>
-        <select name="activities">
-          <option value="hiking">hiking</option>
-          <option value="swimming">swimming</option>
-        </select>
-        <button type="submit" class="button">SUBMIT</button>
-      </form>
+      <div class="content">
+        <form class="flex-column" action="/" %> method="POST">
+          <label for="city">Enter the location</label>
+          <input type="text" name="city" placeholder="Enter city of your destination" required>
+          <label for="date">Enter the dates of your vacation</label>
+          <input type="text" name="date" placeholder="Enter the dates of your vacation in format..." required>
+          <label for="vacation_type"></label>
+          <select name="vacation_type" >
+            <option value="staycation">staycation</option>
+            <option value="long_vacation">long_vacation</option>
+          </select>
+          <label for="activities">pick the activities you're planning on doing</label>
+          <select name="activities">
+            <option value="hiking">hiking</option>
+            <option value="swimming">swimming</option>
+          </select>
+          <button type="submit" class="button">SUBMIT</button>
+        </form>
+      </div>
     </section>
   </main>
   <footer class="flex-column">
     <%- include('./partials/footer.ejs') %>
+    <script src="../js/modal.js"></script>
   </footer>
 </body>
 </html>
