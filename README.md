@@ -17,7 +17,8 @@
 
 
 ## Problem Domain:
-
+  ### MVP Problem Domain
+  User needs an quick, convenient way to customize a packing list for their trip.
 
 ## Versions:
 
