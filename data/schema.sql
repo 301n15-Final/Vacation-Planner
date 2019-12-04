@@ -11,33 +11,41 @@ CREATE TABLE user (
   winter_temp_high INTEGER NOT NULL
 )
 
-CREATE TABLE vacation_types (
+CREATE TABLE saved_trip (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES user(id),
+  name VARCHAR(255) UNIQUE,
+  packing_item_ids INTEGER[] NOT NULL
+)
+
+CREATE TABLE vacation_type (
   id SERIAL PRIMARY KEY,
   name VARCHAR(255) UNIQUE
   -- tropics, overnight trips, flights/train, 
 );
 
-CREATE TABLE temperature_types (
+CREATE TABLE temperature_type (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) UNIQUE,
+  low_temp INTEGER NOT NULL,
+  high_temp INTEGER
+);
+
+CREATE TABLE activity_type  (
   id SERIAL PRIMARY KEY,
   name VARCHAR(255) UNIQUE
 );
 
-CREATE TABLE activity_types  (
-  id SERIAL PRIMARY KEY,
-  name VARCHAR(255) UNIQUE,
-  temp_low INTEGER NOT NULL,
-  temp_high INTEGER NOT NULL
-);
-
-CREATE TABLE packing_items (
+CREATE TABLE packing_item (
   id SERIAL PRIMARY KEY,
   name VARCHAR(255) UNIQUE,
   vacation_type_ids INTEGER[] NOT NULL,
-  FOREIGN KEY (vacation_type_ids) REFERENCES vacation_types(id),
-  temperature_types_ids INTEGER[] NOT NULL,
-  FOREIGN KEY (temperature_types_ids) REFERENCES temperature_types(id),
-  activity_types_id INTEGER[] NOT NULL,
-  FOREIGN KEY (activity_types_ids) REFERENCES activity_types(id)
+  FOREIGN KEY (vacation_type_ids) REFERENCES vacation_type(id),
+  temperature_type_ids INTEGER[] NOT NULL,
+  FOREIGN KEY (temperature_type_ids) REFERENCES temperature_type(id),
+  activity_type_ids INTEGER[] NOT NULL,
+  FOREIGN KEY (activity_type_ids) REFERENCES activity_type(id)
 );
 
-INSERT INTO packing_items (name, vacation )
+INSERT INTO packing_item (name, vacation )
