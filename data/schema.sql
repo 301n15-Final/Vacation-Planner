@@ -19,7 +19,9 @@ CREATE TABLE trip (
   user_id INTEGER NOT NULL,
   FOREIGN KEY (user_id) REFERENCES user(id),
   packing_item_ids INTEGER[] NOT NULL,
-  FOREIGN KEY (packing_item_ids) REFERENCES packing_item(id)
+  FOREIGN KEY (packing_item_ids) REFERENCES packing_item(id),
+  custom_packing_item_ids INTEGER[] NOT NULL,
+  FOREIGN KEY (custom_packing_item_ids) REFERENCES custom_packing_item(id)
   temperature_type_id VARCHAR(255) NOT NULL,
   FOREIGN KEY (temperature_type_id) REFERENCES temperature_type(id),
   activity_type_ids INTEGER[] NOT NULL,
@@ -45,7 +47,20 @@ CREATE TABLE activity_type  (
   name VARCHAR(255) UNIQUE
 );
 
-CREATE TABLE packing_item (
+CREATE TABLE custom_packing_item (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) UNIQUE,
+  user_id INTEGER NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES user(id),
+  vacation_type_ids INTEGER[] NOT NULL,
+  FOREIGN KEY (vacation_type_ids) REFERENCES vacation_type(id),
+  temperature_type_ids INTEGER[] NOT NULL,
+  FOREIGN KEY (temperature_type_ids) REFERENCES temperature_type(id),
+  activity_type_ids INTEGER[] NOT NULL,
+  FOREIGN KEY (activity_type_ids) REFERENCES activity_type(id)
+);
+
+CREATE TABLE standard_packing_item (
   id SERIAL PRIMARY KEY,
   name VARCHAR(255) UNIQUE,
   vacation_type_ids INTEGER[] NOT NULL,
@@ -56,4 +71,26 @@ CREATE TABLE packing_item (
   FOREIGN KEY (activity_type_ids) REFERENCES activity_type(id)
 );
 
-INSERT INTO packing_item (name, vacation )
+INSERT INTO packing_item (name, vacation, temperature_type_ids, activity_type_ids)
+VALUES (),
+  (),
+  (),
+  (),
+  (),
+  (),
+  (),
+  (),
+  (),
+  (),
+  (),
+  (),
+  (),
+  (),
+  (),
+  (),
+  (),
+  (),
+  (),
+  (),
+  (),
+  (),
