@@ -33,7 +33,8 @@ app.use(methodOverride( (req, res) => {
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Specifying route
-app.get('/', (req, res) => res.status(200).send('Hello World'));
+app.get('/', (req, res) => res.status(200).render('index'));
+app.post('/', (req, res) => console.log(req.body));
 
 app.get('*', (req, res) => res.status(404).send('404'));
 
