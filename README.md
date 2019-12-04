@@ -35,6 +35,11 @@
   superagent: 5.1.0  
 
 ## Instructions:
+  ### Environmental variables:
+  PORT  
+  DATABASE_URL - postgreSQL url  
+  GEOCODE_API_KEY - google API key  
+  WEATHER_API - Dark Sky API key  
 
 
 ## Sample endpoints:

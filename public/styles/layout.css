@@ -1,0 +1,62 @@
+body {
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* HEADER AND FOOTER */
+header, footer {
+  width: 100%;
+  min-height: 3rem;
+  position: fixed;
+  left: 0;
+}
+
+header {
+  top: 0;
+}
+
+header h1 {
+  display: inline;
+}
+
+footer {
+  bottom: 0;
+}
+
+/* MENU */
+nav {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  margin: 0;
+  padding: 4rem 0;
+  background: rgba(253, 203, 110, 0.7);
+  text-align: center;
+}
+
+nav ul li {
+  padding: 0.7rem;
+}
+
+nav a {
+  text-decoration: none;
+  color: #2d3436;
+}
+
+#menu {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 3;
+  padding: 1rem;
+  cursor: pointer;
+  color: #2d3436;
+}
+
+
+/* MAIN */
+main {
+  margin-top: 6rem;
+}

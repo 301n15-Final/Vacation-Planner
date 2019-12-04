@@ -8,12 +8,10 @@
     <%- include('../partials/header.ejs') %>
   </header>
   <main>
-    <h1>RESULTS</h1>
-    <ul>
-      <% weather.forEach( day => { %>
-        <li><%= day.summary %></li>
-      <% }) %>
-    </ul>
+    <h1>ERROR</h1>
+    <p>
+      <%= err %>
+    </p>
   </main>
   <footer>
     <%- include('../partials/footer.ejs') %>
