@@ -4,6 +4,8 @@ CREATE TABLE user (
   id SERIAL PRIMARY KEY,
   first_name VARCHAR(255).
   last_name VARCHAR(255),
+  temperature_type_id VARCHAR(255) NOT NULL,
+  FOREIGN KEY (temperature_type_id) REFERENCES temperature_type(id),
   shorts_temp_lowest INTEGER NOT NULL,
   fall_temp_low INTEGER NOT NULL,
   fall_temp_high INTEGER NOT NULL,
@@ -11,12 +13,17 @@ CREATE TABLE user (
   winter_temp_high INTEGER NOT NULL
 )
 
-CREATE TABLE saved_trip (
+CREATE TABLE trip (
   id SERIAL PRIMARY KEY,
+  name VARCHAR(255) UNIQUE,
   user_id INTEGER NOT NULL,
   FOREIGN KEY (user_id) REFERENCES user(id),
-  name VARCHAR(255) UNIQUE,
-  packing_item_ids INTEGER[] NOT NULL
+  packing_item_ids INTEGER[] NOT NULL,
+  FOREIGN KEY (packing_item_ids) REFERENCES packing_item(id)
+  temperature_type_id VARCHAR(255) NOT NULL,
+  FOREIGN KEY (temperature_type_id) REFERENCES temperature_type(id),
+  activity_type_ids INTEGER[] NOT NULL,
+  FOREIGN KEY (activity_type_ids) REFERENCES activity_type(id)
 )
 
 CREATE TABLE vacation_type (
@@ -25,12 +32,13 @@ CREATE TABLE vacation_type (
   -- tropics, overnight trips, flights/train, 
 );
 
-CREATE TABLE temperature_type (
-  id SERIAL PRIMARY KEY,
-  name VARCHAR(255) UNIQUE,
-  low_temp INTEGER NOT NULL,
-  high_temp INTEGER
-);
+-- See entity relationship diagram regarding this table
+-- CREATE TABLE temperature_type (
+--   id SERIAL PRIMARY KEY,
+--   name VARCHAR(255) UNIQUE,
+--   low_temp INTEGER NOT NULL,
+--   high_temp INTEGER
+-- );
 
 CREATE TABLE activity_type  (
   id SERIAL PRIMARY KEY,
