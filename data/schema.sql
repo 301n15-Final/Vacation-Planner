@@ -22,8 +22,6 @@ CREATE TABLE trip (
   FOREIGN KEY (packing_item_ids) REFERENCES packing_item(id),
   custom_packing_item_ids INTEGER[] NOT NULL,
   FOREIGN KEY (custom_packing_item_ids) REFERENCES custom_packing_item(id),
-  temperature_type_id VARCHAR(255) NOT NULL,
-  FOREIGN KEY (temperature_type_id) REFERENCES temperature_type(id),
   activity_type_ids INTEGER[] NOT NULL,
   FOREIGN KEY (activity_type_ids) REFERENCES activity_type(id)
 );
