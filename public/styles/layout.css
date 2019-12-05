@@ -15,9 +15,15 @@ header {
   top: 0;
 }
 
-header h1 {
-  display: inline;
+header img {
+  max-width: 45%;
 }
+header h1 {
+  display: inline-block;
+  margin-left: 1rem;
+  font-weight: 900;
+}
+
 
 footer {
   bottom: 0;
@@ -31,18 +37,20 @@ nav {
   left: 0;
   width: 100%;
   margin: 0;
-  padding: 4rem 0;
-  background: rgba(253, 203, 110, 0.7);
+  padding: 4rem 0 2rem 0;
+  background: rgba(253, 203, 110, 0.9);
   text-align: center;
+  border-radius: 3px;
 }
 
 nav ul li {
   padding: 0.7rem;
+  color: #2d3436;
+  font-weight: 900;
 }
 
 nav a {
   text-decoration: none;
-  color: #2d3436;
 }
 
 #menu {
