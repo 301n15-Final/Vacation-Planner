@@ -45,5 +45,7 @@
 ## Sample endpoints:
 
 
-## Database schema:
+## Database Entity Relationship Diagram:
+
+  <img src="./public/img/entity_relationship_diagram.png" alt="Entity Relationship Diagram" width="600"/> 
 
