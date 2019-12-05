@@ -7,8 +7,7 @@ CREATE TABLE traveller (
   shorts_temp_lowest INTEGER NOT NULL,
   fall_temp_low INTEGER NOT NULL,
   fall_temp_high INTEGER NOT NULL,
-  winter_temp_low INTEGER NOT NULL,
-  winter_temp_high INTEGER NOT NULL,
+  winter_temp_highest INTEGER NOT NULL
 );
 
 CREATE TABLE activity_type (
@@ -65,6 +64,11 @@ CREATE TABLE custom_packing_item (
   FOREIGN KEY (traveller_id) REFERENCES traveller(id),
   name VARCHAR(255) UNIQUE
 );
+
+INSERT INTO traveller (first_name, last_name, shorts_temp_lowest, fall_temp_low, fall_temp_high, winter_temp_highest)
+VALUES ("Tammy", "Ip", 65, 55, 64, )
+
+VALUES ("Tropical"), ("Snow"), ("Pool/Beach"), ("Active Adventure");
 
 INSERT INTO vacation_type (name)
 VALUES ("Tropical"), ("Snow"), ("Pool/Beach"), ("Active Adventure");
@@ -217,9 +221,6 @@ VALUES (0, 2),
 (15, 1),
 (15, 1)
 ;
-
-INSERT INTO standard_packing_item_vacation_type (standard_packing_item_id, vacation_type_id)
-VALUES ();
 
 INSERT INTO standard_packing_item (name, min_temp, max_temp, precip)
 VALUES ("medication",  -20, 120, "mix"),
