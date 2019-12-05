@@ -21,6 +21,7 @@ header img {
 header h1 {
   display: inline-block;
   margin-left: 1rem;
+  font-weight: 900;
 }
 
 
