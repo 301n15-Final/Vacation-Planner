@@ -1,24 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <%- include('../partials/head.ejs') %>
+  <%- include('../partials/head.ejs') %>
 </head>
+
 <body>
   <header class="flex-row">
     <%- include('../partials/header.ejs') %>
   </header>
   <main class="flex-column">
-      <section class="main-content flex-column">
-        <h1>RESULTS</h1>
-        <ul>
-          <% weather.forEach( day => { %>
-            <li><%= day.summary %></li>
-          <% }) %>
-        </ul>
-      </section>
+    <section class="main-content flex-column">
+      <h1>RESULTS</h1>
+      <ul>
+        For your trip, we expect:
+        <% weather.forEach( day => { %>
+        <li><%= day.summary %></li>
+        <% }) %>
+        with the average temperature <%=weather.temperature %>
+
+        We suggest you to bring:
+        <% item.forEach( day => { %>
+        <li><%= day.summary %></li>
+        <% }) %>
+      </ul>
+      </p>
+    </section>
   </main>
   <footer class="flex-column">
     <%- include('../partials/footer.ejs') %>
   </footer>
 </body>
+
 </html>
