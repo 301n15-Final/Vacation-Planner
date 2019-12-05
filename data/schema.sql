@@ -45,8 +45,6 @@ CREATE TABLE custom_packing_item (
   FOREIGN KEY (traveller_id) REFERENCES traveller(id),
   vacation_type_ids INTEGER[] NOT NULL,
   FOREIGN KEY (vacation_type_ids) REFERENCES vacation_type(id),
-  temperature_type_ids INTEGER[] NOT NULL,
-  FOREIGN KEY (temperature_type_ids) REFERENCES temperature_type(id),
   activity_type_ids INTEGER[] NOT NULL,
   FOREIGN KEY (activity_type_ids) REFERENCES activity_type(id)
 );
