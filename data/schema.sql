@@ -4,26 +4,31 @@ CREATE TABLE traveller (
   id SERIAL PRIMARY KEY,
   first_name VARCHAR(255),
   last_name VARCHAR(255),
-  temperature_type_id VARCHAR(255) NOT NULL,
-  FOREIGN KEY (temperature_type_id) REFERENCES temperature_type(id),
   shorts_temp_lowest INTEGER NOT NULL,
   fall_temp_low INTEGER NOT NULL,
   fall_temp_high INTEGER NOT NULL,
   winter_temp_low INTEGER NOT NULL,
-  winter_temp_high INTEGER NOT NULL
+  winter_temp_high INTEGER NOT NULL,
+  custom_packing_item_ids INTEGER[],
+  FOREIGN KEY (custom_packing_item_ids) REFERENCES custom_packing_item(id)
 );
 
 CREATE TABLE trip (
   id SERIAL PRIMARY KEY,
   name VARCHAR(255) UNIQUE,
+  city VARCHAR(255),
+  start_date DATE NOT NULL,
+  end_date DATE NOT NULL,
   traveller_id INTEGER NOT NULL,
   FOREIGN KEY (traveller_id) REFERENCES traveller(id),
   packing_item_ids INTEGER[] NOT NULL,
   FOREIGN KEY (packing_item_ids) REFERENCES packing_item(id),
-  custom_packing_item_ids INTEGER[] NOT NULL,
+  custom_packing_item_ids INTEGER[],
   FOREIGN KEY (custom_packing_item_ids) REFERENCES custom_packing_item(id),
   activity_type_ids INTEGER[] NOT NULL,
-  FOREIGN KEY (activity_type_ids) REFERENCES activity_type(id)
+  FOREIGN KEY (activity_type_ids) REFERENCES activity_type(id),
+  vacation_type_ids INTEGER[] NOT NULL,
+  FOREIGN KEY (vacation_type_ids) REFERENCES vacation_type(id)
 );
 
 CREATE TABLE vacation_type (
@@ -50,6 +55,9 @@ CREATE TABLE custom_packing_item (
 CREATE TABLE standard_packing_item (
   id SERIAL PRIMARY KEY,
   name VARCHAR(255) UNIQUE,
+  min_temp INTEGER,
+  max_temp INTEGER,
+  precip_type VARCHAR(255),
   vacation_type_ids INTEGER[] NOT NULL,
   FOREIGN KEY (vacation_type_ids) REFERENCES vacation_type(id),
   activity_type_ids INTEGER[] NOT NULL,
