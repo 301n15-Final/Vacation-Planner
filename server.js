@@ -53,6 +53,7 @@ function Weather(weather) {
   this.summary = weather.summary;
   this.temperature = ((weather.temperatureHigh + weather.temperatureLow) / 2).toFixed(0);
   this.precipType = weather.precipType;
+  this.icon_url = `../img/icons/${weather.icon}.png`;
 }
 
 // Getting location from Google API and returning lat/long
@@ -101,7 +102,7 @@ async function weatherHandler(req, res) {
     const weather = await Promise.all(days.map(day => getWeather(location, day)))
       .then(data => data.map( forecast => new Weather(forecast[0]) ))
       .catch(err => console.log(err));
-
+    console.log(weather);
     res.status(200).render('pages/result', { weather: weather });
   } catch (err) {
     res.status(200).render('pages/error', { err: err });
