@@ -1,6 +1,12 @@
+form label {
+  margin: 0.5rem auto;
+  text-align: center;
+  font-family: 'Raleway', sans-serif;
+  font-size: 14pt;
+}
+
 
 /* CLASSES */
-
 .flex-column {
   display: flex;
   flex-direction: column;
@@ -11,7 +17,7 @@
 .flex-row {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 }
 
@@ -54,4 +60,17 @@
   margin: 1rem 2rem;
   background: #fff2c9;
   padding: 3rem 2rem;
+}
+
+.input {
+  font-family: 'Raleway', sans-serif;
+  font-size: 14pt;
+  box-sizing: border-box;
+  width: 100%;
+  height: 3.5rem;
+  margin-top: 1rem;
+  border-radius: 3px;
+  border: none;
+  padding: 0.5rem;
+  background: white; 
 }

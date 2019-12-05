@@ -15,9 +15,14 @@ header {
   top: 0;
 }
 
-header h1 {
-  display: inline;
+header img {
+  max-width: 45%;
 }
+header h1 {
+  display: inline-block;
+  margin-left: 1rem;
+}
+
 
 footer {
   bottom: 0;

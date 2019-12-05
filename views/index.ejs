@@ -4,7 +4,7 @@
     <%- include('./partials/head.ejs') %>
 </head>
 <body>
-  <header>
+  <header class="flex-row">
     <%- include('./partials/header.ejs') %>
   </header>
   <main class="flex-column">
@@ -19,20 +19,19 @@
       <button id="start" class="button">START</button>
     </section>
     <section class="modal">
-      <!-- this section is hidden when the page loads and is shown only when user clicks on START button as a modal form -->
       <div class="modal-content">
         <form class="flex-column" action="/" %> method="POST">
           <label for="city">Enter the location</label>
-          <input type="text" name="city" placeholder="Enter city of your destination" required>
+          <input class="input" type="text" name="city" placeholder="Enter city of your destination" required>
           <label for="date">Enter the dates of your vacation</label>
-          <input type="text" name="date" placeholder="Enter the dates of your vacation in format..." required>
+          <input class="input" type="text" name="date" placeholder="Enter the dates of your vacation in format..." required>
           <label for="vacation_type"></label>
-          <select name="vacation_type" >
+          <select class="input" name="vacation_type" >
             <option value="staycation">staycation</option>
             <option value="long_vacation">long_vacation</option>
           </select>
-          <label for="activities">pick the activities you're planning on doing</label>
-          <select name="activities">
+          <label for="activities">Pick the activities you're planning on doing</label>
+          <select class="input" name="activities">
             <option value="hiking">hiking</option>
             <option value="swimming">swimming</option>
           </select>
