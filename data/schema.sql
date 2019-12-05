@@ -23,7 +23,7 @@ CREATE TABLE trip (
   FOREIGN KEY (traveller_id) REFERENCES traveller(id),
   packing_item_ids INTEGER[] NOT NULL,
   FOREIGN KEY (packing_item_ids) REFERENCES packing_item(id),
-  custom_packing_item_ids INTEGER[] NOT NULL,
+  custom_packing_item_ids INTEGER[],
   FOREIGN KEY (custom_packing_item_ids) REFERENCES custom_packing_item(id),
   activity_type_ids INTEGER[] NOT NULL,
   FOREIGN KEY (activity_type_ids) REFERENCES activity_type(id),
