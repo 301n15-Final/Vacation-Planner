@@ -6,8 +6,7 @@ CREATE TABLE traveller (
   last_name VARCHAR(255),
   shorts_temp_lowest INTEGER NOT NULL,
   fall_temp_low INTEGER NOT NULL,
-  fall_temp_high INTEGER NOT NULL,
-  winter_temp_highest INTEGER NOT NULL
+  fall_temp_high INTEGER NOT NULL
 );
 
 CREATE TABLE activity_type (
@@ -65,8 +64,12 @@ CREATE TABLE custom_packing_item (
   name VARCHAR(255) UNIQUE
 );
 
-INSERT INTO traveller (first_name, last_name, shorts_temp_lowest, fall_temp_low, fall_temp_high, winter_temp_highest)
-VALUES ("Tammy", "Ip", 65, 55, 64, )
+INSERT INTO traveller (first_name, last_name, shorts_temp_lowest, fall_temp_low, fall_temp_high)
+VALUES ("Tammy", "Ip", 65, 55, 64),
+("Leo", "Kuhorev", 70, 50, 60),
+("Ehsan", "Ghafari", 65, 55, 64),
+("Diana", "Kim", 68, 50, 60)
+;
 
 VALUES ("Tropical"), ("Snow"), ("Pool/Beach"), ("Active Adventure");
 
