@@ -11,8 +11,9 @@
       <section class="main-content flex-column">
         <h1>RESULTS</h1>
         <ul>
+          <p>For the dates of your trip we expect:</p>
           <% weather.forEach( day => { %>
-            <li><%= day.summary %></li>
+            <li><img class="icon" src="<%= day.icon_url %>" alt="weather icon"> <%= day.day %>: <%= day.summary %> With the average temperature of: <%= day.temperature %> F</li>
           <% }) %>
         </ul>
       </section>

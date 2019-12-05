@@ -74,3 +74,7 @@ form label {
   padding: 0.5rem;
   background: white; 
 }
+
+.icon {
+  width: 40px;
+}
