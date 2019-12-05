@@ -1,6 +1,6 @@
-DROP TABLE IF EXISTS user, trip, vacation_type, activity_type, custom_packing_item, standard_packing_item;
+DROP TABLE IF EXISTS traveller, trip, vacation_type, activity_type, custom_packing_item, standard_packing_item;
 
-CREATE TABLE user (
+CREATE TABLE traveller (
   id SERIAL PRIMARY KEY,
   first_name VARCHAR(255),
   last_name VARCHAR(255),
@@ -16,8 +16,8 @@ CREATE TABLE user (
 CREATE TABLE trip (
   id SERIAL PRIMARY KEY,
   name VARCHAR(255) UNIQUE,
-  user_id INTEGER NOT NULL,
-  FOREIGN KEY (user_id) REFERENCES user(id),
+  traveller_id INTEGER NOT NULL,
+  FOREIGN KEY (traveller_id) REFERENCES traveller(id),
   packing_item_ids INTEGER[] NOT NULL,
   FOREIGN KEY (packing_item_ids) REFERENCES packing_item(id),
   custom_packing_item_ids INTEGER[] NOT NULL,
@@ -31,16 +31,7 @@ CREATE TABLE trip (
 CREATE TABLE vacation_type (
   id SERIAL PRIMARY KEY,
   name VARCHAR(255) UNIQUE
-  -- tropics, overnight trips, flights/train, 
 );
-
--- See entity relationship diagram regarding this table
--- CREATE TABLE temperature_type (
---   id SERIAL PRIMARY KEY,
---   name VARCHAR(255) UNIQUE,
---   low_temp INTEGER NOT NULL,
---   high_temp INTEGER
--- );
 
 CREATE TABLE activity_type  (
   id SERIAL PRIMARY KEY,
@@ -50,8 +41,8 @@ CREATE TABLE activity_type  (
 CREATE TABLE custom_packing_item (
   id SERIAL PRIMARY KEY,
   name VARCHAR(255) UNIQUE,
-  user_id INTEGER NOT NULL,
-  FOREIGN KEY (user_id) REFERENCES user(id),
+  traveller_id INTEGER NOT NULL,
+  FOREIGN KEY (traveller_id) REFERENCES traveller(id),
   vacation_type_ids INTEGER[] NOT NULL,
   FOREIGN KEY (vacation_type_ids) REFERENCES vacation_type(id),
   temperature_type_ids INTEGER[] NOT NULL,
@@ -65,19 +56,17 @@ CREATE TABLE standard_packing_item (
   name VARCHAR(255) UNIQUE,
   vacation_type_ids INTEGER[] NOT NULL,
   FOREIGN KEY (vacation_type_ids) REFERENCES vacation_type(id),
-  temperature_type_ids INTEGER[] NOT NULL,
-  FOREIGN KEY (temperature_type_ids) REFERENCES temperature_type(id),
   activity_type_ids INTEGER[] NOT NULL,
   FOREIGN KEY (activity_type_ids) REFERENCES activity_type(id)
 );
 
 INSERT INTO vacation_type (name)
-VALUES ("Tropical"), ("Snow");
+VALUES ("Tropical"), ("Snow"), ("Pool/Beach"), ("Active Adventure");
 
 INSERT INTO activity_type (name)
 VALUES ("water-based"), ("land-based"), ("high intensity"), ("relaxed");
 
-INSERT INTO standard_packing_item (name, vacation_type_ids, temperature_type_ids, activity_type_ids)
+INSERT INTO standard_packing_item (name, vacation_type_ids, activity_type_ids)
 VALUES ("medication", [], [], []),
   ("toothpaste", [], [], []),
   ("toothbrush", [], [], []),
