@@ -37,6 +37,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', (req, res) => res.status(200).render('index'));
 app.post('/', weatherHandler);
 
+app.get('/result', (req, res) => res.status(200).render('index'));
+app.get('/about', (req, res) => res.status(200).render('pages/about'));
+
 app.get('*', (req, res) => res.status(404).send('404'));
 
 // Ensure that the server is listening for requests

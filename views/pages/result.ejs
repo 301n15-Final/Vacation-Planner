@@ -7,15 +7,17 @@
   <header>
     <%- include('../partials/header.ejs') %>
   </header>
-  <main>
-    <h1>RESULTS</h1>
-    <ul>
-      <% weather.forEach( day => { %>
-        <li><%= day.summary %></li>
-      <% }) %>
-    </ul>
+  <main class="flex-column">
+      <section class="main-content flex-column">
+        <h1>RESULTS</h1>
+        <ul>
+          <% weather.forEach( day => { %>
+            <li><%= day.summary %></li>
+          <% }) %>
+        </ul>
+      </section>
   </main>
-  <footer>
+  <footer class="flex-column">
     <%- include('../partials/footer.ejs') %>
   </footer>
 </body>

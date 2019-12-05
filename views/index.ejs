@@ -8,16 +8,19 @@
     <%- include('./partials/header.ejs') %>
   </header>
   <main class="flex-column">
-    <h1>Hello world!</h1>
-    <section>
+    <section class="main-content flex-column">
+      <h2>Welcome to the Vacation Planner!</h2>
+      <h3>Our Mission:</h3>
       <p>
-        <!-- welcome message goes here -->
+        Blah-blah-blah to help you blah-blah-blah
       </p>
+      <h3>How to:</h3>
+      <p>Blah-blah-blah click here to start</p>
       <button id="start" class="button">START</button>
     </section>
     <section class="modal">
       <!-- this section is hidden when the page loads and is shown only when user clicks on START button as a modal form -->
-      <div class="content">
+      <div class="modal-content">
         <form class="flex-column" action="/" %> method="POST">
           <label for="city">Enter the location</label>
           <input type="text" name="city" placeholder="Enter city of your destination" required>
