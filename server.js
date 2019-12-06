@@ -73,7 +73,6 @@ async function getLocation(city) {
     const data = await superagent.get(url);
     const location = data.body.results[0].geometry.location;
     const countryCode = data.body.results[0].address_components.filter(el => el.types[0] === 'country')[0].short_name;
-    console.log(countryCode);
     return {location: location, code: countryCode};
   } catch(err) {
     console.log(err);

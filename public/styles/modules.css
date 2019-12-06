@@ -1,3 +1,4 @@
+/* TRIP INFO FORM */
 form label {
   margin: 0.5rem auto;
   text-align: center;
@@ -5,6 +6,34 @@ form label {
   font-size: 14pt;
 }
 
+/* RESULT PAGE */
+.result {
+  text-align: center;
+}
+
+.result h2 {
+  font-size: 16pt;
+  font-weight: 900;
+  padding-bottom: 1rem;
+}
+
+.result h3 {
+  font-size: 14pt;
+  font-weight: 600;
+  padding-bottom: 1rem;
+}
+
+.country-info img {
+  max-width: 25%;
+}
+
+.country-info b {
+  font-weight: 600;
+}
+
+.country-info * {
+  padding-bottom: 0.8rem;
+}
 
 /* CLASSES */
 .flex-column {
