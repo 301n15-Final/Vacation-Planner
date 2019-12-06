@@ -1,8 +1,6 @@
 body {
   background: #fffaeb;
   font-family: 'Raleway', sans-serif;
-  background-repeat: no-repeat;
-  background-size: cover;
 }
 
 header, footer {
@@ -13,5 +11,7 @@ header, footer {
 @media (orientation: landscape) {
   body {
     background-image: url("../img/background.jpeg");
+    background-repeat: no-repeat;
+    background-size: cover;
   }
 }
