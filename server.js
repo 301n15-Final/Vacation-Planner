@@ -6,6 +6,18 @@ const cors = require('cors');
 const path = require('path');
 const superagent = require('superagent');
 const methodOverride = require('method-override');
+const bcrypt = require('bcrypt'); // for hashing passwords
+const passport = require('passport'); // for dealing with login
+const flash = require('express-flash'); // express library
+const session = require('express-session'); // express library
+
+// Importing modules
+const initializePassport = require('./modules/passport-config');
+initializePassport(
+  passport,
+  email => users.find( user => user.email === email),
+  id => users.find( user => user.id === id)
+);
 
 // Load Environment variable from the .env
 require('dotenv').config();
@@ -14,8 +26,16 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(cors());
-app.use(express.urlencoded({ extended: true })); //allows working with encoded data from APIs
+app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
+app.use(flash());
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Using middleware to change browser's POST into PUT
 app.use(methodOverride((req) => {
@@ -26,8 +46,8 @@ app.use(methodOverride((req) => {
   }
 }));
 
-// Importing callback functions
-
+// TEMPORARY LOGIN INFORMATION (will be moved to database)
+const users = [];
 
 // Routes
 // Serving static folder
@@ -36,6 +56,30 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Specifying route
 app.get('/', (req, res) => res.status(200).render('index'));
 app.post('/', weatherHandler);
+
+app.get('/login', (req, res) => res.status(200).render('pages/login'));
+app.post('/login', passport.authenticate('local', {
+  successRedirect: '/',
+  failureRedirect: '/login',
+  failureFlash: true
+}));
+
+app.get('/register', (req, res) => res.status(200).render('pages/register'));
+app.post('/register', async (req, res) => {
+  try {
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    users.push({
+      id: Date.now().toString(),
+      name: req.body.name,
+      email: req.body.email,
+      password: hashedPassword
+    });
+    res.redirect('/login');
+  } catch (err) {
+    res.redirect('/register');
+  }
+  console.log(users);
+});
 
 app.get('/result', (req, res) => res.status(200).render('index'));
 app.get('/about', (req, res) => res.status(200).render('pages/about'));
