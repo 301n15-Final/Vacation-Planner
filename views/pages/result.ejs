@@ -12,19 +12,34 @@
   <main class="flex-column">
     <section class="main-content flex-column">
       <h1>RESULTS</h1>
-      <ul>
-        For your trip, we expect:
-        <% weather.forEach( day => { %>
-        <li><%= day.summary %></li>
-        <% }) %>
-        with the average temperature <%=weather.temperature %>
+      <h2>Your trip to <%= request.city %> <%= request.start_date %> - <%= request.end_date %></h2>
 
-        We suggest you to bring:
-        <% item.forEach( day => { %>
-        <li><%= day.summary %></li>
+      <div>
+        <h3>More information about your destination:</h3>
+        <ul>
+          <li>Country: <%= country.country %></li>
+          <li>Capital: <%= country.capital %> </li>
+          <li>Population: <%= country.population %></li>
+          <li>Borders: <% country.borders.forEach( border => { %>
+            <%= border %>,
+            <% }) %> </li>
+          <li>Currencies: <% country.currencies.forEach( currencie => { %>
+            <%= currencie %>,
+            <% }) %> </li>
+          <li>Languages: <% country.languages.forEach( language => { %>
+            <%= language %>,
+            <% }) %> </li>
+          <img src="<%= country.flag_url %>" alt="flag of <%= country.country %>">
+        </ul>
+      </div>
+
+      <p>For the dates of your trip we expect:</p>
+      <ul>
+        <% weather.forEach( day => { %>
+        <li><img class="icon" src="<%= day.icon_url %>" alt="weather icon"> <%= day.day %>: <%= day.summary %> With the
+          average temperature of: <%= day.temperature %> F</li>
         <% }) %>
       </ul>
-      </p>
     </section>
   </main>
   <footer class="flex-column">

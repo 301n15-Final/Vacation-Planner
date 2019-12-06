@@ -47,5 +47,8 @@
 
 ## Database Entity Relationship Diagram:
 
-  <img src="./public/img/entity_relationship_diagram.png" alt="Entity Relationship Diagram" width="600"/> 
+  <img src="./public/img/mvp_erd.png" alt="MVP Entity Relationship Diagram" width="600"/> 
+
+## Credits and Collaborations  
+[Icons](https://icons8.com/)
 
