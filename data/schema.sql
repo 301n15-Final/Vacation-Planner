@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS traveller, trip, vacation_type, activity_type, custom_packing_item, standard_packing_item;
+DROP TABLE IF EXISTS traveller, activity_type, vacation_type, standard_packing_item, custom_packing_item, trip, standard_packing_item_activity_type, standard_packing_item_vacation_type, trip_packing_item;
 
 CREATE TABLE traveller (
   id SERIAL PRIMARY KEY,
@@ -19,6 +19,32 @@ CREATE TABLE vacation_type (
   name VARCHAR(255)
 );
 
+CREATE TABLE standard_packing_item (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) UNIQUE,
+  min_temp INTEGER NOT NULL,
+  max_temp INTEGER NOT NULL,
+  precip VARCHAR(255)
+);
+
+CREATE TABLE custom_packing_item (
+  id SERIAL PRIMARY KEY,
+  traveller_id INTEGER NOT NULL,
+  FOREIGN KEY (traveller_id) REFERENCES traveller(id),
+  name VARCHAR(255) UNIQUE
+);
+
+CREATE TABLE trip (
+  id SERIAL PRIMARY KEY,
+  traveller_id INTEGER NOT NULL,
+  FOREIGN KEY (traveller_id) REFERENCES traveller(id),
+  name VARCHAR(255) UNIQUE,
+  city VARCHAR(255) NOT NULL,
+  country VARCHAR(255) NOT NULL,
+  start_date DATE NOT NULL,
+  end_date DATE NOT NULL
+);
+
 CREATE TABLE standard_packing_item_activity_type (
   standard_packing_item_id INTEGER NULL,
   FOREIGN KEY (standard_packing_item_id) REFERENCES standard_packing_item(id),  
@@ -33,44 +59,22 @@ CREATE TABLE standard_packing_item_vacation_type (
   FOREIGN KEY (vacation_type_id) REFERENCES vacation_type(id)
 );
 
-CREATE TABLE standard_packing_item (
-  id SERIAL PRIMARY KEY,
-  name VARCHAR(255) UNIQUE,
-  min_temp INTEGER NOT NULL,
-  max_temp INTEGER NOT NULL,
-  precip VARCHAR(255)
-);
-
-CREATE TABLE trip (
-  id SERIAL PRIMARY KEY,
-  traveller_id INTEGER NOT NULL,
-  FOREIGN KEY (traveller_id) REFERENCES traveller(id),
-  name VARCHAR(255) UNIQUE,
-  city VARCHAR(255) NOT NULL,
-  country VARCHAR(255) NOT NULL,
-  start_date DATE NOT NULL,
-  end_date DATE NOT NULL
-);
-
 CREATE TABLE trip_packing_item (
   trip_id INTEGER NOT NULL,
   FOREIGN KEY (trip_id) REFERENCES trip(id),  
   packing_item_name VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE custom_packing_item (
-  id SERIAL PRIMARY KEY,
-  traveller_id INTEGER NOT NULL,
-  FOREIGN KEY (traveller_id) REFERENCES traveller(id),
-  name VARCHAR(255) UNIQUE
-);
-
 INSERT INTO traveller (first_name, last_name, shorts_temp_lowest, fall_temp_low, fall_temp_high)
 VALUES ('Tammy', 'Ip', 65, 55, 64),
 ('Leo', 'Kuhorev', 70, 50, 61),
 ('Ehsan', 'Ghafari', 65, 55, 64),
-('Diana', 'Kim', 68, 50, 60)
-;
+('Diana', 'Kim', 68, 50, 60);
+
+INSERT INTO TRIP (traveller_id, name, city, country, start_date, end_date)
+VALUES (1, 'Whistler', 'Whistler', 'Canada', '2019-12-23', '2020-01-03' ),
+(2, 'Vancouver', 'Vancouver', 'Canada', '2019-12-19', '2019-12-23' ),
+(3, 'T&C, here I come!', 'Providenciales', 'Turks and Caicos', '2020-02-14', '2020-02-26');
 
 INSERT INTO vacation_type (name)
 VALUES ('Tropical'), ('Snow'), ('Pool/Beach'), ('Active Adventure');
