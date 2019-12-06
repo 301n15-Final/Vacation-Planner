@@ -1,12 +1,17 @@
 body {
-  /* background: #fffaeb; */
-  background-image: url("../img/background.jpeg");
+  background: #fffaeb;
   font-family: 'Raleway', sans-serif;
-  background-repeat: no-repeat;
-  background-size: cover;
 }
 
 header, footer {
   background: #fdcb6e;
   color: #2d3436;
+}
+
+@media (orientation: landscape) {
+  body {
+    background-image: url("../img/background.jpeg");
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
 }
