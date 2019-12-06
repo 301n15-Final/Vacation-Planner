@@ -49,3 +49,6 @@
 
   <img src="./public/img/mvp_erd.png" alt="MVP Entity Relationship Diagram" width="600"/> 
 
+## Credits and Collaborations  
+[Icons](https://icons8.com/)
+
