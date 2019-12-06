@@ -53,7 +53,17 @@ function Weather(weather) {
   this.summary = weather.summary;
   this.temperature = ((weather.temperatureHigh + weather.temperatureLow) / 2).toFixed(0);
   this.precipType = weather.precipType;
-  this.icon_url = `../img/icons/${weather.icon}.png`;
+  this.icon_url = weather.icon ? `../img/icons/${weather.icon}.png` : `../img/icons/undefined.png`;
+}
+
+function Country(country) {
+  this.country = country.name;
+  this.capital = country.capital;
+  this.population = country.population;
+  this.borders = country.borders;
+  this.currencies = country.currencies.map(curr => curr.name);
+  this.languages = country.languages.map(lang => lang.name);
+  this.flag_url = country.flag;
 }
 
 // Getting location from Google API and returning lat/long
@@ -61,7 +71,10 @@ async function getLocation(city) {
   const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${city}&key=${process.env.GEOCODE_API_KEY}`;
   try {
     const data = await superagent.get(url);
-    return data.body.results[0].geometry.location;
+    const location = data.body.results[0].geometry.location;
+    const countryCode = data.body.results[0].address_components.filter(el => el.types[0] === 'country')[0].short_name;
+    console.log(countryCode);
+    return {location: location, code: countryCode};
   } catch(err) {
     console.log(err);
   }
@@ -77,6 +90,13 @@ async function getWeather(location, time) {
   } catch(err) {
     console.log(err);
   }
+}
+
+//
+async function getCountryData(code) {
+  const url = `https://restcountries.eu/rest/v2/alpha/${code}?fullText=true`;
+  const countryData = await superagent.get(url);
+  return new Country(countryData.body);
 }
 
 // Getting the days of the vacation
@@ -96,14 +116,17 @@ function getDays(vacation) {
 // Rendering forecasted (if exists) or historical weather
 async function weatherHandler(req, res) {
   try {
-    const location = await getLocation(req.body.city);
+    const geo = await getLocation(req.body.city);
     const days = getDays(req.body);
+    const countryData = await getCountryData(geo.code);
 
-    const weather = await Promise.all(days.map(day => getWeather(location, day)))
+    console.log(countryData);
+
+    const weather = await Promise.all(days.map(day => getWeather(geo.location, day)))
       .then(data => data.map( forecast => new Weather(forecast[0]) ))
       .catch(err => console.log(err));
     console.log(weather);
-    res.status(200).render('pages/result', { weather: weather });
+    res.status(200).render('pages/result', { weather: weather, country: countryData, request: req.body });
   } catch (err) {
     res.status(200).render('pages/error', { err: err });
   }
