@@ -37,14 +37,8 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Using middleware to change browser's POST into PUT
-app.use(methodOverride((req) => {
-  if (req.body && typeof req.body === 'object' && '_method' in req.body) {
-    let method = req.body._method;
-    delete req.body._method;
-    return method;
-  }
-}));
+// Using middleware to change browser's POST into DELETE
+app.use(methodOverride('_method'));
 
 // TEMPORARY LOGIN INFORMATION (will be moved to database)
 const users = [];
@@ -57,15 +51,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', (req, res) => res.status(200).render('index'));
 app.post('/', weatherHandler);
 
-app.get('/login', (req, res) => res.status(200).render('pages/login'));
-app.post('/login', passport.authenticate('local', {
+app.get('/login', checkNotAuthenticated, (req, res) => res.status(200).render('pages/login'));
+app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
   successRedirect: '/',
   failureRedirect: '/login',
   failureFlash: true
 }));
 
-app.get('/register', (req, res) => res.status(200).render('pages/register'));
-app.post('/register', async (req, res) => {
+app.get('/register', checkNotAuthenticated, (req, res) => res.status(200).render('pages/register'));
+app.post('/register', checkNotAuthenticated, async (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     users.push({
@@ -81,7 +75,12 @@ app.post('/register', async (req, res) => {
   console.log(users);
 });
 
-app.get('/result', (req, res) => res.status(200).render('index'));
+app.delete('/logout', (req, res) => {
+  req.logOut();
+  res.redirect('/login');
+});
+
+app.get('/result', checkAuthenticated, (req, res) => res.status(200).render('index', { name: req.user.name }));
 app.get('/about', (req, res) => res.status(200).render('pages/about'));
 
 app.get('*', (req, res) => res.status(404).send('404'));
@@ -135,7 +134,7 @@ async function getWeather(location, time) {
   }
 }
 
-//
+// Retrieve additional country data
 async function getCountryData(code) {
   const url = `https://restcountries.eu/rest/v2/alpha/${code}?fullText=true`;
   const countryData = await superagent.get(url);
@@ -173,4 +172,19 @@ async function weatherHandler(req, res) {
   } catch (err) {
     res.status(200).render('pages/error', { err: err });
   }
+}
+
+// Middleware for checking user authentication
+function checkAuthenticated( req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/login');
+}
+
+function checkNotAuthenticated( req, res, next) {
+  if (req.isAuthenticated()) {
+    return res.redirect('/');
+  }
+  next();
 }
