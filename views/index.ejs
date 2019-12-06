@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <%- include('./partials/head.ejs') %>
+  <%- include('./partials/head.ejs') %>
 </head>
+
 <body>
   <header class="flex-row">
     <%- include('./partials/header.ejs') %>
@@ -12,7 +14,8 @@
       <h2>Welcome to the Vacation Planner!</h2>
       <h3>Our Mission:</h3>
       <p>
-        Blah-blah-blah to help you blah-blah-blah
+        We are committed to provide the best travel information for your upcoming trips. Making your vacation planning
+        experience as smooth,stress-free, and fun as possible!
       </p>
       <h3>How to:</h3>
       <p>Blah-blah-blah click here to start</p>
@@ -28,7 +31,7 @@
           <label for="end_date">Enter end date of your vacation</label>
           <input class="input" type="date" name="end_date" required>
           <label for="vacation_type"></label>
-          <select class="input" name="vacation_type" >
+          <select class="input" name="vacation_type">
             <option value="tropical">Tropical</option>
             <option value="snow">Snow</option>
             <option value="pool_beach">Pool/Beach</option>
@@ -51,4 +54,5 @@
     <script src="../js/modal.js"></script>
   </footer>
 </body>
+
 </html>
