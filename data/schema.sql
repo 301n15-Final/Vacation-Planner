@@ -36,8 +36,8 @@ CREATE TABLE standard_packing_item_vacation_type (
 CREATE TABLE standard_packing_item (
   id SERIAL PRIMARY KEY,
   name VARCHAR(255) UNIQUE,
-  min_temp INTEGER,
-  max_temp INTEGER,
+  min_temp INTEGER NOT NULL,
+  max_temp INTEGER NOT NULL,
   precip VARCHAR(255)
 );
 
@@ -46,7 +46,8 @@ CREATE TABLE trip (
   traveller_id INTEGER NOT NULL,
   FOREIGN KEY (traveller_id) REFERENCES traveller(id),
   name VARCHAR(255) UNIQUE,
-  city VARCHAR(255),
+  city VARCHAR(255) NOT NULL,
+  country VARCHAR(255) NOT NULL,
   start_date DATE NOT NULL,
   end_date DATE NOT NULL
 );
