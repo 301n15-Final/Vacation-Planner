@@ -99,6 +99,7 @@ function Weather(weather) {
   this.icon_url = weather.icon ? `../img/icons/${weather.icon}.png` : `../img/icons/undefined.png`;
 }
 
+// Country constructor
 function Country(country) {
   this.country = country.name;
   this.capital = country.capital;
@@ -174,7 +175,8 @@ async function weatherHandler(req, res) {
   }
 }
 
-// Middleware for checking user authentication
+// Middlewares for checking user authentication
+// Use this functions for routes that user cannot access being logged out
 function checkAuthenticated( req, res, next) {
   if (req.isAuthenticated()) {
     return next();
@@ -182,6 +184,7 @@ function checkAuthenticated( req, res, next) {
   res.redirect('/login');
 }
 
+// Use this functions for routes that user cannot access being logged in
 function checkNotAuthenticated( req, res, next) {
   if (req.isAuthenticated()) {
     return res.redirect('/');

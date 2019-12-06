@@ -26,11 +26,16 @@
 
 ## Libraries, Frameworks, Dependencies:
   ### Node.js Dependencies:   
+  bcrypt: 3.0.7,  
   cors: 2.8.5,  
   dotenv: 8.2.0,  
   ejs: 2.7.4,  
   express: 4.17.1,  
-  method-override: 3.0.0,  
+  express-flash: 0.0.2,  
+  express-session: 1.17.0,  
+  method-override: 3.0.0, 
+  passport: 0.4.0,  
+  passport-local: 1.0.0,  
   pg: 7.14.0,  
   superagent: 5.1.0  
 

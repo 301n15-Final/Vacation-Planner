@@ -1,15 +1,33 @@
-<h1>Login</h1>
-<% if (messages.error) { %> 
-  <%= messages.error %>
-<% } %>
-<form action="/login" method="POST">
-<div>
-  <label for="email">Email</label>
-  <input type="email" name="email" id="email" required>
-  <label for="password">Password</label>
-  <input type="password" name="password" id="password" required>
-  <button type="submit">Login</button>
-</div>
-</form>
-
-<a href="/register">Register</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head.ejs') %>
+</head>
+<body>
+  <header class="flex-row">
+    <%- include('../partials/header.ejs') %>
+  </header>
+  <main class="flex-column">
+    <section class="main-content flex-column">
+      <h2>Login</h2>
+      <% if (messages.error) { %> 
+        <%= messages.error %>
+      <% } %>
+      <form action="/login" method="POST">
+      <div>
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" required>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" required>
+        <button type="submit">Login</button>
+      </div>
+      </form>
+  
+      <a href="/register">Register</a>
+    </section>
+  </main>
+  <footer class="flex-column">
+    <%- include('../partials/footer.ejs') %>
+  </footer>
+</body>
+</html>

@@ -1,14 +1,32 @@
-<h1>Register new user</h1>
-<form action="/register" method="POST">
-<div>
-  <label for="name">Name</label>
-  <input type="text" name="name" id="name" required>
-  <label for="email">Email</label>
-  <input type="email" name="email" id="email" required>
-  <label for="password">Password</label>
-  <input type="password" name="password" id="password" required>
-  <button type="submit">Register</button>
-</div>
-</form>
-
-<a href="/login">Login</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head.ejs') %>
+</head>
+<body>
+  <header class="flex-row">
+    <%- include('../partials/header.ejs') %>
+  </header>
+  <main class="flex-column">
+    <section class="main-content flex-column">
+      <h2>Register new user</h2>
+      <form action="/register" method="POST">
+      <div>
+        <label for="name">Name</label>
+        <input type="text" name="name" id="name" required>
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" required>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" required>
+        <button type="submit">Register</button>
+      </div>
+      </form>
+      
+      <a href="/login">Login</a>
+    </section>
+  </main>
+  <footer class="flex-column">
+    <%- include('../partials/footer.ejs') %>
+  </footer>
+</body>
+</html>
