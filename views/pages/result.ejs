@@ -1,47 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <%- include('../partials/head.ejs') %>
+  <%- include('../partials/head.ejs') %>
 </head>
+
 <body>
   <header class="flex-row">
     <%- include('../partials/header.ejs') %>
   </header>
   <main class="flex-column">
-      <section class="result main-content flex-column">
-        <h2>Your trip to <%= request.city %> <br>
+    <section class="result main-content flex-column">
+      <h2>Your trip to <%= request.city %> <br>
         <%= request.start_date %> - <%= request.end_date %></h2>
 
-        <h3>More information about your destination:</h3>
+      <h3>More information about your destination:</h3>
 
-        <div class="country-info flex-column">
-          <img src="<%= country.flag_url %>" alt="flag of <%= country.country %>">
-          <ul>
-            <li><b>Country:</b> <%= country.country %></li>
-            <li><b>Capital:</b> <%= country.capital %> </li>
-            <li><b>Population:</b> <%= country.population %></li>
-            <li><b>Borders:</b> <% country.borders.forEach( border => { %>
-              <%= border %>,  
-              <% }) %> </li>
-            <li><b>Currencies:</b> <% country.currencies.forEach( currencie => { %>
-              <%= currencie %>,  
-              <% }) %> </li>
-            <li><b>Languages:</b> <% country.languages.forEach( language => { %>
-              <%= language %>,  
-              <% }) %> </li>
-          </ul>
-        </div>
-
-        <h3>For the dates of your trip we expect:</h3>
+      <div class="country-info flex-column">
+        <img src="<%= country.flag_url %>" alt="flag of <%= country.country %>">
         <ul>
-          <% weather.forEach( day => { %>
-            <li><img class="icon" src="<%= day.icon_url %>" alt="weather icon"> <%= day.day %>: <%= day.summary %> With the average temperature of: <%= day.temperature %> F</li>
-          <% }) %>
+          <li><b>Country:</b> <%= country.country %></li>
+          <li><b>Capital:</b> <%= country.capital %> </li>
+          <li><b>Population:</b> <%= country.population %></li>
+          <li><b>Borders:</b> <% country.borders.forEach( border => { %>
+            <%= border %>,
+            <% }) %> </li>
+          <li><b>Currencies:</b> <% country.currencies.forEach( currencie => { %>
+            <%= currencie %>,
+            <% }) %> </li>
+          <li><b>Languages:</b> <% country.languages.forEach( language => { %>
+            <%= language %>,
+            <% }) %> </li>
         </ul>
-      </section>
+      </div>
+
+      <h3>For the dates of your trip we expect:</h3>
+      <ul>
+        <li>Country: <%= country.country %></li>
+        <li>Capital: <%= country.capital %> </li>
+        <li>Population: <%= country.population %></li>
+        <li>Borders: <% country.borders.forEach( border => { %>
+          <%= border %>,
+          <% }) %> </li>
+        <li>Currencies: <% country.currencies.forEach( currencie => { %>
+          <%= currencie %>,
+          <% }) %> </li>
+        <li>Languages: <% country.languages.forEach( language => { %>
+          <%= language %>,
+          <% }) %> </li>
+        <img src="<%= country.flag_url %>" alt="flag of <%= country.country %>">
+      </ul>
+      </div>
+
+      <p>For the dates of your trip we expect:</p>
+      <ul>
+        <% weather.forEach( day => { %>
+        <li><img class="icon" src="<%= day.icon_url %>" alt="weather icon"> <%= day.day %>: <%= day.summary %> With the
+          average temperature of: <%= day.temperature %> F</li>
+        <% }) %>
+      </ul>
+    </section>
   </main>
   <footer class="flex-column">
     <%- include('../partials/footer.ejs') %>
   </footer>
 </body>
+
 </html>

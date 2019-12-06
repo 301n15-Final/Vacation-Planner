@@ -1,6 +1,9 @@
 body {
-  background: #fffaeb;
+  /* background: #fffaeb; */
+  background-image: url("../img/background.jpeg");
   font-family: 'Raleway', sans-serif;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 header, footer {

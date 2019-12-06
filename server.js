@@ -14,12 +14,12 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(cors());
-app.use(express.urlencoded({extended: true})); //allows working with encoded data from APIs
+app.use(express.urlencoded({ extended: true })); //allows working with encoded data from APIs
 app.set('view engine', 'ejs');
 
 // Using middleware to change browser's POST into PUT
-app.use(methodOverride( (req) => {
-  if(req.body && typeof req.body === 'object' && '_method' in req.body) {
+app.use(methodOverride((req) => {
+  if (req.body && typeof req.body === 'object' && '_method' in req.body) {
     let method = req.body._method;
     delete req.body._method;
     return method;
@@ -73,8 +73,8 @@ async function getLocation(city) {
     const data = await superagent.get(url);
     const location = data.body.results[0].geometry.location;
     const countryCode = data.body.results[0].address_components.filter(el => el.types[0] === 'country')[0].short_name;
-    return {location: location, code: countryCode};
-  } catch(err) {
+    return { location: location, code: countryCode };
+  } catch (err) {
     console.log(err);
   }
 }
@@ -86,7 +86,7 @@ async function getWeather(location, time) {
       : `https://api.darksky.net/forecast/${process.env.WEATHER_API}/${location.lat},${location.lng}`;
     const data = await superagent.get(url);
     return data.body.daily.data;
-  } catch(err) {
+  } catch (err) {
     console.log(err);
   }
 }
@@ -101,11 +101,11 @@ async function getCountryData(code) {
 // Getting the days of the vacation
 function getDays(vacation) {
   const startDate = Date.parse(vacation.start_date) / 1000;
-  const endDate =  Date.parse(vacation.end_date) / 1000;
+  const endDate = Date.parse(vacation.end_date) / 1000;
   const numberOfDays = ((endDate - startDate) / 86400) + 1;
   const days = [];
 
-  for(let i = 0; i < numberOfDays; i++) {
+  for (let i = 0; i < numberOfDays; i++) {
     days.push(startDate + 86400 * i);
   }
 
@@ -122,7 +122,7 @@ async function weatherHandler(req, res) {
     console.log(countryData);
 
     const weather = await Promise.all(days.map(day => getWeather(geo.location, day)))
-      .then(data => data.map( forecast => new Weather(forecast[0]) ))
+      .then(data => data.map(forecast => new Weather(forecast[0])))
       .catch(err => console.log(err));
     console.log(weather);
     res.status(200).render('pages/result', { weather: weather, country: countryData, request: req.body });
