@@ -28,7 +28,6 @@ initializePassport(
   id => users.find( user => user.id === id)
 );
 
-
 // Application setup
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -142,6 +141,14 @@ async function getWeather(location, time) {
   }
 }
 
+async function getForecast(days, location) {
+  const weather = await Promise.all(days.map(day => getWeather(location, day)))
+    .then(data => data.map(forecast => new Weather(forecast[0])))
+    .catch(err => console.log(err));
+
+  return weather;
+}
+
 // Retrieve additional country data
 async function getCountryData(code) {
   const url = `https://restcountries.eu/rest/v2/alpha/${code}?fullText=true`;
@@ -163,19 +170,16 @@ function getDays(vacation) {
   return days;
 }
 
-// Rendering forecasted (if exists) or historical weather
+// Rendering result page
 async function resultsHandler(req, res) {
   try {
-    const geo = await getLocation(req.body.city);
-    const days = getDays(req.body);
-    const countryData = await getCountryData(geo.code);
+    const geo = await getLocation(req.body.city); //get location info from google API
+    const days = getDays(req.body); //count number of vacation days
+    const countryData = await getCountryData(geo.code); //get country info
+    const weather = await getForecast(days, geo.location); //get forecast info
 
-    console.log(countryData);
+    getData(req.body);
 
-    const weather = await Promise.all(days.map(day => getWeather(geo.location, day)))
-      .then(data => data.map(forecast => new Weather(forecast[0])))
-      .catch(err => console.log(err));
-    console.log(weather);
     res.status(200).render('pages/result', { weather: weather, country: countryData, request: req.body });
   } catch (err) {
     res.status(200).render('pages/error', { err: err });
@@ -197,4 +201,27 @@ function checkNotAuthenticated( req, res, next) {
     return res.redirect('/');
   }
   next();
+}
+
+async function getData(request) {
+  const activityType = request.activities;
+  const vacationType = request.vacation_type;
+  const sql = `SELECT standard_packing_item.name
+  FROM standard_packing_item 
+  JOIN standard_packing_item_activity_type 
+  ON standard_packing_item.id = standard_packing_item_activity_type.standard_packing_item_id 
+  JOIN standard_packing_item_vacation_type
+  ON standard_packing_item.id = standard_packing_item_vacation_type.standard_packing_item_id
+  WHERE activity_type_id = 
+  (SELECT id FROM activity_type WHERE LOWER(name) = $1)
+  AND vacation_type_id =
+  (SELECT id FROM vacation_type WHERE LOWER(name) = $2);`;
+  const data = await client.query(sql, [activityType, vacationType]);
+  console.log(activityType, vacationType);
+  console.log(data.rows);
+}
+
+async function saveUser() {
+  const sql = `INSERT INTO login (email, hashpass);`;
+  const data = client.query(sql);
 }

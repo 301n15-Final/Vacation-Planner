@@ -17,6 +17,36 @@
         <input class="input" type="email" name="email" id="email" required>
         <label for="password">Password</label>
         <input class="input" type="password" name="password" id="password" required>
+        <!-- START Temperature Preference Selection -->
+        <section id="summer-winter-container">
+          <section class="season-container">
+            <p><img class="climate-icon" src="img/sliders/snowflake.png" alt="Snowflake" title="Snowflake" /> As the weather begins to cool down, at what temperature do you prefer to start wearing winter clothing?</p>
+            <section class="selection-container">
+              <img class="temp-pref-icon" src="img/sliders/cold.png" alt="Winter Coat" title="Winter Coat" />
+              <section class="slider-container">
+                <input id="winter-high" class="slider" type="range" min="-20" max="80" step="1" value="50" />
+                <section class="fahrenheit-container">
+                  <output id="winter-temp"></output>
+                  <span>&#176;F</span>
+                </section>
+              </section>
+            </section>
+          </section>
+          <section class="season-container">
+            <p> <img class="climate-icon" src="img/sliders/sun-umbrella.png" alt="Sun and Beach Umbrella" title="Sun and Beach Umbrella" /> As the weather begins to warm up, at what temperature do you prefer to start wearing summer clothing?</p>
+            <section class="selection-container">
+              <img class="temp-pref-icon" src="img/sliders/shorts.png" alt="Shorts" title="Shorts" />
+              <section class="slider-container">
+                <input id="summer-low" class="slider" type="range" min="30" max="110" step="1" value="68" />
+                <section class="fahrenheit-container">
+                  <output id="summer-temp"></output>
+                  <span>&#176;F</span>
+                </section>
+              </section>
+            </section> 
+          </section>
+          <!-- END Temperature Preference Selection -->
+        </section>
         <button class="button" type="submit">Register</button>
       </form>
       <p class="register medium">Go back to <a href="/login">LOGIN</a></p>
