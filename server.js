@@ -168,6 +168,8 @@ async function resultsHandler(req, res) {
     const geo = await getLocation(req.body.city);
     const days = getDays(req.body);
     const countryData = await getCountryData(geo.code);
+    const item = getItems(req.body);
+    getFromDatabase(req.body);
 
     console.log(countryData);
 
@@ -175,7 +177,7 @@ async function resultsHandler(req, res) {
       .then(data => data.map(forecast => new Weather(forecast[0])))
       .catch(err => console.log(err));
     console.log(weather);
-    res.status(200).render('pages/result', { weather: weather, country: countryData, request: req.body });
+    res.status(200).render('pages/result', { weather: weather, country: countryData, items: item, request: req.body });
   } catch (err) {
     res.status(200).render('pages/error', { err: err });
   }
@@ -200,7 +202,20 @@ function checkNotAuthenticated(req, res, next) {
 
 //Getting items from database
 function getItems() {
-  // const items = ['toothpaste', 'toothbrush', 'floss'];
-  const items = 'SELECT name FROM standard_packing_item INNER JOIN standard_packing_item_activity_type ON standard_packing_item_activity_type_id = standard_packing_item_id INNER JOIN activity_type on activity_type_id = standard_packing_item_activity_type_id';
+  const items = ['toothpaste', 'toothbrush', 'floss'];
+  // const items = 'SELECT name FROM standard_packing_item INNER JOIN standard_packing_item_activity_type ON standard_packing_item.activity_type_id = standard_packing_item_id INNER JOIN activity_type on activity_type_id = standard_packing_item_activity_type_id';
+  const items = '
+  SELECT name
+  FROM standard_packing_item
+  INNER JOIN standard_packing_item_activity_type
+  ON standard_packing_item_activity_type.standard_packing_item_id = standard_packing_item.id
+  INNER JOIN activity_type
+  ON activity_type.id = standard_packing_item_activity_type.activity_type_id; '
   return items;
+}
+
+async function getFromDatabase() {
+  let sql = 'SELECT * FROM activity_type;';
+  let data = await client.query(sql);
+  console.log(data.rows);
 }
