@@ -6,5 +6,10 @@
     <a href="../../result"><li>RESULTS</li></a>
     <a href="../../about"><li>ABOUT US</li></a>
   </ul>
+  <form action="/logout?_method=DELETE" method="POST">
+    <% if(typeof name !== 'undefined' && name) { %>
+  <button type="submit">Log Out <%= name %></button>
+    <% } %>
+  </form>
 </nav>
 <i id="menu" class="material-icons">dehaze</i>

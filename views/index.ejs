@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <%- include('./partials/head.ejs') %>
+  <%- include('./partials/head.ejs') %>
 </head>
+
 <body>
   <header class="flex-row">
-    <%- include('./partials/header.ejs') %>
+    <%- include('./partials/header.ejs', {name: typeof name !== 'undefined' ? name : false} ) %>
   </header>
   <main class="flex-column">
     <section class="main-content flex-column">
-      <h2>Welcome to the Vacation Planner!</h2>
+      <h2>Welcome to your Vacation Planner!</h2>
       <h3>Our Mission:</h3>
       <p>
-        Blah-blah-blah to help you blah-blah-blah
+        We are committed to provide the best travel information for your upcoming trips. Making your vacation planning
+        experience as smooth,stress-free, and fun as possible!
       </p>
       <h3>How to:</h3>
       <p>Blah-blah-blah click here to start</p>
@@ -23,26 +26,63 @@
         <form class="flex-column" action="/" %> method="POST">
           <label for="city">Enter the location</label>
           <input class="input" type="text" name="city" placeholder="Enter city of your destination" required>
-          <label for="date">Enter the dates of your vacation</label>
-          <input class="input" type="text" name="date" placeholder="Enter the dates of your vacation in format..." required>
-          <label for="vacation_type"></label>
+          <label for="start_date">Enter start date of your vacation</label>
+          <input class="input" type="date" name="start_date" required>
+          <label for="end_date">Enter end date of your vacation</label>
+          <input class="input" type="date" name="end_date" required>
+          <label for="vacation_type">Vacation Type</label>
           <select class="input" name="vacation_type" >
-            <option value="staycation">staycation</option>
-            <option value="long_vacation">long_vacation</option>
+            <option value="tropical">Tropical</option>
+            <option value="snow">Snow</option>
+            <option value="pool_beach">Pool/Beach</option>
+            <option value="active_adventure">Active Adventure</option>
           </select>
-          <label for="activities">Pick the activities you're planning on doing</label>
+          <label for="activities">Select Activities</label>
           <select class="input" name="activities">
-            <option value="hiking">hiking</option>
-            <option value="swimming">swimming</option>
+            <option value="water_based">Water-based</option>
+            <option value="land_based">Land-based</option>
+            <option value="high_intensity">High intensity</option>
+            <option value="relaxed">Relaxed</option>
           </select>
+          <!-- START Temperature Preference Selection -->
+          <section id="summer-winter-container">
+            <section class="season-container">
+              <p><img class="climate-icon" src="img/sliders/snowflake.png" alt="Snowflake" title="Snowflake" /> As the weather begins to cool down, at what temperature do you prefer to start wearing winter clothing?</p>
+              <section class="selection-container">
+                <img class="temp-pref-icon" src="img/sliders/cold.png" alt="Winter Coat" title="Winter Coat" />
+                <section class="slider-container">
+                  <input id="winter-high" class="slider" type="range" min="-20" max="80" step="1" value="50" />
+                  <section class="fahrenheit-container">
+                    <output id="winter-temp"></output>
+                    <span>&#176;F</span>
+                  </section>
+                </section>
+              </section>
+            </section>
+            <section class="season-container">
+              <p> <img class="climate-icon" src="img/sliders/sun-umbrella.png" alt="Sun and Beach Umbrella" title="Sun and Beach Umbrella" /> As the weather begins to warm up, at what temperature do you prefer to start wearing summer clothing?</p>
+              <section class="selection-container">
+                <img class="temp-pref-icon" src="img/sliders/shorts.png" alt="Shorts" title="Shorts" />
+                <section class="slider-container">
+                  <input id="summer-low" class="slider" type="range" min="30" max="110" step="1" value="68" />
+                  <section class="fahrenheit-container">
+                    <output id="summer-temp"></output>
+                    <span>&#176;F</span>
+                  </section>
+                </section>
+              </section> 
+            </section>
+            <!-- END Temperature Preference Selection -->
+          </section>
           <button type="submit" class="button">SUBMIT</button>
         </form>
-      </div>
-    </section>
+      </div> 
+    </section> 
   </main>
   <footer class="flex-column">
     <%- include('./partials/footer.ejs') %>
     <script src="../js/modal.js"></script>
+    <script src="../js/app.js"></script>
   </footer>
 </body>
 </html>

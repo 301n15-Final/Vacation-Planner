@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head.ejs') %>
+</head>
+<body>
+  <header class="flex-row">
+    <%- include('../partials/header.ejs') %>
+  </header>
+  <main class="flex-column">
+    <section class="main-content flex-column">
+      <h2>Login</h2>
+      <% if (messages.error) { %> 
+        <p class="medium red"><%= messages.error %></p>
+      <% } %>
+      <form class="flex-column" action="/login" method="POST">
+        <label for="email">E-mail</label>
+        <input class="input" type="email" name="email" placeholder="Enter e-mail address" required>
+        <label for="password">Password</label>
+        <input class="input" type="password" name="password" placeholder="Enter password" required>
+        <button class="button" type="submit">Login</button>
+      </form>
+  
+      <p class="register medium">If you don't have an account yet, please <a href="/register">REGISTER</a></p>
+    </section>
+  </main>
+  <footer class="flex-column">
+    <%- include('../partials/footer.ejs') %>
+  </footer>
+</body>
+</html>

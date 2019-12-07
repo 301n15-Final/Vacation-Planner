@@ -15,9 +15,10 @@ header {
   top: 0;
 }
 
-header img {
+header > img {
   max-width: 45%;
 }
+
 header h1 {
   display: inline-block;
   margin-left: 1rem;
@@ -49,7 +50,7 @@ nav ul li {
   font-weight: 900;
 }
 
-nav a {
+nav ul a {
   text-decoration: none;
 }
 
