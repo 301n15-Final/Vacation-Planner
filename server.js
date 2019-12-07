@@ -65,21 +65,7 @@ app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
 }));
 
 app.get('/register', checkNotAuthenticated, (req, res) => res.status(200).render('pages/register'));
-app.post('/register', checkNotAuthenticated, async (req, res) => {
-  try {
-    const hashedPassword = await bcrypt.hash(req.body.password, 10);
-    users.push({
-      id: Date.now().toString(),
-      name: req.body.name,
-      email: req.body.email,
-      password: hashedPassword
-    });
-    res.redirect('/login');
-  } catch (err) {
-    res.redirect('/register');
-  }
-  console.log(users);
-});
+app.post('/register', checkNotAuthenticated, registerUser);
 
 app.delete('/logout', (req, res) => {
   req.logOut();
@@ -178,7 +164,7 @@ async function resultsHandler(req, res) {
     const countryData = await getCountryData(geo.code); //get country info
     const weather = await getForecast(days, geo.location); //get forecast info
 
-    getData(req.body);
+    getData(req.body); //getting items from DB
 
     res.status(200).render('pages/result', { weather: weather, country: countryData, request: req.body });
   } catch (err) {
@@ -221,7 +207,33 @@ async function getData(request) {
   console.log(data.rows);
 }
 
-async function saveUser() {
-  const sql = `INSERT INTO login (email, hashpass);`;
-  const data = client.query(sql);
+async function saveTraveler(r) {
+  let sql = `INSERT INTO traveler (first_name, last_name, summer_temp_lowest, fall_temp_lowest)
+  VALUES ($1, $2, $3, $4) RETURNING id;`;
+  const data = await client.query(sql, [r.first_name, r.last_name, 50, 50]);
+  return data.rows.id;
+}
+
+async function saveLogin(id, email, password) {
+  let sql = `INSERT INTO login (traveler_id, email, hashpass)
+  VALUES ($1, $2, $3);`;
+  await client.query(sql, [id, email, password]);
+}
+
+async function registerUser(req, res) {
+  try {
+    const travelerId = await saveTraveler(req.body); // save user into traveler table
+    const hashedPassword = await bcrypt.hash(req.body.password, 10); // hash password
+    await saveLogin(travelerId, req.body.email, hashedPassword); // save user into login table
+    users.push({
+      id: Date.now().toString(),
+      name: req.body.name,
+      email: req.body.email,
+      password: hashedPassword
+    });
+    res.redirect('/login');
+  } catch (err) {
+    res.redirect('/register');
+  }
+  console.log(users);
 }

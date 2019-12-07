@@ -1,11 +1,11 @@
-DROP TABLE IF EXISTS traveler, activity_type, vacation_type, standard_packing_item, custom_packing_item, trip, standard_packing_item_activity_type, standard_packing_item_vacation_type, trip_packing_item;
+DROP TABLE IF EXISTS login, traveler, activity_type, vacation_type, standard_packing_item, custom_packing_item, trip, standard_packing_item_activity_type, standard_packing_item_vacation_type, trip_packing_item;
 
 CREATE TABLE traveler (
   id SERIAL PRIMARY KEY,
   first_name VARCHAR(255),
   last_name VARCHAR(255),
   summer_temp_lowest INTEGER NOT NULL,
-  fall_temp_lowest INTEGER NOT NULL,
+  fall_temp_lowest INTEGER NOT NULL
 );
 
 CREATE TABLE login (
@@ -14,7 +14,7 @@ CREATE TABLE login (
   email VARCHAR(255) NOT NULL,
   salt VARCHAR(255),
   hashpass VARCHAR(255) NOT NULL
-)
+);
 
 CREATE TABLE activity_type (
   id SERIAL PRIMARY KEY,
@@ -72,11 +72,11 @@ CREATE TABLE trip_packing_item (
   packing_item_name VARCHAR(255) NOT NULL
 );
 
-INSERT INTO traveler (first_name, last_name, shorts_temp_lowest, fall_temp_low, fall_temp_high)
-VALUES ('Tammy', 'Ip', 65, 55, 64),
-('Leo', 'Kuhorev', 70, 50, 61),
-('Ehsan', 'Ghafari', 65, 55, 64),
-('Diana', 'Kim', 68, 50, 60);
+INSERT INTO traveler (first_name, last_name, summer_temp_lowest, fall_temp_lowest)
+VALUES ('Tammy', 'Ip', 65, 55),
+('Leo', 'Kuhorev', 70, 50),
+('Ehsan', 'Ghafari', 65, 55),
+('Diana', 'Kim', 68, 50);
 
 INSERT INTO TRIP (traveler_id, name, city, country, start_date, end_date)
 VALUES (1, 'Whistler', 'Whistler', 'Canada', '2019-12-23', '2020-01-03' ),
