@@ -11,19 +11,17 @@
     <section class="main-content flex-column">
       <h2>Login</h2>
       <% if (messages.error) { %> 
-        <%= messages.error %>
+        <p class="medium red"><%= messages.error %></p>
       <% } %>
-      <form action="/login" method="POST">
-      <div>
-        <label for="email">Email</label>
-        <input type="email" name="email" id="email" required>
+      <form class="flex-column" action="/login" method="POST">
+        <label for="email">E-mail</label>
+        <input class="input" type="email" name="email" placeholder="Enter e-mail address" required>
         <label for="password">Password</label>
-        <input type="password" name="password" id="password" required>
-        <button type="submit">Login</button>
-      </div>
+        <input class="input" type="password" name="password" placeholder="Enter password" required>
+        <button class="button" type="submit">Login</button>
       </form>
   
-      <a href="/register">Register</a>
+      <p class="register medium">If you don't have an account yet, please <a href="/register">REGISTER</a></p>
     </section>
   </main>
   <footer class="flex-column">

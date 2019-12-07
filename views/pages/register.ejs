@@ -10,19 +10,16 @@
   <main class="flex-column">
     <section class="main-content flex-column">
       <h2>Register new user</h2>
-      <form action="/register" method="POST">
-      <div>
+      <form class="flex-column" action="/register" method="POST">
         <label for="name">Name</label>
-        <input type="text" name="name" id="name" required>
+        <input class="input" type="text" name="name" id="name" required>
         <label for="email">Email</label>
-        <input type="email" name="email" id="email" required>
+        <input class="input" type="email" name="email" id="email" required>
         <label for="password">Password</label>
-        <input type="password" name="password" id="password" required>
-        <button type="submit">Register</button>
-      </div>
+        <input class="input" type="password" name="password" id="password" required>
+        <button class="button" type="submit">Register</button>
       </form>
-      
-      <a href="/login">Login</a>
+      <p class="register medium">Go back to <a href="/login">LOGIN</a></p>
     </section>
   </main>
   <footer class="flex-column">
