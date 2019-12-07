@@ -11,12 +11,18 @@ const passport = require('passport'); // for dealing with login
 const flash = require('express-flash'); // express library
 const session = require('express-session'); // express library
 
+// Connecting to DB
+const pg = require('pg');
+const client = new pg.Client(process.env.DATABASE_URL);
+client.connect();
+client.on('error', err => console.log(err));
+
 // Importing modules
 const initializePassport = require('./modules/passport-config');
 initializePassport(
   passport,
-  email => users.find( user => user.email === email),
-  id => users.find( user => user.id === id)
+  email => users.find(user => user.email === email),
+  id => users.find(user => user.id === id)
 );
 
 // Load Environment variable from the .env
@@ -177,7 +183,7 @@ async function resultsHandler(req, res) {
 
 // Middlewares for checking user authentication
 // Use this functions for routes that user cannot access being logged out
-function checkAuthenticated( req, res, next) {
+function checkAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
   }
@@ -185,9 +191,16 @@ function checkAuthenticated( req, res, next) {
 }
 
 // Use this functions for routes that user cannot access being logged in
-function checkNotAuthenticated( req, res, next) {
+function checkNotAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
     return res.redirect('/');
   }
   next();
+}
+
+//Getting items from database
+function getItems() {
+  // const items = ['toothpaste', 'toothbrush', 'floss'];
+  const items = 'SELECT name FROM standard_packing_item INNER JOIN standard_packing_item_activity_type ON standard_packing_item_activity_type_id = standard_packing_item_id INNER JOIN activity_type on activity_type_id = standard_packing_item_activity_type_id';
+  return items;
 }
