@@ -49,7 +49,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Specifying route
 app.get('/', (req, res) => res.status(200).render('index'));
-app.post('/', weatherHandler);
+app.post('/', resultsHandler);
 
 app.get('/login', checkNotAuthenticated, (req, res) => res.status(200).render('pages/login'));
 app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
@@ -157,7 +157,7 @@ function getDays(vacation) {
 }
 
 // Rendering forecasted (if exists) or historical weather
-async function weatherHandler(req, res) {
+async function resultsHandler(req, res) {
   try {
     const geo = await getLocation(req.body.city);
     const days = getDays(req.body);
