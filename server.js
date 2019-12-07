@@ -11,6 +11,15 @@ const passport = require('passport'); // for dealing with login
 const flash = require('express-flash'); // express library
 const session = require('express-session'); // express library
 
+// Load Environment variable from the .env
+require('dotenv').config();
+
+// Connecting to DB
+const pg = require('pg');
+const client = new pg.Client(process.env.DATABASE_URL);
+client.connect();
+client.on('error', err => console.log(err));
+
 // Importing modules
 const initializePassport = require('./modules/passport-config');
 initializePassport(
@@ -19,8 +28,6 @@ initializePassport(
   id => users.find( user => user.id === id)
 );
 
-// Load Environment variable from the .env
-require('dotenv').config();
 
 // Application setup
 const app = express();
