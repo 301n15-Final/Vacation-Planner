@@ -12,4 +12,6 @@ winterOutput.innerHTML = winterHighTempSlider.value;
 
 winterHighTempSlider.oninput = function() {
   winterOutput.innerHTML = this.value;
+  console.log('winter temp: ', this.value);
 };
+

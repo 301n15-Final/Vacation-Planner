@@ -109,20 +109,28 @@ form label {
 }
 
 /* TEMP PREFERENCES SLIDERS */
-#temp-preference {
+#summer-winter-container {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-  width: 80%;
+  width: 100%;
 }
 
-.slide-container {
+.season-container {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  margin: 0 auto;
 }
 
-.slider:hover {
-  opacity: 1;
+.temp-pref-icon {
+  width: 35%;
 }
+
+.slider-temp-icon {
+  width: 10%;
+}
+
+
+
+/* Thermometer */
+
+/* Thermometer */

@@ -11,7 +11,7 @@
   </header>
   <main class="flex-column">
     <section class="main-content flex-column">
-      <h2>Welcome to the Vacation Planner!</h2>
+      <h2>Welcome to your Vacation Planner!</h2>
       <h3>Our Mission:</h3>
       <p>
         We are committed to provide the best travel information for your upcoming trips. Making your vacation planning
@@ -44,25 +44,34 @@
             <option value="high_intensity">High intensity</option>
             <option value="relaxed">Relaxed</option>
           </select>
+          <!-- START Temperature Preference Selection -->
+          <section id="summer-winter-container">
 
-          <section id="temp-preference">
-            <div class="slide-container">
-              <
-              <input type="range" min="1" max="100" value="50" class="slider" id="winter-high">
-              <p id="winter-ends-at"></p>
-            </div>
-
-            <div class="slide-container">
+            <section class="season-container">
               <p>When the weather starts cooling down, at what temperature do you prefer to start wearing winter clothing?</p>
-              <input type="range" min="1" max="100" value="65" class="slider" id="summer-low">
-              <p id="summer-starts-at"></p>
-            </div>
-          </section>
+              <img class="temp-pref-icon" src="img/sliders/cold.png" alt="Winter Coat" title="Winter Coat" />
 
+              <section class="selection-container">
+                <img class="slider-temp-icon" src="img/sliders/snowflake.png" alt="Snowflake" title="Snowflake" />
+              
+              </section>
+            </section>
+            <section class="season-container">
+              <p>When the weather starts warming up, at what temperature do you prefer to start wearing summer clothing?</p>
+              <img class="temp-pref-icon" src="img/sliders/shorts.png" alt="Shorts" title="Shorts" />
+              
+              
+              <section class="selection-container">
+                <img class="slider-temp-icon" src="img/sliders/sun-umbrella.png" alt="Sun and Beach Umbrella" title="Sun and Beach Umbrella" />
+
+              </section> 
+              <!-- END Temperature Preference Selection -->
+            </section>
+          </section>
           <button type="submit" class="button">SUBMIT</button>
         </form>
-      </div>
-    </section>
+      </div> 
+    </section> 
   </main>
   <footer class="flex-column">
     <%- include('./partials/footer.ejs') %>
