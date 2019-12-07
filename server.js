@@ -11,6 +11,9 @@ const passport = require('passport'); // for dealing with login
 const flash = require('express-flash'); // express library
 const session = require('express-session'); // express library
 
+// Load Environment variable from the .env
+require('dotenv').config();
+
 // Connecting to DB
 const pg = require('pg');
 const client = new pg.Client(process.env.DATABASE_URL);
@@ -24,9 +27,6 @@ initializePassport(
   email => users.find(user => user.email === email),
   id => users.find(user => user.id === id)
 );
-
-// Load Environment variable from the .env
-require('dotenv').config();
 
 // Application setup
 const app = express();
@@ -53,7 +53,7 @@ const users = [];
 // Serving static folder
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Specifying route
+// Specifying routes
 app.get('/', (req, res) => res.status(200).render('index'));
 app.post('/', resultsHandler);
 
@@ -141,6 +141,14 @@ async function getWeather(location, time) {
   }
 }
 
+async function getForecast(days, location) {
+  const weather = await Promise.all(days.map(day => getWeather(location, day)))
+    .then(data => data.map(forecast => new Weather(forecast[0])))
+    .catch(err => console.log(err));
+
+  return weather;
+}
+
 // Retrieve additional country data
 async function getCountryData(code) {
   const url = `https://restcountries.eu/rest/v2/alpha/${code}?fullText=true`;
@@ -165,19 +173,12 @@ function getDays(vacation) {
 // Rendering forecasted (if exists) or historical weather
 async function resultsHandler(req, res) {
   try {
-    const geo = await getLocation(req.body.city);
-    const days = getDays(req.body);
-    const countryData = await getCountryData(geo.code);
-    const item = getItems(req.body);
-    getFromDatabase(req.body);
+    const geo = await getLocation(req.body.city); //get location info from google API
+    const days = getDays(req.body); //count number of vacation days
+    const countryData = await getCountryData(geo.code); //get country info
+    const weather = await getForecast(days, geo.location); //get forecast info
 
-    console.log(countryData);
-
-    const weather = await Promise.all(days.map(day => getWeather(geo.location, day)))
-      .then(data => data.map(forecast => new Weather(forecast[0])))
-      .catch(err => console.log(err));
-    console.log(weather);
-    res.status(200).render('pages/result', { weather: weather, country: countryData, items: item, request: req.body });
+    res.status(200).render('pages/result', { weather: weather, country: countryData, request: req.body });
   } catch (err) {
     res.status(200).render('pages/error', { err: err });
   }

@@ -5,8 +5,16 @@ CREATE TABLE traveler (
   first_name VARCHAR(255),
   last_name VARCHAR(255),
   summer_temp_lowest INTEGER NOT NULL,
-  fall_temp_lowest INTEGER NOT NULL
+  fall_temp_lowest INTEGER NOT NULL,
 );
+
+CREATE TABLE login (
+  traveler_id INTEGER NOT NULL,
+  FOREIGN KEY (traveler_id) REFERENCES traveler(id),
+  email VARCHAR(255) NOT NULL,
+  salt VARCHAR(255),
+  hashpass VARCHAR(255) NOT NULL
+)
 
 CREATE TABLE activity_type (
   id SERIAL PRIMARY KEY,
