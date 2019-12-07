@@ -47,7 +47,7 @@ const users = [];
 // Serving static folder
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Specifying route
+// Specifying routes
 app.get('/', (req, res) => res.status(200).render('index'));
 app.post('/', resultsHandler);
 

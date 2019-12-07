@@ -158,7 +158,7 @@ form label {
 }
 
 .temp-pref-icon {
-  max-width: 256px;
+  max-width: 25%;
   height: auto;
 }
 
@@ -171,11 +171,11 @@ form label {
 }
 
 @media (max-width: 500px) {
-  .modal {
+  /* .modal {
     width: 450px; 
     height: auto; 
     overflow: auto;
-  }
+  } */
 }
 
 @media (min-width: 800px) {
