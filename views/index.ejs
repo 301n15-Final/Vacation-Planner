@@ -47,26 +47,33 @@
           <!-- START Temperature Preference Selection -->
           <section id="summer-winter-container">
 
+
+
             <section class="season-container">
-              <p>When the weather starts cooling down, at what temperature do you prefer to start wearing winter clothing?</p>
-              <img class="temp-pref-icon" src="img/sliders/cold.png" alt="Winter Coat" title="Winter Coat" />
+              <p><img class="climate-icon" src="img/sliders/snowflake.png" alt="Snowflake" title="Snowflake" /> As the weather begins to cool down, at what temperature do you prefer to start wearing winter clothing?</p>
 
               <section class="selection-container">
-                <img class="slider-temp-icon" src="img/sliders/snowflake.png" alt="Snowflake" title="Snowflake" />
-              
+                <img class="temp-pref-icon" src="img/sliders/cold.png" alt="Winter Coat" title="Winter Coat" />
+                
+                <input id="winter-high" class="slider" type="range" min="-20" max="80" step="1" value="50">
+                <output id="winter-temp"></output>
               </section>
             </section>
-            <section class="season-container">
-              <p>When the weather starts warming up, at what temperature do you prefer to start wearing summer clothing?</p>
-              <img class="temp-pref-icon" src="img/sliders/shorts.png" alt="Shorts" title="Shorts" />
-              
-              
-              <section class="selection-container">
-                <img class="slider-temp-icon" src="img/sliders/sun-umbrella.png" alt="Sun and Beach Umbrella" title="Sun and Beach Umbrella" />
 
+
+
+
+            <section class="season-container">
+              <p> <img class="climate-icon" src="img/sliders/sun-umbrella.png" alt="Sun and Beach Umbrella" title="Sun and Beach Umbrella" /> As the weather begins to warm up, at what temperature do you prefer to start wearing summer clothing?</p>
+
+              <section class="selection-container">
+                <img class="temp-pref-icon" src="img/sliders/shorts.png" alt="Shorts" title="Shorts" />
+                <input id="summer-low" class="slider" type="range" min="30" max="110" step="1" value="68">
+                <output id="summer-temp"></output>
+                
               </section> 
-              <!-- END Temperature Preference Selection -->
             </section>
+            <!-- END Temperature Preference Selection -->
           </section>
           <button type="submit" class="button">SUBMIT</button>
         </form>
@@ -76,6 +83,7 @@
   <footer class="flex-column">
     <%- include('./partials/footer.ejs') %>
     <script src="../js/modal.js"></script>
+    <script src="../js/app.js"></script>
   </footer>
 </body>
 </html>

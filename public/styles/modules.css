@@ -108,10 +108,10 @@ form label {
   width: 40px;
 }
 
-/* TEMP PREFERENCES SLIDERS */
+/* TEMP PREFERENCES */
 #summer-winter-container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-evenly;
   width: 100%;
 }
@@ -121,16 +121,34 @@ form label {
   flex-direction: column;
 }
 
+.season-container > p {
+  margin: 1em 2em 1em 0;
+  text-align: left;
+}
+.selection-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-bottom: 1.3em;
+}
+
 .temp-pref-icon {
-  width: 35%;
+  max-width: 80%;
+  height: auto;
 }
 
-.slider-temp-icon {
-  width: 10%;
+.climate-icon {
+  width: 6%;
 }
 
+.slider {
+  -webkit-appearance: slider-vertical;
+}
 
-
-/* Thermometer */
-
-/* Thermometer */
+@media (max-width: 500px) {
+  .modal {
+    width: 450px; 
+    height: auto; 
+    overflow: auto;
+  }
+}
