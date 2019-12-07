@@ -120,3 +120,22 @@ form label {
 .red {
   color: #d63031;
 }
+
+/* TEMP PREFERENCES SLIDERS */
+#temp-preference {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 80%;
+}
+
+.slide-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.slider:hover {
+  opacity: 1;
+}

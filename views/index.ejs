@@ -44,6 +44,19 @@
             <option value="high_intensity">High intensity</option>
             <option value="relaxed">Relaxed</option>
           </select>
+
+          <section id="temp-preference">
+            <div class="slide-container">
+              <input type="range" min="1" max="100" value="50" class="slider" id="winter-high">
+              <p id="winter-ends-at"></p>
+            </div>
+
+            <div class="slide-container">
+              <input type="range" min="1" max="100" value="65" class="slider" id="summer-low">
+              <p id="summer-starts-at"></p>
+            </div>
+          </section>
+
           <button type="submit" class="button">SUBMIT</button>
         </form>
       </div>
@@ -54,5 +67,4 @@
     <script src="../js/modal.js"></script>
   </footer>
 </body>
-
 </html>
