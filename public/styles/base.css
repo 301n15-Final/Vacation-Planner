@@ -1,0 +1,23 @@
+body {
+  background: #fffaeb;
+  font-family: 'Raleway', sans-serif;
+}
+
+header, footer {
+  background: #fdcb6e;
+  color: #2d3436;
+}
+
+h2 {
+  font-size: 16pt;
+  font-weight: 900;
+  padding-bottom: 1rem;
+}
+
+@media (orientation: landscape) {
+  body {
+    background-image: url("../img/background.jpeg");
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+}

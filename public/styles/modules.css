@@ -1,0 +1,187 @@
+/* RESULT PAGE */
+.result {
+  text-align: center;
+}
+
+.result h3 {
+  font-size: 14pt;
+  font-weight: 600;
+  padding-bottom: 1rem;
+}
+
+.country-info img {
+  max-width: 25%;
+}
+
+.country-info b {
+  font-weight: 600;
+}
+
+.country-info * {
+  padding-bottom: 0.8rem;
+}
+
+/* LOGIN AND REGISTER PAGES */
+.register {
+  padding-top: 2rem;
+}
+
+.register a {
+  font-weight: 600;
+}
+
+/* FORMS */
+form label {
+  margin: 0.5rem auto;
+  text-align: center;
+  font-family: 'Raleway', sans-serif;
+  font-size: 14pt;
+}
+
+/* CLASSES */
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.modal {
+  display: none; 
+  position: fixed;
+  z-index: 4; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto;
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+  background: #dfe6e9;
+  margin: 5rem 2rem 2rem 2rem;
+  padding: 2rem 1.5rem;
+  border-radius: 3px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.6);
+}
+
+.button {
+  box-sizing: border-box;
+  height: 3.5rem;
+  margin-top: 1rem;
+  border-radius: 3px;
+  border: none;
+  padding: 0.5rem 4rem;
+  background: #e17055;
+  color: white;
+  cursor: pointer;
+  font-size: 100%;
+  outline: none;
+}
+
+.main-content {
+  margin: 1rem 2rem;
+  background: #fff2c9;
+  padding: 3rem 2rem;
+  border-radius: 3px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.6);
+}
+
+.input {
+  font-family: 'Raleway', sans-serif;
+  font-size: 14pt;
+  box-sizing: border-box;
+  width: 100%;
+  height: 3.5rem;
+  margin-bottom: 1rem;
+  border-radius: 3px;
+  border: none;
+  padding: 0.5rem;
+  background: white; 
+}
+
+.icon {
+  width: 40px;
+}
+
+.medium {
+  font-size: 14pt;
+}
+
+.red {
+  color: #d63031;
+}
+
+/* TEMP PREFERENCES */
+#summer-winter-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.season-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.season-container > p {
+  margin: 1em 2em 1em 0;
+  text-align: left;
+}
+.selection-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-bottom: 1.3em;
+}
+
+.slider-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.fahrenheit-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.temp-pref-icon {
+  max-width: 25%;
+  height: auto;
+}
+
+.climate-icon {
+  width: 6%;
+}
+
+.slider {
+  -webkit-appearance: slider-vertical;
+}
+
+@media (max-width: 500px) {
+  /* .modal {
+    width: 450px; 
+    height: auto; 
+    overflow: auto;
+  } */
+}
+
+@media (min-width: 800px) {
+  #summer-winter-container {
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 100%;
+  }
+}

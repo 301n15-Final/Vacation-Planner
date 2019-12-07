@@ -1,0 +1,15 @@
+<img src="https://placehold.it/200x60" alt="icon">
+<h1>Your Trip Planner</h1>
+<nav>
+  <ul>
+    <a href="../../"><li>HOME</li></a>
+    <a href="../../result"><li>RESULTS</li></a>
+    <a href="../../about"><li>ABOUT US</li></a>
+  </ul>
+  <form action="/logout?_method=DELETE" method="POST">
+    <% if(typeof name !== 'undefined' && name) { %>
+  <button type="submit">Log Out <%= name %></button>
+    <% } %>
+  </form>
+</nav>
+<i id="menu" class="material-icons">dehaze</i>
