@@ -211,26 +211,32 @@ async function saveTraveler(r) {
   let sql = `INSERT INTO traveler (first_name, last_name, summer_temp_lowest, fall_temp_lowest)
   VALUES ($1, $2, $3, $4) RETURNING id;`;
   const data = await client.query(sql, [r.first_name, r.last_name, 50, 50]);
-  return data.rows.id;
+  return data.rows[0].id;
 }
 
 async function saveLogin(id, email, password) {
   let sql = `INSERT INTO login (traveler_id, email, hashpass)
-  VALUES ($1, $2, $3);`;
-  await client.query(sql, [id, email, password]);
+  VALUES ($1, $2, $3) RETURNING traveler_id;`;
+  const data = await client.query(sql, [id, email, password]);
+  console.log(data.rows[0]);
 }
 
 async function registerUser(req, res) {
   try {
+    console.log(req.body);
     const travelerId = await saveTraveler(req.body); // save user into traveler table
     const hashedPassword = await bcrypt.hash(req.body.password, 10); // hash password
     await saveLogin(travelerId, req.body.email, hashedPassword); // save user into login table
+
+    // <--------DELETE---------->
     users.push({
       id: Date.now().toString(),
-      name: req.body.name,
+      name: req.body.first_name,
       email: req.body.email,
       password: hashedPassword
     });
+
+
     res.redirect('/login');
   } catch (err) {
     res.redirect('/register');
