@@ -11,12 +11,14 @@
     <section class="main-content flex-column">
       <h2>Register new user</h2>
       <form class="flex-column" action="/register" method="POST">
-        <label for="name">Name</label>
-        <input class="input" type="text" name="name" id="name" required>
+        <label for="first_name">First Name</label>
+        <input class="input" type="text" name="first_name" required>
+        <label for="last_name">Last Name</label>
+        <input class="input" type="text" name="last_name" required>
         <label for="email">Email</label>
-        <input class="input" type="email" name="email" id="email" required>
+        <input class="input" type="email" name="email" required>
         <label for="password">Password</label>
-        <input class="input" type="password" name="password" id="password" required>
+        <input class="input" type="password" name="password" required>
         <!-- START Temperature Preference Selection -->
         <section id="summer-winter-container">
           <section class="season-container">
