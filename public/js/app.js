@@ -1,15 +1,17 @@
-var summerLowTempSlider = document.getElementById('summer-low');
-var summerOutput = document.getElementById('summer-starts-at');
-summerOutput.innerHTML = summerLowTempSlider.value;
+var summerSlider = document.getElementById('summer-low');
+var summerOutput = document.getElementById('summer-temp');
+summerOutput.innerHTML = summerSlider.value;
 
-summerLowTempSlider.oninput = function() {
+summerSlider.oninput = function() {
   summerOutput.innerHTML = this.value;
+  console.log('summer low temp: ', this.value);
 };
 
-var winterHighTempSlider = document.getElementById('winter-high');
-var winterOutput = document.getElementById('winter-ends-at');
-winterOutput.innerHTML = winterHighTempSlider.value;
+var winterSlider = document.getElementById('winter-high');
+var winterOutput = document.getElementById('winter-temp');
+winterOutput.innerHTML = winterSlider.value;
 
-winterHighTempSlider.oninput = function() {
+winterSlider.oninput = function() {
   winterOutput.innerHTML = this.value;
+  console.log('winter high temp: ', this.value);
 };

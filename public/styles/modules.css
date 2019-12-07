@@ -108,21 +108,67 @@ form label {
   width: 40px;
 }
 
-/* TEMP PREFERENCES SLIDERS */
-#temp-preference {
+/* TEMP PREFERENCES */
+#summer-winter-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.season-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.season-container > p {
+  margin: 1em 2em 1em 0;
+  text-align: left;
+}
+.selection-container {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-  width: 80%;
+  margin-bottom: 1.3em;
 }
 
-.slide-container {
+.slider-container {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  margin: 0 auto;
+  justify-content: center;
 }
 
-.slider:hover {
-  opacity: 1;
+.fahrenheit-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.temp-pref-icon {
+  max-width: 256px;
+  height: auto;
+}
+
+.climate-icon {
+  width: 6%;
+}
+
+.slider {
+  -webkit-appearance: slider-vertical;
+}
+
+@media (max-width: 500px) {
+  .modal {
+    width: 450px; 
+    height: auto; 
+    overflow: auto;
+  }
+}
+
+@media (min-width: 800px) {
+  #summer-winter-container {
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 100%;
+  }
 }

@@ -11,7 +11,7 @@
   </header>
   <main class="flex-column">
     <section class="main-content flex-column">
-      <h2>Welcome to the Vacation Planner!</h2>
+      <h2>Welcome to your Vacation Planner!</h2>
       <h3>Our Mission:</h3>
       <p>
         We are committed to provide the best travel information for your upcoming trips. Making your vacation planning
@@ -44,27 +44,45 @@
             <option value="high_intensity">High intensity</option>
             <option value="relaxed">Relaxed</option>
           </select>
-
-          <section id="temp-preference">
-            <div class="slide-container">
-              <input type="range" min="1" max="100" value="50" class="slider" id="winter-high">
-              <p id="winter-ends-at"></p>
-            </div>
-
-            <div class="slide-container">
-              <input type="range" min="1" max="100" value="65" class="slider" id="summer-low">
-              <p id="summer-starts-at"></p>
-            </div>
+          <!-- START Temperature Preference Selection -->
+          <section id="summer-winter-container">
+            <section class="season-container">
+              <p><img class="climate-icon" src="img/sliders/snowflake.png" alt="Snowflake" title="Snowflake" /> As the weather begins to cool down, at what temperature do you prefer to start wearing winter clothing?</p>
+              <section class="selection-container">
+                <img class="temp-pref-icon" src="img/sliders/cold.png" alt="Winter Coat" title="Winter Coat" />
+                <section class="slider-container">
+                  <input id="winter-high" class="slider" type="range" min="-20" max="80" step="1" value="50" />
+                  <section class="fahrenheit-container">
+                    <output id="winter-temp"></output>
+                    <span>&#176;F</span>
+                  </section>
+                </section>
+              </section>
+            </section>
+            <section class="season-container">
+              <p> <img class="climate-icon" src="img/sliders/sun-umbrella.png" alt="Sun and Beach Umbrella" title="Sun and Beach Umbrella" /> As the weather begins to warm up, at what temperature do you prefer to start wearing summer clothing?</p>
+              <section class="selection-container">
+                <img class="temp-pref-icon" src="img/sliders/shorts.png" alt="Shorts" title="Shorts" />
+                <section class="slider-container">
+                  <input id="summer-low" class="slider" type="range" min="30" max="110" step="1" value="68" />
+                  <section class="fahrenheit-container">
+                    <output id="summer-temp"></output>
+                    <span>&#176;F</span>
+                  </section>
+                </section>
+              </section> 
+            </section>
+            <!-- END Temperature Preference Selection -->
           </section>
-
           <button type="submit" class="button">SUBMIT</button>
         </form>
-      </div>
-    </section>
+      </div> 
+    </section> 
   </main>
   <footer class="flex-column">
     <%- include('./partials/footer.ejs') %>
     <script src="../js/modal.js"></script>
+    <script src="../js/app.js"></script>
   </footer>
 </body>
 </html>

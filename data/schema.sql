@@ -4,9 +4,8 @@ CREATE TABLE traveler (
   id SERIAL PRIMARY KEY,
   first_name VARCHAR(255),
   last_name VARCHAR(255),
-  shorts_temp_lowest INTEGER NOT NULL,
-  fall_temp_low INTEGER NOT NULL,
-  fall_temp_high INTEGER NOT NULL
+  summer_temp_lowest INTEGER NOT NULL,
+  fall_temp_lowest INTEGER NOT NULL
 );
 
 CREATE TABLE activity_type (
