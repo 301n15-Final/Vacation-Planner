@@ -1,9 +1,10 @@
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
 
-function initialize(passport, getUserByEmail, getUserById) {
+async function initialize(passport, getUser, getUserById) {
   const authenticateUser = async (email, password, done) => {
-    const user = getUserByEmail(email);
+    const user = await getUser(email);
+    console.log('user inside of authenticateUser', user);
     // eslint-disable-next-line eqeqeq
     if (user == null) {
       return done(null, false, {message: 'No user with that email'});

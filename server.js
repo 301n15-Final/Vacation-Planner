@@ -24,8 +24,8 @@ client.on('error', err => console.log(err));
 const initializePassport = require('./modules/passport-config');
 initializePassport(
   passport,
-  email => users.find(user => user.email === email),
-  id => users.find(user => user.id === id)
+  findUser,
+  findUser
 );
 
 // Application setup
@@ -46,9 +46,6 @@ app.use(passport.session());
 // Using middleware to change browser's POST into DELETE
 app.use(methodOverride('_method'));
 
-// TEMPORARY LOGIN INFORMATION (will be moved to database)
-const users = [];
-
 // Routes
 // Serving static folder
 app.use(express.static(path.join(__dirname, 'public')));
@@ -67,28 +64,20 @@ app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
 }));
 
 app.get('/register', checkNotAuthenticated, (req, res) => res.status(200).render('pages/register'));
-app.post('/register', checkNotAuthenticated, async (req, res) => {
-  try {
-    const hashedPassword = await bcrypt.hash(req.body.password, 10);
-    users.push({
-      id: Date.now().toString(),
-      name: req.body.name,
-      email: req.body.email,
-      password: hashedPassword
-    });
-    res.redirect('/login');
-  } catch (err) {
-    res.redirect('/register');
-  }
-  console.log(users);
-});
+app.post('/register', checkNotAuthenticated, registerUser);
 
 app.delete('/logout', (req, res) => {
   req.logOut();
   res.redirect('/login');
 });
 
-app.get('/result', checkAuthenticated, (req, res) => res.status(200).render('index', { name: req.user.name }));
+app.get('/result', checkAuthenticated, (req, res) => {
+  return res.status(200).render('index', async () => {
+    const userName = await req.user.name;
+    console.log(userName);
+    return { name: userName };
+  });
+});
 app.get('/about', (req, res) => res.status(200).render('pages/about'));
 
 app.get('*', (req, res) => res.status(404).send('404'));
@@ -172,20 +161,20 @@ function getDays(vacation) {
   return days;
 }
 
-// Rendering forecasted (if exists) or historical weather
+// Rendering result page
 async function resultsHandler(req, res) {
   try {
     const geo = await getLocation(req.body.city); //get location info from google API
     const days = getDays(req.body); //count number of vacation days
     const countryData = await getCountryData(geo.code); //get country info
     const weather = await getForecast(days, geo.location); //get forecast info
-    const item = await getItems(req.body);
+    const item = await getItems(req.body); //get items suggestion from database
 
     res.status(200).render('pages/result', {
       weather: weather,
       country: countryData,
-      items: item,
-      request: req.body
+      request: req.body,
+      items: item
     });
   } catch (err) {
     res.status(200).render('pages/error', { err: err });
@@ -209,9 +198,7 @@ function checkNotAuthenticated(req, res, next) {
   next();
 }
 
-//Getting items from database
 async function getItems(form) {
-  console.log(form);
   const activityType = form.activities;
   const vacationType = form.vacation_type;
   const sql = `SELECT standard_packing_item.name
@@ -225,7 +212,49 @@ async function getItems(form) {
   AND vacation_type_id =
   (SELECT id FROM vacation_type WHERE LOWER(name) = $2);`;
   const items = await client.query(sql, [activityType, vacationType]);
-  console.log(activityType, vacationType);
-  console.log(items.rows);
+  console.log('avtivity type:', activityType, '| vacation type', vacationType);
   return items.rows.map(record => record.name);
 }
+
+// Saving user into traveler table
+async function saveTraveler(r) {
+  let sql = `INSERT INTO traveler (first_name, last_name, summer_temp_lowest, fall_temp_lowest)
+  VALUES ($1, $2, $3, $4) RETURNING id;`;
+  try {
+    const data = await client.query(sql, [r.first_name, r.last_name, 50, 50]);
+    return data.rows[0].id;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+// saving user's login information
+async function saveLogin(id, email, password) {
+  let sql = `INSERT INTO login (traveler_id, email, hashpass)
+  VALUES ($1, $2, $3) RETURNING traveler_id;`;
+  try {
+    const data = await client.query(sql, [id, email, password]);
+    console.log('user saved into database', data.rows[0]);
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+
+async function registerUser(req, res) {
+  try {
+    const travelerId = await saveTraveler(req.body); // save user into traveler table
+    const hashedPassword = await bcrypt.hash(req.body.password, 10); // hash password
+    await saveLogin(travelerId, req.body.email, hashedPassword); // save user into login table
+    res.redirect('/login');
+  } catch (err) {
+    res.redirect('/register');
+  }
+}
+
+async function findUser(email) {
+  let sql = `SELECT traveler_id AS id, email, hashpass AS password FROM login WHERE email LIKE $1;`;
+  const data = await client.query(sql, [email]);
+  return data.rows[0];
+}
+
