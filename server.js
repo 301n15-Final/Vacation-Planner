@@ -24,8 +24,10 @@ client.on('error', err => console.log(err));
 const initializePassport = require('./modules/passport-config');
 initializePassport(
   passport,
-  email => users.find( user => user.email === email),
-  id => users.find( user => user.id === id)
+  findUser,
+  // email => users.find( user => user.email === email),
+  findUser
+  // id => users.find( user => user.id === id)
 );
 
 // Application setup
@@ -248,5 +250,6 @@ async function registerUser(req, res) {
 async function findUser(email) {
   let sql = `SELECT id, email, hashpass AS password FROM login WHERE email LIKE $1;`;
   const data = await client.query(sql, [email]);
-  console.log(data.rows[0]);
+  return data.rows[0];
 }
+
