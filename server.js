@@ -96,9 +96,9 @@ function Country(country) {
   this.country = country.name;
   this.capital = country.capital;
   this.population = country.population;
-  this.borders = country.borders;
-  this.currencies = country.currencies.map(curr => curr.name);
-  this.languages = country.languages.map(lang => lang.name);
+  this.borders = country.borders.join(', ');
+  this.currencies = country.currencies.map(curr => curr.name).join(', ');
+  this.languages = country.languages.map(lang => lang.name).join(', ');
   this.flag_url = country.flag;
 }
 

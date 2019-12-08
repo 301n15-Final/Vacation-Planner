@@ -17,18 +17,12 @@
         <div class="country-info flex-column">
           <img src="<%= country.flag_url %>" alt="flag of <%= country.country %>">
           <ul>
-            <li><b>Country:</b> <%= country.country %></li>
-            <li><b>Capital:</b> <%= country.capital %> </li>
-            <li><b>Population:</b> <%= country.population %></li>
-            <li><b>Borders:</b> <% country.borders.forEach( border => { %>
-              <%= border %>,  
-              <% }) %> </li>
-            <li><b>Currencies:</b> <% country.currencies.forEach( currencie => { %>
-              <%= currencie %>,  
-              <% }) %> </li>
-            <li><b>Languages:</b> <% country.languages.forEach( language => { %>
-              <%= language %>,  
-              <% }) %> </li>
+            <li><b>Country: </b><%= country.country %></li>
+            <li><b>Capital: </b><%= country.capital %> </li>
+            <li><b>Population: </b><%= country.population %></li>
+            <li><b>Borders: </b><%= country.borders %></li>
+            <li><b>Currencies: </b><%= country.currencies %></li>
+            <li><b>Languages: </b><%= country.languages %></li>
           </ul>
         </div>
 
