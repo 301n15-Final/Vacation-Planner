@@ -70,7 +70,8 @@ app.delete('/logout', (req, res) => {
 });
 
 app.get('/result', checkAuthenticated, async (req, res) => {
-  return res.status(200).render('index');
+  const user = await req.user;
+  return res.status(200).render('index', { name: user.first_name });
 });
 app.get('/about', (req, res) => res.status(200).render('pages/about'));
 
@@ -246,13 +247,17 @@ async function registerUser(req, res) {
   }
 }
 
-async function findUser(email) {
+async function findUser(key, value) {
   let sql = `SELECT login.traveler_id AS id, login.email AS email, login.hashpass AS password, traveler.first_name AS first_name, traveler.last_name AS last_name
   FROM login
   JOIN traveler
   ON login.traveler_id = traveler.id
-  WHERE email LIKE $1;`;
-  const data = await client.query(sql, [email]);
-  return data.rows[0];
+  WHERE ${key} = $1;`;
+  try {
+    const data = await client.query(sql, [value]);
+    return data.rows[0];
+  } catch (err) {
+    console.log(err);
+  }
 }
 
