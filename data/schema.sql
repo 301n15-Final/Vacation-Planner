@@ -9,7 +9,6 @@ CREATE TABLE traveler (
 );
 
 CREATE TABLE login (
-  id SERIAL PRIMARY KEY,
   traveler_id INTEGER NOT NULL,
   FOREIGN KEY (traveler_id) REFERENCES traveler(id),
   email VARCHAR(255) NOT NULL,

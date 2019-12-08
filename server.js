@@ -69,7 +69,13 @@ app.delete('/logout', (req, res) => {
   res.redirect('/login');
 });
 
-app.get('/result', checkAuthenticated, (req, res) => res.status(200).render('index', { name: req.user.name }));
+app.get('/result', checkAuthenticated, (req, res) => {
+  return res.status(200).render('index', async () => {
+    const userName = await req.user.name;
+    console.log(userName);
+    return { name: userName };
+  });
+});
 app.get('/about', (req, res) => res.status(200).render('pages/about'));
 
 app.get('*', (req, res) => res.status(404).send('404'));
@@ -160,10 +166,14 @@ async function resultsHandler(req, res) {
     const days = getDays(req.body); //count number of vacation days
     const countryData = await getCountryData(geo.code); //get country info
     const weather = await getForecast(days, geo.location); //get forecast info
+    const item = await getItems(req.body); //get items suggestion from database
 
-    getData(req.body); //getting items from DB
-
-    res.status(200).render('pages/result', { weather: weather, country: countryData, request: req.body });
+    res.status(200).render('pages/result', {
+      weather: weather,
+      country: countryData,
+      request: req.body,
+      items: item
+    });
   } catch (err) {
     res.status(200).render('pages/error', { err: err });
   }
@@ -186,9 +196,9 @@ function checkNotAuthenticated( req, res, next) {
   next();
 }
 
-async function getData(request) {
-  const activityType = request.activities;
-  const vacationType = request.vacation_type;
+async function getItems(form) {
+  const activityType = form.activities;
+  const vacationType = form.vacation_type;
   const sql = `SELECT standard_packing_item.name
   FROM standard_packing_item 
   JOIN standard_packing_item_activity_type 
@@ -199,31 +209,41 @@ async function getData(request) {
   (SELECT id FROM activity_type WHERE LOWER(name) = $1)
   AND vacation_type_id =
   (SELECT id FROM vacation_type WHERE LOWER(name) = $2);`;
-  const data = await client.query(sql, [activityType, vacationType]);
+  const items = await client.query(sql, [activityType, vacationType]);
   console.log('avtivity type:', activityType, '| vacation type', vacationType);
-  console.log(data.rows);
+  return items.rows.map(record => record.name);
 }
 
+// Saving user into traveler table
 async function saveTraveler(r) {
   let sql = `INSERT INTO traveler (first_name, last_name, summer_temp_lowest, fall_temp_lowest)
   VALUES ($1, $2, $3, $4) RETURNING id;`;
-  const data = await client.query(sql, [r.first_name, r.last_name, 50, 50]);
-  return data.rows[0].id;
+  try {
+    const data = await client.query(sql, [r.first_name, r.last_name, 50, 50]);
+    return data.rows[0].id;
+  } catch (err) {
+    console.log(err);
+  }
 }
 
+// saving user's login information
 async function saveLogin(id, email, password) {
   let sql = `INSERT INTO login (traveler_id, email, hashpass)
   VALUES ($1, $2, $3) RETURNING traveler_id;`;
-  const data = await client.query(sql, [id, email, password]);
-  console.log('user saved into database', data.rows[0]);
+  try {
+    const data = await client.query(sql, [id, email, password]);
+    console.log('user saved into database', data.rows[0]);
+  } catch (err) {
+    console.log(err);
+  }
 }
+
 
 async function registerUser(req, res) {
   try {
     const travelerId = await saveTraveler(req.body); // save user into traveler table
     const hashedPassword = await bcrypt.hash(req.body.password, 10); // hash password
     await saveLogin(travelerId, req.body.email, hashedPassword); // save user into login table
-
     res.redirect('/login');
   } catch (err) {
     res.redirect('/register');
@@ -231,7 +251,7 @@ async function registerUser(req, res) {
 }
 
 async function findUser(email) {
-  let sql = `SELECT id, email, hashpass AS password FROM login WHERE email LIKE $1;`;
+  let sql = `SELECT traveler_id AS id, email, hashpass AS password FROM login WHERE email LIKE $1;`;
   const data = await client.query(sql, [email]);
   return data.rows[0];
 }

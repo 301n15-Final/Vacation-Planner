@@ -6,7 +6,11 @@
 .result h3 {
   font-size: 14pt;
   font-weight: 600;
-  padding-bottom: 1rem;
+  padding: 1rem 0;
+}
+
+ul.items{
+text-align: left;
 }
 
 .country-info img {
