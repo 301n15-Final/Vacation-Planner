@@ -25,9 +25,7 @@ const initializePassport = require('./modules/passport-config');
 initializePassport(
   passport,
   findUser,
-  // email => users.find( user => user.email === email),
   findUser
-  // id => users.find( user => user.id === id)
 );
 
 // Application setup
@@ -47,9 +45,6 @@ app.use(passport.session());
 
 // Using middleware to change browser's POST into DELETE
 app.use(methodOverride('_method'));
-
-// TEMPORARY LOGIN INFORMATION (will be moved to database)
-const users = [];
 
 // Routes
 // Serving static folder
@@ -229,17 +224,6 @@ async function registerUser(req, res) {
     const travelerId = await saveTraveler(req.body); // save user into traveler table
     const hashedPassword = await bcrypt.hash(req.body.password, 10); // hash password
     await saveLogin(travelerId, req.body.email, hashedPassword); // save user into login table
-
-    // <--------DELETE---------->
-    users.push({
-      id: Date.now().toString(),
-      name: req.body.first_name,
-      email: req.body.email,
-      password: hashedPassword
-    });
-    console.log('users', users);
-    // <--------DELETE---------->
-
 
     res.redirect('/login');
   } catch (err) {
