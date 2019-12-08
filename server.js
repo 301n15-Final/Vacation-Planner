@@ -235,11 +235,18 @@ async function registerUser(req, res) {
       email: req.body.email,
       password: hashedPassword
     });
+    console.log('users', users);
+    // <--------DELETE---------->
 
 
     res.redirect('/login');
   } catch (err) {
     res.redirect('/register');
   }
-  console.log(users);
+}
+
+async function findUser(email) {
+  let sql = `SELECT id, email, hashpass AS password FROM login WHERE email LIKE $1;`;
+  const data = await client.query(sql, [email]);
+  console.log(data.rows[0]);
 }
