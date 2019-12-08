@@ -200,7 +200,7 @@ async function getData(request) {
   AND vacation_type_id =
   (SELECT id FROM vacation_type WHERE LOWER(name) = $2);`;
   const data = await client.query(sql, [activityType, vacationType]);
-  console.log(activityType, vacationType);
+  console.log('avtivity type:', activityType, '| vacation type', vacationType);
   console.log(data.rows);
 }
 
@@ -215,12 +215,11 @@ async function saveLogin(id, email, password) {
   let sql = `INSERT INTO login (traveler_id, email, hashpass)
   VALUES ($1, $2, $3) RETURNING traveler_id;`;
   const data = await client.query(sql, [id, email, password]);
-  console.log(data.rows[0]);
+  console.log('user saved into database', data.rows[0]);
 }
 
 async function registerUser(req, res) {
   try {
-    console.log(req.body);
     const travelerId = await saveTraveler(req.body); // save user into traveler table
     const hashedPassword = await bcrypt.hash(req.body.password, 10); // hash password
     await saveLogin(travelerId, req.body.email, hashedPassword); // save user into login table
