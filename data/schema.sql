@@ -14,7 +14,7 @@ CREATE TABLE login (
   email VARCHAR(255) NOT NULL,
   salt VARCHAR(255),
   hashpass VARCHAR(255) NOT NULL
-)
+);
 
 CREATE TABLE activity_type (
   id SERIAL PRIMARY KEY,
@@ -216,14 +216,7 @@ VALUES (23, 2),
 (59, 1),
 (60, 1),
 (61, 1),
-(62, 1),
-(58, 1),
-(51, 1),
-(25, 1),
-(15, 1),
-(15, 1),
-(15, 1),
-(15, 1);
+(62, 1);
 
 INSERT INTO standard_packing_item_vacation_type (standard_packing_item_id, vacation_type_id)
 VALUES 
@@ -288,12 +281,5 @@ VALUES
 (59, 1),
 (60, 1),
 (61, 1),
-(62, 1),
-(58, 1),
-(51, 1),
-(25, 1),
-(15, 1),
-(15, 1),
-(15, 1),
-(15, 1);
+(62, 1);
 

@@ -57,6 +57,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', (req, res) => res.status(200).render('index'));
 app.post('/', resultsHandler);
 
+app.get('/test', (req, res) => getFromDatabase(req, res));
+
 app.get('/login', checkNotAuthenticated, (req, res) => res.status(200).render('pages/login'));
 app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
   successRedirect: '/',
@@ -177,8 +179,9 @@ async function resultsHandler(req, res) {
     const days = getDays(req.body); //count number of vacation days
     const countryData = await getCountryData(geo.code); //get country info
     const weather = await getForecast(days, geo.location); //get forecast info
+    const item = await getItems(req.body);
 
-    res.status(200).render('pages/result', { weather: weather, country: countryData, request: req.body });
+    res.status(200).render('pages/result', { weather: weather, country: countryData, items: item, request: req.body });
   } catch (err) {
     res.status(200).render('pages/error', { err: err });
   }
@@ -202,21 +205,41 @@ function checkNotAuthenticated(req, res, next) {
 }
 
 //Getting items from database
-function getItems() {
-  const items = ['toothpaste', 'toothbrush', 'floss'];
+async function getItems(form) {
+  console.log(form);
+  // const items = ['toothpaste', 'toothbrush', 'floss'];
+  const activityType = form.activities;
+  const vacationType = form.vacation_type;
+  console.log('=================== TESTING=========');
+  console.log(activityType);
+  console.log(vacationType);
+  const sql = `SELECT standard_packing_item.name
+  FROM standard_packing_item 
+  JOIN standard_packing_item_activity_type 
+  ON standard_packing_item.id = standard_packing_item_activity_type.standard_packing_item_id 
+  JOIN standard_packing_item_vacation_type
+  ON standard_packing_item.id = standard_packing_item_vacation_type.standard_packing_item_id
+  WHERE activity_type_id = 
+  (SELECT id FROM activity_type WHERE LOWER(name) = $1)
+  AND vacation_type_id =
+  (SELECT id FROM vacation_type WHERE LOWER(name) = $2);`;
+  const items = await client.query(sql, [activityType, vacationType]);
+  console.log(activityType, vacationType);
+  console.log(items.rows);
   // const items = 'SELECT name FROM standard_packing_item INNER JOIN standard_packing_item_activity_type ON standard_packing_item.activity_type_id = standard_packing_item_id INNER JOIN activity_type on activity_type_id = standard_packing_item_activity_type_id';
-  const items = '
-  SELECT name
-  FROM standard_packing_item
-  INNER JOIN standard_packing_item_activity_type
-  ON standard_packing_item_activity_type.standard_packing_item_id = standard_packing_item.id
-  INNER JOIN activity_type
-  ON activity_type.id = standard_packing_item_activity_type.activity_type_id; '
-  return items;
+  //   const items = '
+  //   SELECT name
+  //   FROM standard_packing_item
+  //   INNER JOIN standard_packing_item_activity_type
+  //   ON standard_packing_item_activity_type.standard_packing_item_id = standard_packing_item.id
+  //   INNER JOIN activity_type
+  //   ON activity_type.id = standard_packing_item_activity_type.activity_type_id; '
+  return items.rows.map(record => record.name);
 }
 
-async function getFromDatabase() {
+async function getFromDatabase(req, res) {
   let sql = 'SELECT * FROM activity_type;';
   let data = await client.query(sql);
   console.log(data.rows);
+  res.send(data);
 }
