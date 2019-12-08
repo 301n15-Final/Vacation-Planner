@@ -6,7 +6,11 @@
 .result h3 {
   font-size: 14pt;
   font-weight: 600;
-  padding-bottom: 1rem;
+  padding: 1rem 0;
+}
+
+ul.items{
+text-align: left;
 }
 
 .country-info img {
@@ -158,8 +162,7 @@ form label {
 }
 
 .temp-pref-icon {
-  max-width: 25%;
-  height: auto;
+  max-width: 50%;
 }
 
 .climate-icon {
@@ -170,13 +173,6 @@ form label {
   -webkit-appearance: slider-vertical;
 }
 
-@media (max-width: 500px) {
-  /* .modal {
-    width: 450px; 
-    height: auto; 
-    overflow: auto;
-  } */
-}
 
 @media (min-width: 800px) {
   #summer-winter-container {
