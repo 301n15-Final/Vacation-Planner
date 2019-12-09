@@ -9,7 +9,7 @@
   </header>
   <main class="flex-column">
       <section class="result main-content flex-column">
-        <h2>Your trip to <%= request.city %> <br>
+        <h2 id="trip-name">Your trip to <%= request.city %> <br>
         <%= request.start_date %> - <%= request.end_date %></h2>
 
         <h3>More information about your destination:</h3>
@@ -39,11 +39,12 @@
         <li><input type="checkbox"> <%= item %></li>
         <% }) %>
       </ul>
-      
+      <button id="save" class="button">SAVE TRIP</button>
       </section>
   </main>
   <footer class="flex-column">
     <%- include('../partials/footer.ejs') %>
+    <script src="../js/save.js"></script>
   </footer>
 </body>
 </html>

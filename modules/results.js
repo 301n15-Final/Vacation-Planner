@@ -1,6 +1,7 @@
 'use strict';
 
 const superagent = require('superagent');
+
 // Connecting to DB
 const pg = require('pg');
 const client = new pg.Client(process.env.DATABASE_URL);
@@ -27,7 +28,7 @@ function Country(country) {
   this.flag_url = country.flag;
 }
 
-// Getting location from Google API and returning lat/long
+// Getting location from Google API
 async function getLocation(city) {
   const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${city}&key=${process.env.GEOCODE_API_KEY}`;
   try {
@@ -52,6 +53,7 @@ async function getWeather(location, time) {
   }
 }
 
+// Send multiple API calls for every day of user's vacation
 async function getForecast(days, location) {
   const weather = await Promise.all(days.map(day => getWeather(location, day)))
     .then(data => data.map(forecast => new Weather(forecast[0])))
@@ -63,8 +65,12 @@ async function getForecast(days, location) {
 // Retrieve additional country data
 async function getCountryData(code) {
   const url = `https://restcountries.eu/rest/v2/alpha/${code}?fullText=true`;
-  const countryData = await superagent.get(url);
-  return new Country(countryData.body);
+  try {
+    const countryData = await superagent.get(url);
+    return new Country(countryData.body);
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 // Getting the days of the vacation
@@ -79,6 +85,25 @@ function getDays(vacation) {
   }
 
   return days;
+}
+
+// Getting list of suggested items from DB
+async function getItems(form) {
+  const activityType = form.activities;
+  const vacationType = form.vacation_type;
+  const sql = `SELECT standard_packing_item.name
+  FROM standard_packing_item 
+  JOIN standard_packing_item_activity_type 
+  ON standard_packing_item.id = standard_packing_item_activity_type.standard_packing_item_id 
+  JOIN standard_packing_item_vacation_type
+  ON standard_packing_item.id = standard_packing_item_vacation_type.standard_packing_item_id
+  WHERE activity_type_id = 
+  (SELECT id FROM activity_type WHERE LOWER(name) = $1)
+  AND vacation_type_id =
+  (SELECT id FROM vacation_type WHERE LOWER(name) = $2);`;
+  const items = await client.query(sql, [activityType, vacationType]);
+  console.log('avtivity type:', activityType, '| vacation type', vacationType);
+  return items.rows.map(record => record.name);
 }
 
 // Rendering result page
@@ -97,26 +122,12 @@ async function resultsHandler(req, res) {
       items: items
     });
   } catch (err) {
-    res.status(200).render('pages/error', { err: err });
+    errorHandler(err, req, res);
   }
 }
 
-async function getItems(form) {
-  const activityType = form.activities;
-  const vacationType = form.vacation_type;
-  const sql = `SELECT standard_packing_item.name
-  FROM standard_packing_item 
-  JOIN standard_packing_item_activity_type 
-  ON standard_packing_item.id = standard_packing_item_activity_type.standard_packing_item_id 
-  JOIN standard_packing_item_vacation_type
-  ON standard_packing_item.id = standard_packing_item_vacation_type.standard_packing_item_id
-  WHERE activity_type_id = 
-  (SELECT id FROM activity_type WHERE LOWER(name) = $1)
-  AND vacation_type_id =
-  (SELECT id FROM vacation_type WHERE LOWER(name) = $2);`;
-  const items = await client.query(sql, [activityType, vacationType]);
-  console.log('avtivity type:', activityType, '| vacation type', vacationType);
-  return items.rows.map(record => record.name);
+function errorHandler(err, req, res) {
+  res.status(500).render('pages/error', {err: err});
 }
 
 module.exports = resultsHandler;

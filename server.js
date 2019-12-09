@@ -19,6 +19,7 @@ const getUser = callback.getUser;
 const userProfileHandler = callback.userProfileHandler;
 const resultsHandler = require('./modules/results');
 const registerUser = require('./modules/users');
+const tripsHandler = require('./modules/trips');
 const initializePassport = require('./modules/passport-config');
 initializePassport(passport, getUser);
 
@@ -81,10 +82,7 @@ app.delete('/logout', (req, res) => {
   res.redirect('/login');
 });
 
-app.get('/result', checkAuthenticated, async (req, res) => {
-  const user = await req.user;
-  return res.status(200).render('index', { name: user.first_name });
-});
+app.get('/trips', checkAuthenticated, tripsHandler);
 
 app.get('/about', (req, res) => res.status(200).render('pages/about'));
 
@@ -95,4 +93,3 @@ app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 
 // Functions (temporary - will go into modules)
-
