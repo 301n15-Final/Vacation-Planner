@@ -7,4 +7,4 @@ $('.items li').each(function() {
   items.push( $(this).text() );
 });
 
-console.table(items);
+console.table($tripName, items);
