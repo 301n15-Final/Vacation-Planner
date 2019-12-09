@@ -11,7 +11,7 @@ CREATE TABLE traveler (
 CREATE TABLE login (
   traveler_id INTEGER NOT NULL,
   FOREIGN KEY (traveler_id) REFERENCES traveler(id),
-  email VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL UNIQUE,
   salt VARCHAR(255),
   hashpass VARCHAR(255) NOT NULL
 );

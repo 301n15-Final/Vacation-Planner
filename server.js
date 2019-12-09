@@ -213,6 +213,16 @@ async function getItems(form) {
   return items.rows.map(record => record.name);
 }
 
+async function checkUniqueEmail(r) {
+  let sql = `SELECT email FROM login WHERE email = $1;`;
+  try {
+    const data = await client.query(sql, [r.email]);
+    return data.rows.length > 0 ? true : false;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 // Saving user into traveler table
 async function saveTraveler(r) {
   let sql = `INSERT INTO traveler (first_name, last_name, summer_temp_lowest, fall_temp_lowest)
@@ -240,10 +250,15 @@ async function saveLogin(id, email, password) {
 
 async function registerUser(req, res) {
   try {
-    const travelerId = await saveTraveler(req.body); // save user into traveler table
-    const hashedPassword = await bcrypt.hash(req.body.password, 10); // hash password
-    await saveLogin(travelerId, req.body.email, hashedPassword); // save user into login table
-    res.redirect('/login');
+    const emailFound = await checkUniqueEmail(req.body);
+    if (emailFound) {
+      res.render('./pages/register', { email: req.body.email });
+    } else {
+      const travelerId = await saveTraveler(req.body); // save user into traveler table
+      const hashedPassword = await bcrypt.hash(req.body.password, 10); // hash password
+      await saveLogin(travelerId, req.body.email, hashedPassword); // save user into login table
+      res.redirect('/profile');
+    }
   } catch (err) {
     res.redirect('/register');
   }
