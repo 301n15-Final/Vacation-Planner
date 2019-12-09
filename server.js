@@ -64,6 +64,8 @@ app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
 app.get('/register', checkNotAuthenticated, (req, res) => res.status(200).render('pages/register'));
 app.post('/register', checkNotAuthenticated, registerUser);
 
+app.get('/profile', checkAuthenticated, userProfileHandler);
+
 app.delete('/logout', (req, res) => {
   req.logOut();
   res.redirect('/login');
@@ -79,6 +81,23 @@ app.get('*', (req, res) => res.status(404).send('404'));
 
 // Ensure that the server is listening for requests
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+// Middlewares for checking user authentication
+// Use this functions for routes that user cannot access being logged out
+function checkAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/login');
+}
+
+// Use this functions for routes that user cannot access being logged in
+function checkNotAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return res.redirect('/');
+  }
+  next();
+}
 
 
 // Functions (temporary - will go into modules)
@@ -176,23 +195,6 @@ async function resultsHandler(req, res) {
   }
 }
 
-// Middlewares for checking user authentication
-// Use this functions for routes that user cannot access being logged out
-function checkAuthenticated( req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  res.redirect('/login');
-}
-
-// Use this functions for routes that user cannot access being logged in
-function checkNotAuthenticated( req, res, next) {
-  if (req.isAuthenticated()) {
-    return res.redirect('/');
-  }
-  next();
-}
-
 async function getItems(form) {
   const activityType = form.activities;
   const vacationType = form.vacation_type;
@@ -248,7 +250,13 @@ async function registerUser(req, res) {
 }
 
 async function findUser(key, value) {
-  let sql = `SELECT login.traveler_id AS id, login.email AS email, login.hashpass AS password, traveler.first_name AS first_name, traveler.last_name AS last_name
+  let sql = `SELECT login.traveler_id AS id, 
+  login.email AS email, 
+  login.hashpass AS password, 
+  traveler.first_name AS first_name, 
+  traveler.last_name AS last_name, 
+  traveler.summer_temp_lowest AS summer_temp,
+  traveler.fall_temp_lowest AS fall_temp
   FROM login
   JOIN traveler
   ON login.traveler_id = traveler.id
@@ -261,3 +269,7 @@ async function findUser(key, value) {
   }
 }
 
+async function userProfileHandler(req, res) {
+  const user = await req.user;
+  return res.status(200).render('pages/profile', { user: user });
+}
