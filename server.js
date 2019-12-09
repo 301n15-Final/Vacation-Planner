@@ -12,21 +12,19 @@ const session = require('express-session'); // express library
 // Load Environment variable from the .env
 require('dotenv').config();
 
-// Connecting to DB
-const pg = require('pg');
-const client = new pg.Client(process.env.DATABASE_URL);
-client.connect();
-client.on('error', err => console.log(err));
 
 // IMPORTING MODULES
+const callback = require('./modules/callbacks');
+const findUser = callback.findUser;
+const userProfileHandler = callback.userProfileHandler;
+const resultsHandler = require('./modules/results');
+const registerUser = require('./modules/users');
 const initializePassport = require('./modules/passport-config');
 initializePassport(
   passport,
   findUser,
   findUser
 );
-const resultsHandler = require('./modules/results');
-const registerUser = require('./modules/users');
 
 
 // Application setup
@@ -104,27 +102,3 @@ app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 // Functions (temporary - will go into modules)
 
-async function findUser(key, value) {
-  let sql = `SELECT login.traveler_id AS id, 
-  login.email AS email, 
-  login.hashpass AS password, 
-  traveler.first_name AS first_name, 
-  traveler.last_name AS last_name, 
-  traveler.summer_temp_lowest AS summer_temp,
-  traveler.fall_temp_lowest AS fall_temp
-  FROM login
-  JOIN traveler
-  ON login.traveler_id = traveler.id
-  WHERE ${key} = $1;`;
-  try {
-    const data = await client.query(sql, [value]);
-    return data.rows[0];
-  } catch (err) {
-    console.log(err);
-  }
-}
-
-async function userProfileHandler(req, res) {
-  const user = await req.user;
-  return res.status(200).render('pages/profile', { user: user });
-}
