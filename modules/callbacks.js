@@ -8,7 +8,7 @@ client.on('error', err => console.log(err));
 
 const callback = {}; //object for holding callback functions
 
-callback.findUser = async function(key, value) {
+callback.getUser = async function(key, value) {
   let sql = `SELECT login.traveler_id AS id, 
   login.email AS email, 
   login.hashpass AS password, 

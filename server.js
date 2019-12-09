@@ -13,19 +13,14 @@ const session = require('express-session'); // express library
 require('dotenv').config();
 
 
-// IMPORTING MODULES
+// Importing modules
 const callback = require('./modules/callbacks');
-const findUser = callback.findUser;
+const getUser = callback.getUser;
 const userProfileHandler = callback.userProfileHandler;
 const resultsHandler = require('./modules/results');
 const registerUser = require('./modules/users');
 const initializePassport = require('./modules/passport-config');
-initializePassport(
-  passport,
-  findUser,
-  findUser
-);
-
+initializePassport(passport, getUser);
 
 // Application setup
 const app = express();
@@ -43,10 +38,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // MIDDLEWARES
-// Using middleware to change browser's POST into DELETE
 app.use(methodOverride('_method'));
 
-// Middlewares for checking user authentication
 // Use this functions for routes that user cannot access being logged out
 function checkAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
@@ -92,9 +85,10 @@ app.get('/result', checkAuthenticated, async (req, res) => {
   const user = await req.user;
   return res.status(200).render('index', { name: user.first_name });
 });
+
 app.get('/about', (req, res) => res.status(200).render('pages/about'));
 
-app.get('*', (req, res) => res.status(404).send('404'));
+app.get('*', (req, res) => res.status(404).render('pages/error', {err: '404 - Page not found'}));
 
 // Ensure that the server is listening for requests
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
