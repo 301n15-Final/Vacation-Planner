@@ -12,10 +12,12 @@ h2 {
   font-size: 16pt;
   font-weight: 900;
   padding-bottom: 1rem;
+  text-align: center;
 }
 
 h3 {
   padding: 1rem 1rem;
+  text-align: center;
 }
 
 b {
