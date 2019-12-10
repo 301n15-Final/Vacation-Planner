@@ -47,9 +47,21 @@ CREATE TABLE trip (
   FOREIGN KEY (traveler_id) REFERENCES traveler(id),
   name VARCHAR(255) UNIQUE,
   city VARCHAR(255) NOT NULL,
-  country VARCHAR(255) NOT NULL,
+  country_id INTEGER NOT NULL,
+  FOREIGN KEY (country_id) REFERENCES country(id),
   start_date DATE NOT NULL,
   end_date DATE NOT NULL
+);
+
+CREATE TABLE country (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) UNIQUE,
+  capital VARCHAR(255),
+  population VARCHAR(255),
+  borders VARCHAR(255),
+  currencies VARCHAR(255),
+  languages VARCHAR(255),
+  flag_url VARCHAR(255)
 );
 
 CREATE TABLE standard_packing_item_activity_type (

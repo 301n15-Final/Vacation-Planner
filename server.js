@@ -82,7 +82,10 @@ app.delete('/logout', (req, res) => {
   res.redirect('/login');
 });
 
-app.post('/results', (req, res) => res.status(200).render('index'));
+app.post('/results', (req, res) => {
+  console.log(req.body);
+  res.status(200).render('index');
+});
 
 app.get('/trips', checkAuthenticated, tripsHandler);
 
