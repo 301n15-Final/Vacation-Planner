@@ -17,10 +17,6 @@ text-align: left;
   max-width: 25%;
 }
 
-.country-info b {
-  font-weight: 600;
-}
-
 .country-info * {
   padding-bottom: 0.8rem;
 }
