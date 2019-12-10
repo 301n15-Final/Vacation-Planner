@@ -47,7 +47,7 @@ Trip.getSavedTrips = async function(req, res) {
     WHERE traveler.id = $1;`;
     let data = await client.query(sql, [user.id]);
     console.log(data.rows[0]);
-    return res.status(200).render('pages/trips', {trip: data.rows[0]});
+    return res.status(200).render('pages/trips', {trips: data.rows});
   } catch (err) {
     console.log(err);
   }
