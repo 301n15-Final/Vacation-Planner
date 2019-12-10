@@ -21,7 +21,7 @@ const resultsHandler = require('./modules/results');
 const registerUser = require('./modules/users');
 const Trip = require('./modules/trips');
 const getSavedTrips = Trip.getSavedTrips;
-const saveTrip = Trip.saveTrip;
+const saveTrip = Trip.saveTripHandler;
 const showSavedTrip = Trip.showSavedTrip;
 const initializePassport = require('./modules/passport-config');
 initializePassport(passport, getUser);

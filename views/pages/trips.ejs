@@ -14,6 +14,7 @@
         <div class="flex-column trip">
           <h3 class="medium"><%= idx + 1 %> - <%= trip.name %></h3>
           <form action="/trips/<%= trip.trip_id %>" method="GET">
+            <input type="hidden" name="trip_id" value="<%= trip.trip_id %>">
             <button class="button">GET DETAILS</button>
           </form>
         </div>

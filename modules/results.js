@@ -95,7 +95,7 @@ function getDays(vacation) {
 
 // Getting list of suggested items from DB
 async function getItems(form) {
-  const activityType = form.activities;
+  const activityType = form.activity_type;
   const vacationType = form.vacation_type;
   const sql = `SELECT standard_packing_item.name
   FROM standard_packing_item 

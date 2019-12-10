@@ -9,26 +9,41 @@ client.on('error', err => console.log(err));
 
 const Trip = {};
 
-Trip.saveTrip = async function(req, res) {
-  const r = req.body;
-  let sql = `SELECT id FROM country WHERE name LIKE $1;`;
+// Check if country exists, if not - save and return
+async function getCountryId(r) {
   try {
-    let countryId = await client.query(sql, [r.country]);
-    if (countryId.rowCount < 1) {
+    let sql = `SELECT id, name AS country, capital, population, borders, currencies, languages, flag_url
+    FROM country WHERE name LIKE $1;`;
+    let country = await client.query(sql, [r.country]);
+    if (country.rowCount < 1) {
       sql = `INSERT INTO country (name, capital, population, borders, currencies, languages, flag_url)
-      VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id;`;
-      countryId = await client.query(sql, [r.country, r.capital, r.population, r.borders, r.currencies, r.languages, r.flag_url]);
+      VALUES ($1, $2, $3, $4, $5, $6, $7)
+      RETURNING id, name AS country, capital, population, borders, currencies, languages, flag_url;`;
+      country = await client.query(sql, [r.country, r.capital, r.population, r.borders, r.currencies, r.languages, r.flag_url]);
     }
+    return country.rows[0];
+  } catch (err) {
+    console.log(err);
+  }
+}
 
-    const user = await req.user;
-    sql = `INSERT INTO trip (traveler_id, name, city, country_id, start_date, end_date, vacation_type_id, activity_type_id)
+// Save trip to DB
+async function saveTrip(r, userId, country) {
+  const sql = `INSERT INTO trip (traveler_id, name, city, country_id, start_date, end_date, vacation_type_id, activity_type_id)
     VALUES ($1, $2, $3, $4, $5, $6,
       (SELECT id FROM vacation_type WHERE LOWER(name) = $7), 
       (SELECT id FROM activity_type WHERE LOWER(name) = $8));`;
 
-    await client.query(sql, [user.id, r.trip_name, r.city, countryId.rows[0].id, r.start_date, r.end_date, r.vacation_type, r.activities]);
+  await client.query(sql, [userId, r.trip_name, r.city, country.id, r.start_date, r.end_date, r.vacation_type, r.activities]);
+}
 
-    res.redirect('/trips');
+Trip.saveTripHandler = async function(req, res) {
+  try {
+    const r = req.body;
+    const country = await getCountryId(r);
+    const user = await req.user;
+    await saveTrip(r, user.id, country);
+    res.status(200).redirect('/trips');
   } catch (err) {
     console.log(err);
   }
@@ -51,8 +66,15 @@ Trip.getSavedTrips = async function(req, res) {
 };
 
 Trip.showSavedTrip = async function(req, res) {
+  const tripId = req.params.trip_id;
+  let sql = `SELECT * FROM trip WHERE id = $1;`;
+  const trip = await client.query(sql, [tripId]);
 
-  let sql = `SELECT trip.name AS name,
+  sql = `SELECT * FROM country WHERE id = $1;`;
+  const country = await client.query(sql, [trip.rows[0].country_id]);
+  console.log('trip', country.rows[0]);
+
+  sql = `SELECT trip.name AS name,
     trip.id AS trip_id,
     trip.city AS city,
     trip.start_date AS start_date,
@@ -70,7 +92,13 @@ Trip.showSavedTrip = async function(req, res) {
     JOIN country
     ON trip.country_id = country.id
     WHERE traveler.id = $1;`;
-  console.log('showSavedTrip', req.body);
+  res.status(200).render('pages/result', {
+    location: location,
+    weather: weather,
+    country: country,
+    request: trip.rows[0],
+    items: items
+  });
 };
 
 module.exports = Trip;
