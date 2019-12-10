@@ -28,6 +28,10 @@ p{
   text-align: center;
 }
 
+b {
+  font-weight: 600;
+}
+
 @media (orientation: landscape) {
   body {
     background-image: url("../img/background.jpeg");

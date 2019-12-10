@@ -8,6 +8,14 @@ const client = new pg.Client(process.env.DATABASE_URL);
 client.connect();
 client.on('error', err => console.log(err));
 
+// Location constructor
+function Location(location) {
+  this.city = location.formatted_address.split(',')[0];
+  this.location = location.geometry.location;
+  this.countryCode = location.address_components.filter(el => el.types[0] === 'country')[0].short_name;
+  this.country = location.address_components.filter(el => el.types[0] === 'country')[0].long_name;
+}
+
 // Weather constructor
 function Weather(weather) {
   this.day = (new Date(weather.time * 1000)).toString().substring(0, 10);
@@ -33,9 +41,7 @@ async function getLocation(city) {
   const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${city}&key=${process.env.GEOCODE_API_KEY}`;
   try {
     const data = await superagent.get(url);
-    const location = data.body.results[0].geometry.location;
-    const countryCode = data.body.results[0].address_components.filter(el => el.types[0] === 'country')[0].short_name;
-    return { location: location, code: countryCode };
+    return new Location(data.body.results[0]);
   } catch (err) {
     console.log(err);
   }
@@ -111,15 +117,20 @@ async function resultsHandler(req, res) {
   try {
     const geo = await getLocation(req.body.city); //get location info from google API
     const days = getDays(req.body); //count number of vacation days
-    const countryData = await getCountryData(geo.code); //get country info
+    const countryData = await getCountryData(geo.countryCode); //get country info
     const weather = await getForecast(days, geo.location); //get forecast info
     const items = await getItems(req.body); //get items suggestion from database
+    const user = await req.user; //getting user information
+
+    console.log('user', user);
 
     res.status(200).render('pages/result', {
+      location: geo,
       weather: weather,
       country: countryData,
       request: req.body,
-      items: items
+      items: items,
+      user: user
     });
   } catch (err) {
     errorHandler(err, req, res);
