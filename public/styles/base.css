@@ -14,8 +14,16 @@ h2 {
   padding-bottom: 1rem;
 }
 
+h3 {
+  padding: 1rem 1rem;
+}
+
 b {
   font-weight: 600;
+}
+
+p{
+  text-align: center;
 }
 
 @media (orientation: landscape) {
