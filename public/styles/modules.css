@@ -122,6 +122,16 @@ form label {
   color: #d63031;
 }
 
+/* TRIPS PAGE */
+.trip {
+  width: 100%;
+  padding: 0 1rem 1rem 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid black;
+  border-radius: 3px;
+  box-shadow: 2px 2px 5px 1px rgba(0,0,0,0.3);
+}
+
 /* TEMP PREFERENCES */
 #summer-winter-container {
   display: flex;

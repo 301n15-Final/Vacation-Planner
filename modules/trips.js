@@ -38,20 +38,39 @@ Trip.getSavedTrips = async function(req, res) {
   try {
     const user = await req.user;
     let sql = `SELECT trip.name AS name,
-    trip.city AS city,
-    trip.country_id AS country,
-    trip.start_date AS start_date,
-    trip.end_date AS end_date
+    trip.id AS trip_id
     FROM trip
     JOIN traveler
     ON trip.traveler_id = traveler.id
     WHERE traveler.id = $1;`;
     let data = await client.query(sql, [user.id]);
-    console.log(data.rows[0]);
     return res.status(200).render('pages/trips', {trips: data.rows});
   } catch (err) {
     console.log(err);
   }
+};
+
+Trip.showSavedTrip = async function(req, res) {
+
+  let sql = `SELECT trip.name AS name,
+    trip.id AS trip_id,
+    trip.city AS city,
+    trip.start_date AS start_date,
+    trip.end_date AS end_date,
+    country.name AS country,
+    country.capital AS capital,
+    country.population AS population,
+    country.borders AS borders,
+    country.currencies AS currencies,
+    country.languages AS languages,
+    country.flag_url AS flag_urs
+    FROM trip
+    JOIN traveler
+    ON trip.traveler_id = traveler.id
+    JOIN country
+    ON trip.country_id = country.id
+    WHERE traveler.id = $1;`;
+  console.log('showSavedTrip', req.body);
 };
 
 module.exports = Trip;
