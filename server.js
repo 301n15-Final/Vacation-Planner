@@ -4,9 +4,7 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-const superagent = require('superagent');
 const methodOverride = require('method-override');
-const bcrypt = require('bcrypt'); // for hashing passwords
 const passport = require('passport'); // for dealing with login
 const flash = require('express-flash'); // express library
 const session = require('express-session'); // express library
@@ -14,19 +12,16 @@ const session = require('express-session'); // express library
 // Load Environment variable from the .env
 require('dotenv').config();
 
-// Connecting to DB
-const pg = require('pg');
-const client = new pg.Client(process.env.DATABASE_URL);
-client.connect();
-client.on('error', err => console.log(err));
 
 // Importing modules
+const callback = require('./modules/callbacks');
+const getUser = callback.getUser;
+const userProfileHandler = callback.userProfileHandler;
+const resultsHandler = require('./modules/results');
+const registerUser = require('./modules/users');
+const tripsHandler = require('./modules/trips');
 const initializePassport = require('./modules/passport-config');
-initializePassport(
-  passport,
-  findUser,
-  findUser
-);
+initializePassport(passport, getUser);
 
 // Application setup
 const app = express();
@@ -43,8 +38,24 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Using middleware to change browser's POST into DELETE
+// MIDDLEWARES
 app.use(methodOverride('_method'));
+
+// Use this functions for routes that user cannot access being logged out
+function checkAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/login');
+}
+
+// Use this functions for routes that user cannot access being logged in
+function checkNotAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return res.redirect('/');
+  }
+  next();
+}
 
 // Routes
 // Serving static folder
@@ -58,7 +69,7 @@ app.get('/test', (req, res) => getFromDatabase(req, res));
 
 app.get('/login', checkNotAuthenticated, (req, res) => res.status(200).render('pages/login'));
 app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
-  successRedirect: '/',
+  successRedirect: '/profile',
   failureRedirect: '/login',
   failureFlash: true
 }));
@@ -66,27 +77,27 @@ app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
 app.get('/register', checkNotAuthenticated, (req, res) => res.status(200).render('pages/register'));
 app.post('/register', checkNotAuthenticated, registerUser);
 
+app.get('/profile', checkAuthenticated, userProfileHandler);
+
 app.delete('/logout', (req, res) => {
   req.logOut();
   res.redirect('/login');
 });
 
-app.get('/result', checkAuthenticated, (req, res) => {
-  return res.status(200).render('index', async () => {
-    const userName = await req.user.name;
-    console.log(userName);
-    return { name: userName };
-  });
-});
+app.post('/results', (req, res) => res.status(200).render('index'));
+
+app.get('/trips', checkAuthenticated, tripsHandler);
+
 app.get('/about', (req, res) => res.status(200).render('pages/about'));
 
-app.get('*', (req, res) => res.status(404).send('404'));
+app.get('*', (req, res) => res.status(404).render('pages/error', {err: '404 - Page not found'}));
 
 // Ensure that the server is listening for requests
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 
 // Functions (temporary - will go into modules)
+<<<<<<< HEAD
 // Weather constructor
 function Weather(weather) {
   this.day = (new Date(weather.time * 1000)).toString().substring(0, 10);
@@ -258,3 +269,5 @@ async function findUser(email) {
   return data.rows[0];
 }
 
+=======
+>>>>>>> 75875757cb174f67ae799172148ef85b85aad2ce

@@ -10,6 +10,7 @@
     <%- include('../partials/header.ejs') %>
   </header>
   <main class="flex-column">
+<<<<<<< HEAD
     <section class="result main-content flex-column">
       <h2>Your trip to <%= request.city %> <br>
         <%= request.start_date %> - <%= request.end_date %></h2>
@@ -41,9 +42,29 @@
         </ul>
 
     </section>
+=======
+      <section class="result main-content flex-column">
+        <%- include('../partials/partial-result.ejs', {
+          weather: weather,
+          country: country,
+          request: request,
+          items: items
+        }) %>
+      <button class="button open-modal">SAVE TRIP</button>
+      </section>
+      <section class="modal">
+        <div class="modal-content">
+          <form class="flex-column" action="/results" method="POST">
+            <label for="trip-name">Name of your trip</label>
+            <input class="input" type="text" name="trip-name" placeholder="Trip to <%= country.country %>">
+          </form>
+        </div>
+      </section>
+>>>>>>> 75875757cb174f67ae799172148ef85b85aad2ce
   </main>
   <footer class="flex-column">
     <%- include('../partials/footer.ejs') %>
+    <script src="../js/modal.js"></script>
   </footer>
 </body>
 

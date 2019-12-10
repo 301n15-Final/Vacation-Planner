@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head.ejs') %>
+</head>
+<body>
+  <header class="flex-row">
+    <%- include('../partials/header.ejs') %>
+  </header>
+  <main class="flex-column">
+    <section class="main-content flex-column">
+      <h2>Welcome to your profile, <%= user.first_name %> <%= user.last_name %></h2>
+      <p><b>Your email: </b><%= user.email %></p>
+      <p><b>Your lowest summer temperature: </b><%= user.summer_temp %> &deg;F</p>
+      <p><b>Your lowest fall temperature: </b><%= user.fall_temp %> &deg;F</p>
+      
+      <form action="/logout?_method=DELETE" method="POST">
+          <button type="submit" class="button">Log Out</button>
+      </form>
+    </section>
+  </main>
+  <footer class="flex-column">
+    <%- include('../partials/footer.ejs') %>
+  </footer>
+</body>
+</html>

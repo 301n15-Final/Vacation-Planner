@@ -9,10 +9,9 @@
   </header>
   <main class="flex-column">
     <section class="main-content flex-column">
-      <h2>ERROR</h2>
-      <p class="medium red">
-        <%= err %>
-      </p>
+      <h2>Saved Trips</h2>
+      <h2 id="trip-name">Your trip to <%= trip.city %>, <%= trip.country %> <br>
+        <%= trip.start_date %> - <%= trip.end_date %></h2>
     </section>
   </main>
   <footer class="flex-column">

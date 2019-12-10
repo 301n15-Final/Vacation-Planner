@@ -10,6 +10,9 @@
   <main class="flex-column">
     <section class="main-content flex-column">
       <h2>Register new user</h2>
+      <% if (typeof email !== 'undefined') { %> 
+        <p class="medium red">User with email <%= email %> already exists</p>
+      <% } %>
       <form class="flex-column" action="/register" method="POST">
         <label for="first_name">First Name</label>
         <input class="input" type="text" name="first_name" required>
