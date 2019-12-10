@@ -15,10 +15,14 @@
       <h3>Our Mission:</h3>
       <p>
         We are committed to provide the best travel information for your upcoming trips. Making your vacation planning
-        experience as smooth,stress-free, and fun as possible!
+        experience as smooth, stress-free, and fun as possible!
       </p>
       <h3>How to:</h3>
-      <p>Blah-blah-blah click here to start</p>
+      <p>Our app takes your trip information and generates weather forecast and useful country facts for you. We will
+        also suggest a travel packing list for you based on your travel preferences.</p>
+      <h3>Click "Start" below and tell us
+        about your
+        trip!</h3>
       <button class="button open-modal">START</button>
     </section>
     <section class="modal">
@@ -31,7 +35,7 @@
           <label for="end_date">Enter end date of your vacation</label>
           <input class="input" type="date" name="end_date" required>
           <label for="vacation_type">Vacation Type</label>
-          <select class="input" name="vacation_type" >
+          <select class="input" name="vacation_type">
             <option value="tropical">Tropical</option>
             <option value="snow">Snow</option>
             <option value="pool/beach">Pool/Beach</option>
@@ -46,12 +50,13 @@
           </select>
           <button type="submit" class="button">SUBMIT</button>
         </form>
-      </div> 
-    </section> 
+      </div>
+    </section>
   </main>
   <footer class="flex-column">
     <%- include('./partials/footer.ejs') %>
     <script src="../js/modal.js"></script>
   </footer>
 </body>
+
 </html>

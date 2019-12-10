@@ -67,6 +67,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', (req, res) => res.status(200).render('index'));
 app.post('/', resultsHandler);
 
+app.get('/test', (req, res) => getFromDatabase(req, res));
+
 app.get('/login', checkNotAuthenticated, (req, res) => res.status(200).render('pages/login'));
 app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
   successRedirect: '/profile',
