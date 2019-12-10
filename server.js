@@ -19,7 +19,7 @@ const getUser = callback.getUser;
 const userProfileHandler = callback.userProfileHandler;
 const resultsHandler = require('./modules/results');
 const registerUser = require('./modules/users');
-const tripsHandler = require('./modules/trips');
+const getSavedTrips = require('./modules/trips');
 const initializePassport = require('./modules/passport-config');
 initializePassport(passport, getUser);
 
@@ -82,12 +82,12 @@ app.delete('/logout', (req, res) => {
   res.redirect('/login');
 });
 
-app.post('/results', (req, res) => {
+app.get('/trips', checkAuthenticated, getSavedTrips);
+app.post('/trips', (req, res) => {
   console.log(req.body);
-  res.status(200).render('index');
+  res.redirect('/trips');
 });
 
-app.get('/trips', checkAuthenticated, tripsHandler);
 
 app.get('/about', (req, res) => res.status(200).render('pages/about'));
 

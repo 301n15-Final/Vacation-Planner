@@ -120,13 +120,17 @@ async function resultsHandler(req, res) {
     const countryData = await getCountryData(geo.countryCode); //get country info
     const weather = await getForecast(days, geo.location); //get forecast info
     const items = await getItems(req.body); //get items suggestion from database
+    const user = await req.user; //getting user information
+
+    console.log('user', user);
 
     res.status(200).render('pages/result', {
       location: geo,
       weather: weather,
       country: countryData,
       request: req.body,
-      items: items
+      items: items,
+      user: user
     });
   } catch (err) {
     errorHandler(err, req, res);

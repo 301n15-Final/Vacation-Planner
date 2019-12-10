@@ -5,7 +5,7 @@ const client = new pg.Client(process.env.DATABASE_URL);
 client.connect();
 client.on('error', err => console.log(err));
 
-async function tripsHandler(req, res) {
+async function getSavedTrips(req, res) {
   try {
     const user = await req.user;
     let sql = `SELECT trip.name AS name,
@@ -25,4 +25,4 @@ async function tripsHandler(req, res) {
   }
 }
 
-module.exports = tripsHandler;
+module.exports = getSavedTrips;
