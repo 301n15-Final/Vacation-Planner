@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head.ejs') %>
+</head>
+<body>
+  <header class="flex-row">
+    <%- include('../partials/header.ejs') %>
+  </header>
+  <main class="flex-column">
+    <section class="main-content flex-column">
+      <h2>Saved Trips</h2>
+      <% trips.forEach(trip => { %>
+        <h2 id="trip-name">Your trip to <%= trip.city %>, <%= trip.country %> <br>
+          <%= trip.start_date %> - <%= trip.end_date %></h2>
+      <% }) %>
+    </section>
+  </main>
+  <footer class="flex-column">
+    <%- include('../partials/footer.ejs') %>
+  </footer>
+</body>
+</html>

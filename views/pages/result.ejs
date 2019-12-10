@@ -1,47 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <%- include('../partials/head.ejs') %>
+  <%- include('../partials/head.ejs') %>
 </head>
+
 <body>
   <header class="flex-row">
     <%- include('../partials/header.ejs') %>
   </header>
   <main class="flex-column">
       <section class="result main-content flex-column">
-        <h2>Your trip to <%= request.city %> <br>
-        <%= request.start_date %> - <%= request.end_date %></h2>
+        <%- include('../partials/partial-result.ejs', {
+          location: location,
+          weather: weather,
+          country: country,
+          request: request,
+          items: items
+        }) %>
+        <% if (typeof user !== 'undefined') { %>
+          <button class="button open-modal">SAVE TRIP</button>
+        <% } %>
+      </section>
+      <section class="modal">
+        <div class="modal-content">
+          <form class="flex-column" action="/trips" method="POST">
+            <label for="trip-name">Please enter name for your trip</label>
+            <input class="input" type="text" name="trip_name" placeholder="My trip to <%= location.city %>, <%= location.country %> <%= request.start_date %> - <%= request.end_date %>" value="My trip to <%= location.city %>, <%= location.country %> <%= request.start_date %> - <%= request.end_date %>">
+            <input type="hidden" name="city" value="<%= location.city %>">
+            <input type="hidden" name="country" value="<%= location.country %>">
+            <input class="input" type="hidden" name="start_date" value="<%= request.start_date %>">
+            <input class="input" type="hidden" name="end_date" value="<%= request.end_date %>">
+            <input type="hidden" name="capital" value="<%= country.capital %>">
+            <input type="hidden" name="population" value="<%= country.population %>">
+            <input type="hidden" name="borders" value="<%= country.borders %>">
+            <input type="hidden" name="currencies" value="<%= country.currencies %>">
+            <input type="hidden" name="languages" value="<%= country.languages %>">
+            <input type="hidden" name="flag_url" value="<%= country.flag_url %>">
+            <input type="hidden" name="vacation_type" value="<%= request.vacation_type %>"> 
+            <input type="hidden" name="activities" value="<%= request.activities %>"> 
 
-        <h3>More information about your destination:</h3>
+            <button class="button">SAVE TRIP</button>
 
-        <div class="country-info flex-column">
-          <img src="<%= country.flag_url %>" alt="flag of <%= country.country %>">
-          <ul>
-            <li><b>Country:</b> <%= country.country %></li>
-            <li><b>Capital:</b> <%= country.capital %> </li>
-            <li><b>Population:</b> <%= country.population %></li>
-            <li><b>Borders:</b> <% country.borders.forEach( border => { %>
-              <%= border %>,  
-              <% }) %> </li>
-            <li><b>Currencies:</b> <% country.currencies.forEach( currencie => { %>
-              <%= currencie %>,  
-              <% }) %> </li>
-            <li><b>Languages:</b> <% country.languages.forEach( language => { %>
-              <%= language %>,  
-              <% }) %> </li>
-          </ul>
+          </form>
         </div>
-
-        <h3>For the dates of your trip we expect:</h3>
-        <ul>
-          <% weather.forEach( day => { %>
-            <li><img class="icon" src="<%= day.icon_url %>" alt="weather icon"> <%= day.day %>: <%= day.summary %> With the average temperature of: <%= day.temperature %> F</li>
-          <% }) %>
-        </ul>
       </section>
   </main>
   <footer class="flex-column">
     <%- include('../partials/footer.ejs') %>
+    <script src="../js/modal.js"></script>
   </footer>
 </body>
+
 </html>

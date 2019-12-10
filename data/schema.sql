@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS traveler, activity_type, vacation_type, standard_packing_item, custom_packing_item, trip, standard_packing_item_activity_type, standard_packing_item_vacation_type, trip_packing_item;
+DROP TABLE IF EXISTS login, traveler, activity_type, vacation_type, standard_packing_item, custom_packing_item, country, trip, standard_packing_item_activity_type, standard_packing_item_vacation_type, trip_packing_item;
 
 CREATE TABLE traveler (
   id SERIAL PRIMARY KEY,
@@ -6,6 +6,14 @@ CREATE TABLE traveler (
   last_name VARCHAR(255),
   summer_temp_lowest INTEGER NOT NULL,
   fall_temp_lowest INTEGER NOT NULL
+);
+
+CREATE TABLE login (
+  traveler_id INTEGER NOT NULL,
+  FOREIGN KEY (traveler_id) REFERENCES traveler(id),
+  email VARCHAR(255) NOT NULL UNIQUE,
+  salt VARCHAR(255),
+  hashpass VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE activity_type (
@@ -33,15 +41,31 @@ CREATE TABLE custom_packing_item (
   name VARCHAR(255) UNIQUE
 );
 
+CREATE TABLE country (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) UNIQUE,
+  capital VARCHAR(255),
+  population VARCHAR(255),
+  borders VARCHAR(255),
+  currencies VARCHAR(255),
+  languages VARCHAR(255),
+  flag_url VARCHAR(255)
+);
+
 CREATE TABLE trip (
   id SERIAL PRIMARY KEY,
   traveler_id INTEGER NOT NULL,
   FOREIGN KEY (traveler_id) REFERENCES traveler(id),
-  name VARCHAR(255) UNIQUE,
+  name VARCHAR(255),
   city VARCHAR(255) NOT NULL,
-  country VARCHAR(255) NOT NULL,
+  country_id INTEGER NOT NULL,
+  FOREIGN KEY (country_id) REFERENCES country(id),
   start_date DATE NOT NULL,
-  end_date DATE NOT NULL
+  end_date DATE NOT NULL,
+  vacation_type_id INTEGER NOT NULL,
+  FOREIGN KEY (vacation_type_id) REFERENCES vacation_type(id),
+  activity_type_id INTEGER NOT NULL,
+  FOREIGN KEY (activity_type_id) REFERENCES activity_type(id)
 );
 
 CREATE TABLE standard_packing_item_activity_type (
@@ -64,22 +88,25 @@ CREATE TABLE trip_packing_item (
   packing_item_name VARCHAR(255) NOT NULL
 );
 
-INSERT INTO traveler (first_name, last_name, shorts_temp_lowest, fall_temp_low, fall_temp_high)
-VALUES ('Tammy', 'Ip', 65, 55, 64),
-('Leo', 'Kuhorev', 70, 50, 61),
-('Ehsan', 'Ghafari', 65, 55, 64),
-('Diana', 'Kim', 68, 50, 60);
+INSERT INTO traveler (first_name, last_name, summer_temp_lowest, fall_temp_lowest)
+VALUES ('Tammy', 'Ip', 65, 55),
+('Leo', 'Kuhorev', 70, 50),
+('Ehsan', 'Ghafari', 65, 55),
+('Diana', 'Kim', 68, 50);
 
-INSERT INTO TRIP (traveler_id, name, city, country, start_date, end_date)
-VALUES (1, 'Whistler', 'Whistler', 'Canada', '2019-12-23', '2020-01-03' ),
-(2, 'Vancouver', 'Vancouver', 'Canada', '2019-12-19', '2019-12-23' ),
-(3, 'T&C, here I come!', 'Providenciales', 'Turks and Caicos', '2020-02-14', '2020-02-26');
+INSERT INTO country (name, capital, population, borders, currencies, languages, flag_url)
+VALUES ('United States', 'Washington, D.C.', '323947000', 'CAN, MEX', 'United States dollar', 'English', 'https://restcountries.eu/data/usa.svg');
 
 INSERT INTO vacation_type (name)
 VALUES ('Tropical'), ('Snow'), ('Pool/Beach'), ('Active Adventure');
 
 INSERT INTO activity_type (name)
 VALUES ('water-based'), ('land-based'), ('high intensity'), ('relaxed');
+
+INSERT INTO trip (traveler_id, name, city, country_id, start_date, end_date, vacation_type_id, activity_type_id)
+VALUES (1, 'Whistler', 'Whistler', 1, '2019-12-23', '2020-01-03', 1, 2),
+(2, 'Vancouver', 'Vancouver', 1, '2019-12-19', '2019-12-23', 1, 2),
+(3, 'T&C, here I come!', 'Providenciales', 1, '2020-02-14', '2020-02-26', 1, 2);
 
 INSERT INTO standard_packing_item (name, min_temp, max_temp, precip)
 VALUES ('medication',  -20, 120, 'mix'),
@@ -208,14 +235,7 @@ VALUES (23, 2),
 (59, 1),
 (60, 1),
 (61, 1),
-(62, 1),
-(58, 1),
-(51, 1),
-(25, 1),
-(15, 1),
-(15, 1),
-(15, 1),
-(15, 1);
+(62, 1);
 
 INSERT INTO standard_packing_item_vacation_type (standard_packing_item_id, vacation_type_id)
 VALUES 
@@ -280,12 +300,5 @@ VALUES
 (59, 1),
 (60, 1),
 (61, 1),
-(62, 1),
-(58, 1),
-(51, 1),
-(25, 1),
-(15, 1),
-(15, 1),
-(15, 1),
-(15, 1);
+(62, 1);
 

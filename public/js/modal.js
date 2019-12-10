@@ -2,9 +2,9 @@
 
 let $modalEl = $('.modal');
 
-$('#start').on('click', () => {
+$('.open-modal').on('click', () => {
   $modalEl.fadeIn(300);
   $(window).on('click', (event) => {
-    if($(event.target).is($modalEl)) { $modalEl.fadeOut(300) }
+    if($(event.target).is($modalEl)) { $modalEl.fadeOut(300); }
   });
 });
