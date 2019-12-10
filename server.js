@@ -19,7 +19,9 @@ const getUser = callback.getUser;
 const userProfileHandler = callback.userProfileHandler;
 const resultsHandler = require('./modules/results');
 const registerUser = require('./modules/users');
-const getSavedTrips = require('./modules/trips');
+const Trip = require('./modules/trips');
+const getSavedTrips = Trip.getSavedTrips;
+const saveTrip = Trip.saveTrip;
 const initializePassport = require('./modules/passport-config');
 initializePassport(passport, getUser);
 
@@ -83,11 +85,7 @@ app.delete('/logout', (req, res) => {
 });
 
 app.get('/trips', checkAuthenticated, getSavedTrips);
-app.post('/trips', (req, res) => {
-  console.log(req.body);
-  res.redirect('/trips');
-});
-
+app.post('/trips', checkAuthenticated, saveTrip);
 
 app.get('/about', (req, res) => res.status(200).render('pages/about'));
 

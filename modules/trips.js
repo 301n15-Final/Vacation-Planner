@@ -1,11 +1,24 @@
 'use strict';
 
+// Connecting to DB
 const pg = require('pg');
 const client = new pg.Client(process.env.DATABASE_URL);
 client.connect();
 client.on('error', err => console.log(err));
 
-async function getSavedTrips(req, res) {
+const Trip = {};
+
+Trip.saveTrip = async function(req, res) {
+  // check if country exists, if not - save and get id
+  let sql = `SELECT id FROM country WHERE name LIKE $1;`;
+  const countryId = await client.query(sql, [req.body.country]);
+  console.log(countryId);
+
+  console.log(req.body);
+  res.redirect('/trips');
+};
+
+Trip.getSavedTrips = async function(req, res) {
   try {
     const user = await req.user;
     let sql = `SELECT trip.name AS name,
@@ -23,6 +36,6 @@ async function getSavedTrips(req, res) {
   } catch (err) {
     console.log(err);
   }
-}
+};
 
-module.exports = getSavedTrips;
+module.exports = Trip;
