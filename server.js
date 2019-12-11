@@ -17,11 +17,13 @@ require('dotenv').config();
 const callback = require('./modules/callbacks');
 const getUser = callback.getUser;
 const userProfileHandler = callback.userProfileHandler;
-const resultsHandler = require('./modules/results');
+const Results = require('./modules/results');
+const resultsHandler = Results.resultsHandler;
 const registerUser = require('./modules/users');
 const Trip = require('./modules/trips');
 const getSavedTrips = Trip.getSavedTrips;
-const saveTrip = Trip.saveTrip;
+const saveTrip = Trip.saveTripHandler;
+const showSavedTrip = Trip.showSavedTrip;
 const initializePassport = require('./modules/passport-config');
 initializePassport(passport, getUser);
 
@@ -67,8 +69,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', (req, res) => res.status(200).render('index'));
 app.post('/', resultsHandler);
 
-app.get('/test', (req, res) => getFromDatabase(req, res));
-
 app.get('/login', checkNotAuthenticated, (req, res) => res.status(200).render('pages/login'));
 app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
   successRedirect: '/profile',
@@ -87,6 +87,7 @@ app.delete('/logout', (req, res) => {
 });
 
 app.get('/trips', checkAuthenticated, getSavedTrips);
+app.get('/trips/:trip_id', checkAuthenticated, showSavedTrip);
 app.post('/trips', checkAuthenticated, saveTrip);
 
 app.get('/about', (req, res) => res.status(200).render('pages/about'));
@@ -95,6 +96,3 @@ app.get('*', (req, res) => res.status(404).render('pages/error', {err: '404 - Pa
 
 // Ensure that the server is listening for requests
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-
-
-// Functions (temporary - will go into modules)

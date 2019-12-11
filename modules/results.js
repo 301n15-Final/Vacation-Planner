@@ -8,6 +8,8 @@ const client = new pg.Client(process.env.DATABASE_URL);
 client.connect();
 client.on('error', err => console.log(err));
 
+const Results = {};
+
 // Location constructor
 function Location(location) {
   this.city = location.formatted_address.split(',')[0];
@@ -94,8 +96,8 @@ function getDays(vacation) {
 }
 
 // Getting list of suggested items from DB
-async function getItems(form) {
-  const activityType = form.activities;
+Results.getItems = async function(form) {
+  const activityType = form.activity_type;
   const vacationType = form.vacation_type;
   const sql = `SELECT standard_packing_item.name
   FROM standard_packing_item 
@@ -108,26 +110,26 @@ async function getItems(form) {
   AND vacation_type_id =
   (SELECT id FROM vacation_type WHERE LOWER(name) = $2);`;
   const items = await client.query(sql, [activityType, vacationType]);
-  console.log('avtivity type:', activityType, '| vacation type', vacationType);
   return items.rows.map(record => record.name);
-}
+};
 
 // Rendering result page
-async function resultsHandler(req, res) {
+Results.resultsHandler = async function(req, res) {
   try {
     const geo = await getLocation(req.body.city); //get location info from google API
     const days = getDays(req.body); //count number of vacation days
     const countryData = await getCountryData(geo.countryCode); //get country info
     const weather = await getForecast(days, geo.location); //get forecast info
-    const items = await getItems(req.body); //get items suggestion from database
+    const items = await Results.getItems(req.body); //get items suggestion from database
     const user = await req.user; //getting user information
 
     console.log('user', user);
 
     res.status(200).render('pages/result', {
-      location: geo,
+      city: geo.city,
+      country: geo.country,
       weather: weather,
-      country: countryData,
+      countryData: countryData,
       request: req.body,
       items: items,
       user: user
@@ -135,10 +137,10 @@ async function resultsHandler(req, res) {
   } catch (err) {
     errorHandler(err, req, res);
   }
-}
+};
 
 function errorHandler(err, req, res) {
   res.status(500).render('pages/error', {err: err});
 }
 
-module.exports = resultsHandler;
+module.exports = Results;

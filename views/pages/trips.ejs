@@ -10,9 +10,14 @@
   <main class="flex-column">
     <section class="main-content flex-column">
       <h2>Saved Trips</h2>
-      <% trips.forEach(trip => { %>
-        <h2 id="trip-name">Your trip to <%= trip.city %>, <%= trip.country %> <br>
-          <%= trip.start_date %> - <%= trip.end_date %></h2>
+      <% trips.forEach( (trip, idx) => { %>
+        <div class="flex-column trip">
+          <h3 class="medium"><%= idx + 1 %> - <%= trip.name %></h3>
+          <form action="/trips/<%= trip.trip_id %>" method="GET">
+            <input type="hidden" name="trip_id" value="<%= trip.trip_id %>">
+            <button class="button">GET DETAILS</button>
+          </form>
+        </div>
       <% }) %>
     </section>
   </main>
