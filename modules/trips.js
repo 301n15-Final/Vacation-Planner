@@ -1,11 +1,13 @@
 'use strict';
 
 // Connecting to DB
-
 const pg = require('pg');
 const client = new pg.Client(process.env.DATABASE_URL);
 client.connect();
 client.on('error', err => console.log(err));
+
+const Results = require('./results');
+const getItems = Results.getItems;
 
 const Trip = {};
 
@@ -67,37 +69,32 @@ Trip.getSavedTrips = async function(req, res) {
 
 Trip.showSavedTrip = async function(req, res) {
   const tripId = req.params.trip_id;
-  let sql = `SELECT * FROM trip WHERE id = $1;`;
+
+  // Getting trip data
+  let sql = `SELECT trip.id AS id, trip.traveler_id AS traveler_id, trip.name AS name, trip.city AS city, trip.country_id AS country_id, trip.start_date AS start_date, trip.end_date AS end_date, LOWER(vacation_type.name) AS vacation_type, LOWER(activity_type.name) AS activity_type
+  FROM trip
+  JOIN vacation_type
+  ON trip.vacation_type_id = vacation_type.id
+  JOIN activity_type
+  ON trip.activity_type_id = activity_type.id
+  WHERE trip.id = $1;`;
   const trip = await client.query(sql, [tripId]);
 
+  // Getting country data
   sql = `SELECT * FROM country WHERE id = $1;`;
-  const country = await client.query(sql, [trip.rows[0].country_id]);
-  console.log('trip', country.rows[0]);
+  const countryData = await client.query(sql, [trip.rows[0].country_id]);
 
-  sql = `SELECT trip.name AS name,
-    trip.id AS trip_id,
-    trip.city AS city,
-    trip.start_date AS start_date,
-    trip.end_date AS end_date,
-    country.name AS country,
-    country.capital AS capital,
-    country.population AS population,
-    country.borders AS borders,
-    country.currencies AS currencies,
-    country.languages AS languages,
-    country.flag_url AS flag_urs
-    FROM trip
-    JOIN traveler
-    ON trip.traveler_id = traveler.id
-    JOIN country
-    ON trip.country_id = country.id
-    WHERE traveler.id = $1;`;
+  // Getting items
+  const items = await getItems(trip.rows[0]);
+  console.log(items);
+
   res.status(200).render('pages/result', {
-    location: location,
-    weather: weather,
-    country: country,
-    request: trip.rows[0],
-    items: items
+    city: trip.rows[0].city,
+    country: trip.rows[0].country,
+    countryData: countryData.rows[0],
+    request: req.body,
+    items: items,
+    weather: []
   });
 };
 
