@@ -171,6 +171,10 @@ form label {
   box-shadow: 2px 2px 5px 1px rgba(0,0,0,0.3);
 }
 
+.trip h3 {
+  align-self: flex-start;
+}
+
 /* TEMP PREFERENCES */
 #summer-winter-container {
   display: flex;
