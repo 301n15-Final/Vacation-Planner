@@ -25,7 +25,8 @@ ul.items{
 }
 
 .country-info img {
-  max-width: 25%;
+  margin-left: 1rem;
+  max-width: 35%;
 }
 
 .country-info * {

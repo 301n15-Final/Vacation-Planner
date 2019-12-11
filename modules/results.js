@@ -43,7 +43,11 @@ async function getLocation(city) {
   const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${city}&key=${process.env.GEOCODE_API_KEY}`;
   try {
     const data = await superagent.get(url);
-    return new Location(data.body.results[0]);
+    if(data.body.results < 1) {
+      throw 'Location no found!';
+    } else {
+      return new Location(data.body.results[0]);
+    }
   } catch (err) {
     console.log(err);
   }
@@ -117,23 +121,25 @@ Results.getItems = async function(form) {
 Results.resultsHandler = async function(req, res) {
   try {
     const geo = await getLocation(req.body.city); //get location info from google API
-    const days = getDays(req.body); //count number of vacation days
-    const countryData = await getCountryData(geo.countryCode); //get country info
-    const weather = await getForecast(days, geo.location); //get forecast info
-    const items = await Results.getItems(req.body); //get items suggestion from database
-    const user = await req.user; //getting user information
+    if(typeof geo === 'undefined') {
+      throw 'Location not found';
+    } else {
+      const days = getDays(req.body); //count number of vacation days
+      const countryData = await getCountryData(geo.countryCode); //get country info
+      const weather = await getForecast(days, geo.location); //get forecast info
+      const items = await Results.getItems(req.body); //get items suggestion from database
+      const user = await req.user; //getting user information
 
-    console.log('user', user);
-
-    res.status(200).render('pages/result', {
-      city: geo.city,
-      country: geo.country,
-      weather: weather,
-      countryData: countryData,
-      request: req.body,
-      items: items,
-      user: user
-    });
+      res.status(200).render('pages/result', {
+        city: geo.city,
+        country: geo.country,
+        weather: weather,
+        countryData: countryData,
+        request: req.body,
+        items: items,
+        user: user
+      });
+    }
   } catch (err) {
     errorHandler(err, req, res);
   }
