@@ -22,6 +22,12 @@
         <% if (typeof user !== 'undefined') { %>
           <button class="button open-modal">SAVE TRIP</button>
         <% } %>
+        <% if (tripId) { %>
+          <form action="/trips?_method=DELETE" method="POST">
+            <input type="hidden" name="tripId" value="<%= tripId %>">
+            <button type="submit" class="button">DELETE TRIP</button>
+          </form>
+        <% } %>
       </section>
       <section class="modal">
         <div class="modal-content">
@@ -40,6 +46,9 @@
             <input type="hidden" name="flag_url" value="<%= countryData.flag_url %>">
             <input type="hidden" name="vacation_type" value="<%= request.vacation_type %>"> 
             <input type="hidden" name="activity_type" value="<%= request.activity_type %>"> 
+            <% weather.forEach( day => { %>
+              <input type="hidden" name="weather" value="<%= day.day %>, <%= day.summary %>, <%= day.temperature %>, <%= day.precipType %>, <%= day.icon_url %>">
+            <% }) %>
 
             <button class="button">SAVE TRIP</button>
 

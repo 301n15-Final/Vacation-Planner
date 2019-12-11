@@ -22,8 +22,9 @@ const resultsHandler = Results.resultsHandler;
 const registerUser = require('./modules/users');
 const Trip = require('./modules/trips');
 const getSavedTrips = Trip.getSavedTrips;
-const saveTrip = Trip.saveTripHandler;
+const saveTripHandler = Trip.saveTripHandler;
 const showSavedTrip = Trip.showSavedTrip;
+const deleteTrip = Trip.deleteTrip;
 const initializePassport = require('./modules/passport-config');
 initializePassport(passport, getUser);
 
@@ -88,7 +89,8 @@ app.delete('/logout', (req, res) => {
 
 app.get('/trips', checkAuthenticated, getSavedTrips);
 app.get('/trips/:trip_id', checkAuthenticated, showSavedTrip);
-app.post('/trips', checkAuthenticated, saveTrip);
+app.delete('/trips', checkAuthenticated, deleteTrip);
+app.post('/trips', checkAuthenticated, saveTripHandler);
 
 app.get('/about', (req, res) => res.status(200).render('pages/about'));
 

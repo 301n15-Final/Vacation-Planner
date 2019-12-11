@@ -10,15 +10,24 @@
   <main class="flex-column">
     <section class="main-content flex-column">
       <h2>Saved Trips</h2>
-      <% trips.forEach( (trip, idx) => { %>
+      <% if (trips.length > 0) { %>
+        <% trips.forEach( (trip, idx) => { %>
+          <div class="flex-column trip">
+            <h3 class="medium"><%= idx + 1 %> - <%= trip.name %></h3>
+            <form action="/trips/<%= trip.trip_id %>" method="GET">
+              <input type="hidden" name="trip_id" value="<%= trip.trip_id %>">
+              <button class="button">GET DETAILS</button>
+            </form>
+          </div>
+        <% }) %>
+      <% } else { %>
         <div class="flex-column trip">
-          <h3 class="medium"><%= idx + 1 %> - <%= trip.name %></h3>
-          <form action="/trips/<%= trip.trip_id %>" method="GET">
-            <input type="hidden" name="trip_id" value="<%= trip.trip_id %>">
-            <button class="button">GET DETAILS</button>
+          <h3 class="medium">NO SAVED TRIPS</h3>
+          <form action="/">
+            <button class="button">SEARCH TRIP</button>
           </form>
         </div>
-      <% }) %>
+      <% } %>
     </section>
   </main>
   <footer class="flex-column">

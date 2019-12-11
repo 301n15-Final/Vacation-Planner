@@ -137,7 +137,8 @@ Results.resultsHandler = async function(req, res) {
         countryData: countryData,
         request: req.body,
         items: items,
-        user: user
+        user: user,
+        tripId: false
       });
     }
   } catch (err) {
