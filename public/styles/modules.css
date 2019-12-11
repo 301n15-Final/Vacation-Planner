@@ -67,6 +67,10 @@ form label {
   margin-left: 1em;
 }
 
+.forecast-list {
+  text-align: left;
+}
+
 .modal {
   display: none; 
   position: fixed;
