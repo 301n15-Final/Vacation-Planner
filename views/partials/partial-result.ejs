@@ -5,7 +5,7 @@
   <h2 id="trip-name"><%= name %></h2>
 <% } %>
 
-  <h3>More information about your destination:</h3>
+  <h3>Information about your destination:</h3>
 
   <div class="country-info flex-column">
     <img src="<%= countryData.flag_url %>" alt="flag of <%= countryData.country %>">
@@ -20,16 +20,26 @@
   </div>
 
   <% if(typeof weather !== 'undefined') { %>
-    <h3>For the dates of your trip we expect:</h3>
-    <ul>
-      <% weather.forEach( day => { %>
-        <li><img class="icon" src="<%= day.icon_url %>" alt="weather icon"> <%= day.day %>: <%= day.summary %> With the average temperature of: <%= day.temperature %> &deg;F</li>
+    <h3>For the dates of your trip, the daily historical averages are as follows:</h3>
+    <ul class="forecast-list scroll-x">
+    <% weather.forEach( day => { %>
+      <section>
+        <div class="date-temp-icon">
+          <li><img class="icon" src="<%= day.icon_url %>" alt="weather icon"> </li>
+          <div>
+            <li><%= day.day %> </li>
+            <li>Average temperature: <%= day.temperature %> &deg;F</li>
+          </div>
+        </div>
+        <li><%= day.summary %></li>
+      </section>
       <% }) %>
-    </ul>
+   </ul>
+
   <% } %>
 
-  <h3>For your trip we suggest you to bring:</h3>
-<ul class="items">
+  <h3>For your trip we suggest you bring:</h3>
+<ul class="items scroll-x">
   <% items.forEach( item => { %>
   <li><input type="checkbox"> <%= item %></li>
   <% }) %>
