@@ -7,10 +7,21 @@
   font-size: 14pt;
   font-weight: 600;
   padding: 1rem 0;
+  color: #ED4E14;
+  margin-top: 1rem;
+}
+
+.scroll-x {
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+  width: 100%;
+  overflow-x: auto;
+  flex-wrap: wrap;
 }
 
 ul.items{
-text-align: left;
+  text-align: left;
 }
 
 .country-info img {
@@ -52,6 +63,32 @@ form label {
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
+}
+
+.country-info {
+  margin: 1em 0;
+  align-items: flex-start;
+  text-align: left;
+  justify-content: center;
+  margin-left: 0.5rem;
+  padding-bottom: 0;
+}
+
+.country-info ul {
+  margin-left: 1em;
+}
+
+.forecast-list {
+  text-align: left;
+}
+
+.forecast-list > section {
+  margin: 1.3em;
+}
+
+.date-temp-icon {
+  display: flex;
+  flex-direction: row;
 }
 
 .modal {
@@ -111,7 +148,8 @@ form label {
 }
 
 .icon {
-  width: 40px;
+  width: 32px;
+  margin-right: 5px;
 }
 
 .medium {
