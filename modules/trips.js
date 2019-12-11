@@ -32,11 +32,19 @@ async function getCountryId(r) {
 // Save trip to DB
 async function saveTrip(r, userId, country) {
   const sql = `INSERT INTO trip (traveler_id, name, city, country_id, start_date, end_date, vacation_type_id, activity_type_id)
-    VALUES ($1, $2, $3, $4, $5, $6,
-      (SELECT id FROM vacation_type WHERE LOWER(name) = $7), 
-      (SELECT id FROM activity_type WHERE LOWER(name) = $8));`;
+  VALUES ($1, $2, $3, $4, $5, $6,
+    (SELECT id FROM vacation_type WHERE LOWER(name) = $7), 
+    (SELECT id FROM activity_type WHERE LOWER(name) = $8))
+  RETURNING trip.id AS id;`;
 
-  await client.query(sql, [userId, r.trip_name, r.city, country.id, r.start_date, r.end_date, r.vacation_type, r.activities]);
+  const tripId = await client.query(sql, [userId, r.trip_name, r.city, country.id, r.start_date, r.end_date, r.vacation_type, r.activity_type]);
+  return tripId.rows[0].id;
+}
+
+async function saveWeather(trip_id, weather) {
+  const sql = `INSERT INTO weather (trip_id, day, summary, temperature, precipType, icon_url)
+  VALUES ($1, $2, $3, $4, $5, $6);`;
+  await client.query(sql, [trip_id, ...weather]);
 }
 
 Trip.saveTripHandler = async function(req, res) {
@@ -44,7 +52,10 @@ Trip.saveTripHandler = async function(req, res) {
     const r = req.body;
     const country = await getCountryId(r);
     const user = await req.user;
-    await saveTrip(r, user.id, country);
+    const tripID = await saveTrip(r, user.id, country);
+    const weather = r.weather.map( day => day.split(', '));
+    await weather.forEach(day => saveWeather(tripID, day));
+
     res.status(200).redirect('/trips');
   } catch (err) {
     console.log(err);
@@ -87,6 +98,11 @@ Trip.showSavedTrip = async function(req, res) {
   // Getting items
   const items = await getItems(trip.rows[0]);
 
+  // Getting weather
+  sql = `SELECT * FROM weather WHERE trip_id = $1;`;
+  const weather = await client.query(sql, [tripId]);
+  console.log(weather.rows);
+
   res.status(200).render('pages/result', {
     city: trip.rows[0].city,
     country: countryData.rows[0].name,
@@ -94,7 +110,7 @@ Trip.showSavedTrip = async function(req, res) {
     request: req.body,
     items: items,
     name: trip.rows[0].name,
-    weather: []
+    weather: weather.rows
   });
 };
 

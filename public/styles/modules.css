@@ -25,7 +25,7 @@ ul.items{
 }
 
 .country-info img {
-  margin-left: 1rem;
+  align-self: center;
   max-width: 35%;
 }
 

@@ -68,6 +68,17 @@ CREATE TABLE trip (
   FOREIGN KEY (activity_type_id) REFERENCES activity_type(id)
 );
 
+CREATE TABLE weather (
+  id SERIAL PRIMARY KEY,
+  trip_id INTEGER NOT NULL,
+  FOREIGN KEY (trip_id) REFERENCES trip(id),
+  day VARCHAR(255),
+  summary VARCHAR(255),
+  temperature VARCHAR(255),
+  precipType VARCHAR(255),
+  icon_url VARCHAR(255)
+);
+
 CREATE TABLE standard_packing_item_activity_type (
   standard_packing_item_id INTEGER NULL,
   FOREIGN KEY (standard_packing_item_id) REFERENCES standard_packing_item(id),  
@@ -88,14 +99,14 @@ CREATE TABLE trip_packing_item (
   packing_item_name VARCHAR(255) NOT NULL
 );
 
-INSERT INTO traveler (first_name, last_name, summer_temp_lowest, fall_temp_lowest)
-VALUES ('Tammy', 'Ip', 65, 55),
-('Leo', 'Kuhorev', 70, 50),
-('Ehsan', 'Ghafari', 65, 55),
-('Diana', 'Kim', 68, 50);
+-- INSERT INTO traveler (first_name, last_name, summer_temp_lowest, fall_temp_lowest)
+-- VALUES ('Tammy', 'Ip', 65, 55),
+-- ('Leo', 'Kuhorev', 70, 50),
+-- ('Ehsan', 'Ghafari', 65, 55),
+-- ('Diana', 'Kim', 68, 50);
 
-INSERT INTO country (name, capital, population, borders, currencies, languages, flag_url)
-VALUES ('United States', 'Washington, D.C.', '323947000', 'CAN, MEX', 'United States dollar', 'English', 'https://restcountries.eu/data/usa.svg');
+-- INSERT INTO country (name, capital, population, borders, currencies, languages, flag_url)
+-- VALUES ('United States', 'Washington, D.C.', '323947000', 'CAN, MEX', 'United States dollar', 'English', 'https://restcountries.eu/data/usa.svg');
 
 INSERT INTO vacation_type (name)
 VALUES ('Tropical'), ('Snow'), ('Pool/Beach'), ('Active Adventure');
@@ -103,10 +114,10 @@ VALUES ('Tropical'), ('Snow'), ('Pool/Beach'), ('Active Adventure');
 INSERT INTO activity_type (name)
 VALUES ('water-based'), ('land-based'), ('high intensity'), ('relaxed');
 
-INSERT INTO trip (traveler_id, name, city, country_id, start_date, end_date, vacation_type_id, activity_type_id)
-VALUES (1, 'Whistler', 'Whistler', 1, '2019-12-23', '2020-01-03', 1, 2),
-(2, 'Vancouver', 'Vancouver', 1, '2019-12-19', '2019-12-23', 1, 2),
-(3, 'T&C, here I come!', 'Providenciales', 1, '2020-02-14', '2020-02-26', 1, 2);
+-- INSERT INTO trip (traveler_id, name, city, country_id, start_date, end_date, vacation_type_id, activity_type_id)
+-- VALUES (1, 'Whistler', 'Whistler', 1, '2019-12-23', '2020-01-03', 1, 2),
+-- (2, 'Vancouver', 'Vancouver', 1, '2019-12-19', '2019-12-23', 1, 2),
+-- (3, 'T&C, here I come!', 'Providenciales', 1, '2020-02-14', '2020-02-26', 1, 2);
 
 INSERT INTO standard_packing_item (name, min_temp, max_temp, precip)
 VALUES ('medication',  -20, 120, 'mix'),
