@@ -71,6 +71,15 @@ form label {
   text-align: left;
 }
 
+.forecast-list > section {
+  margin: 1.3em;
+}
+
+.date-temp-icon {
+  display: flex;
+  flex-direction: row;
+}
+
 .modal {
   display: none; 
   position: fixed;
@@ -128,7 +137,8 @@ form label {
 }
 
 .icon {
-  width: 40px;
+  width: 32px;
+  margin-right: 5px;
 }
 
 .medium {

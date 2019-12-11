@@ -18,8 +18,17 @@
   <h3>For the dates of your trip, we expect:</h3>
   <ul class="forecast-list">
     <% weather.forEach( day => { %>
-      <li><img class="icon" src="<%= day.icon_url %>" alt="weather icon"> <%= day.day %>: <%= day.summary %> With the average temperature of: <%= day.temperature %> &deg;F</li>
-    <% }) %>
+      <section>
+        <div class="date-temp-icon">
+          <li><img class="icon" src="<%= day.icon_url %>" alt="weather icon"> </li>
+          <div>
+            <li><%= day.day %> </li>
+            <li>Average temperature: <%= day.temperature %> &deg;F</li>
+          </div>
+        </div>
+        <li><%= day.summary %></li>
+      </section>
+      <% }) %>
   </ul>
 
   <h3>For your trip we suggest you to bring:</h3>
