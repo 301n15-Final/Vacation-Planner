@@ -22,6 +22,12 @@
         <% if (typeof user !== 'undefined') { %>
           <button class="button open-modal">SAVE TRIP</button>
         <% } %>
+        <% if (tripId) { %>
+          <form action="/trips?_method=DELETE" method="POST">
+            <input type="hidden" name="tripId" value="<%= tripId %>">
+            <button type="submit" class="button">DELETE TRIP</button>
+          </form>
+        <% } %>
       </section>
       <section class="modal">
         <div class="modal-content">

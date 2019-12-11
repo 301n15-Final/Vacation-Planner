@@ -127,7 +127,6 @@ Results.resultsHandler = async function(req, res) {
       const days = getDays(req.body); //count number of vacation days
       const countryData = await getCountryData(geo.countryCode); //get country info
       const weather = await getForecast(days, geo.location); //get forecast info
-      console.log(weather);
       const items = await Results.getItems(req.body); //get items suggestion from database
       const user = await req.user; //getting user information
 
@@ -138,7 +137,8 @@ Results.resultsHandler = async function(req, res) {
         countryData: countryData,
         request: req.body,
         items: items,
-        user: user
+        user: user,
+        tripId: false
       });
     }
   } catch (err) {
