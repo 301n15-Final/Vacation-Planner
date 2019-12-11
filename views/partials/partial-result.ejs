@@ -16,7 +16,7 @@
   </div>
 
   <h3>For the dates of your trip, we expect:</h3>
-  <ul class="forecast-list">
+  <ul class="forecast-list scroll-x">
     <% weather.forEach( day => { %>
       <section>
         <div class="date-temp-icon">
@@ -32,7 +32,7 @@
   </ul>
 
   <h3>For your trip we suggest you to bring:</h3>
-<ul class="items">
+<ul class="items scroll-x">
   <% items.forEach( item => { %>
   <li><input type="checkbox"> <%= item %></li>
   <% }) %>

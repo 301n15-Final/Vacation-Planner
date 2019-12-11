@@ -7,10 +7,20 @@
   font-size: 14pt;
   font-weight: 600;
   padding: 1rem 0;
+  color: #ED4E14;
+}
+
+.scroll-x {
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+  width: 100%;
+  overflow-x: auto;
+  flex-wrap: wrap;
 }
 
 ul.items{
-text-align: left;
+  text-align: left;
 }
 
 .country-info img {
