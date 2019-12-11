@@ -54,6 +54,19 @@ form label {
   align-items: center;
 }
 
+.country-info {
+  margin: 1em 0;
+  align-items: flex-start;
+  text-align: left;
+  justify-content: center;
+  margin-left: 0.5rem;
+  padding-bottom: 0;
+}
+
+.country-info ul {
+  margin-left: 1em;
+}
+
 .modal {
   display: none; 
   position: fixed;

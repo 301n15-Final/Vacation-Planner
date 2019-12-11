@@ -1,11 +1,11 @@
 <h2 id="trip-name">Your trip to <%= request.city %> <br>
-  <%= request.start_date %> - <%= request.end_date %></h2>
+  <%= request.start_date %> to <%= request.end_date %></h2>
 
-  <h3>More information about your destination:</h3>
+  <h3>Information about your destination:</h3>
 
-  <div class="country-info flex-column">
+  <div class="country-info flex-row">
     <img src="<%= country.flag_url %>" alt="flag of <%= country.country %>">
-    <ul>
+    <ul class="country-info-list">
       <li><b>Country: </b><%= country.country %></li>
       <li><b>Capital: </b><%= country.capital %> </li>
       <li><b>Population: </b><%= country.population %></li>
@@ -15,7 +15,7 @@
     </ul>
   </div>
 
-  <h3>For the dates of your trip we expect:</h3>
+  <h3>For the dates of your trip, we expect:</h3>
   <ul>
     <% weather.forEach( day => { %>
       <li><img class="icon" src="<%= day.icon_url %>" alt="weather icon"> <%= day.day %>: <%= day.summary %> With the average temperature of: <%= day.temperature %> &deg;F</li>
