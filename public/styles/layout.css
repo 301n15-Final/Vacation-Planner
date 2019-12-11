@@ -64,12 +64,8 @@ nav ul a {
   color: #2d3436;
 }
 
-.about a>img{
-width: 2em;
-height: 2em;
-}
-
 /* MAIN */
 main {
   margin-top: 6rem;
+  margin-bottom: 5rem;
 }

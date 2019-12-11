@@ -42,6 +42,16 @@ ul.items{
   font-weight: 600;
 }
 
+/* ABOUT US PAGE */
+.about a > img {
+  width: 2em;
+  height: 2em;
+}
+
+.about section > img {
+  margin-bottom: 1rem;
+}
+
 /* FORMS */
 form label {
   margin: 0.5rem auto;
@@ -221,6 +231,10 @@ form label {
 
 .slider {
   -webkit-appearance: slider-vertical;
+}
+
+.justify {
+  text-align: justify;
 }
 
 
