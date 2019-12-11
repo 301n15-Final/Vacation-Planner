@@ -12,6 +12,8 @@
   <main class="flex-column">
       <section class="result main-content flex-column">
         <%- include('../partials/partial-result.ejs', {
+          city: city,
+          country: country,
           weather: weather,
           countryData: countryData,
           request: request,

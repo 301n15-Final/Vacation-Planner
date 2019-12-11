@@ -1,12 +1,16 @@
-<h2 id="trip-name">Your trip to <%= request.city %> <br>
-  <%= request.start_date %> - <%= request.end_date %></h2>
+<% if(typeof name === 'undefined') { %>
+  <h2 id="trip-name">Your trip to <%= city %> <br>
+    <%= request.start_date %> - <%= request.end_date %></h2>
+<% } else { %>
+  <h2 id="trip-name"><%= name %></h2>
+<% } %>
 
   <h3>More information about your destination:</h3>
 
   <div class="country-info flex-column">
     <img src="<%= countryData.flag_url %>" alt="flag of <%= countryData.country %>">
     <ul>
-      <li><b>Country: </b><%= countryData.country %></li>
+      <li><b>Country: </b><%= country %></li>
       <li><b>Capital: </b><%= countryData.capital %> </li>
       <li><b>Population: </b><%= countryData.population %></li>
       <li><b>Borders: </b><%= countryData.borders %></li>

@@ -86,14 +86,14 @@ Trip.showSavedTrip = async function(req, res) {
 
   // Getting items
   const items = await getItems(trip.rows[0]);
-  console.log(items);
 
   res.status(200).render('pages/result', {
     city: trip.rows[0].city,
-    country: trip.rows[0].country,
+    country: countryData.rows[0].name,
     countryData: countryData.rows[0],
     request: req.body,
     items: items,
+    name: trip.rows[0].name,
     weather: []
   });
 };
