@@ -33,7 +33,8 @@ function Country(country) {
   this.capital = country.capital;
   this.population = country.population;
   this.borders = country.borders.join(', ');
-  this.currencies = country.currencies.map(curr => curr.name).join(', ');
+  this.currencies = country.currencies.map(curr => curr.name);
+  this.currencyCodes = country.currencies.map(curr => curr.code);
   this.languages = country.languages.map(lang => lang.name).join(', ');
   this.flag_url = country.flag;
 }
@@ -85,6 +86,18 @@ async function getCountryData(code) {
   }
 }
 
+//Getting currency exchange rate
+async function getCurrency(countryData) {
+  const url = `https://openexchangerates.org/api/latest.json?app_id=${process.env.CURRENCY_API_KEY}&base=USD`;
+  try {
+    const currencyData = await superagent.get(url);
+    const currencyRates = countryData.currencyCodes.map(code => currencyData.body.rates[code] ? currencyData.body.rates[code].toFixed(2) : false);
+    return currencyRates;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 // Getting the days of the vacation
 function getDays(vacation) {
   const startDate = Date.parse(vacation.start_date) / 1000;
@@ -125,7 +138,11 @@ Results.resultsHandler = async function(req, res) {
       throw 'Location not found';
     } else {
       const days = getDays(req.body); //count number of vacation days
-      const countryData = await getCountryData(geo.countryCode); //get country info
+      let countryData = await getCountryData(geo.countryCode); //get country info
+      const currency = await getCurrency(countryData); //get currency exchange rate
+      const currencyStr = countryData.currencies.map( (el, idx) => el + (currency[idx] ? ` (1 USD = ${currency[idx]} ${countryData.currencyCodes[idx]})` : '')).join(', ');
+      // eslint-disable-next-line require-atomic-updates
+      countryData.currencies = currencyStr;
       const weather = await getForecast(days, geo.location); //get forecast info
       const items = await Results.getItems(req.body); //get items suggestion from database
       const user = await req.user; //getting user information
