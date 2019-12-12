@@ -8,7 +8,7 @@ $('.open-modal').on('click', () => {
   $('input[name=city]').focus();
 
   $(window).on('click', (event) => {
-    if($(event.target).is($modalEl)){ 
+    if($(event.target).is($modalEl)) {
       let leaveForm = confirm('Are you sure you want to cancel this form?');
       if(leaveForm === true) $modalEl.fadeOut(300);
     }
