@@ -42,6 +42,17 @@ ul.items{
   font-weight: 600;
 }
 
+/* ABOUT US PAGE */
+.about a > img {
+  width: 2em;
+  height: 2em;
+}
+
+.about section > img {
+  margin-bottom: 1rem;
+  max-width: 250px;
+}
+
 /* FORMS */
 form label {
   margin: 0.5rem auto;
@@ -171,6 +182,10 @@ form label {
   box-shadow: 2px 2px 5px 1px rgba(0,0,0,0.3);
 }
 
+.trip h3 {
+  align-self: flex-start;
+}
+
 /* TEMP PREFERENCES */
 #summer-winter-container {
   display: flex;
@@ -217,6 +232,10 @@ form label {
 
 .slider {
   -webkit-appearance: slider-vertical;
+}
+
+.justify {
+  text-align: justify;
 }
 
 
