@@ -5,6 +5,7 @@ let today = new Date().toJSON().slice(0, 10);
 
 $('.open-modal').on('click', () => {
   $modalEl.fadeIn(300);
+  $('input[name=city]').focus();
 
   $(window).on('click', (event) => {
     if($(event.target).is($modalEl)){ 
