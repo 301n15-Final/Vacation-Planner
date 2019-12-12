@@ -77,4 +77,5 @@
 
 ## Credits and Collaborations  
 [Icons](https://icons8.com/)  
+[Palm tree image](https://www.clipartwiki.com/)  
 [NodeJS Login Tutorial](https://youtu.be/-RCnNyD0L-s)
