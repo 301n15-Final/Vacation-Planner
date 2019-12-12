@@ -12,33 +12,43 @@
   <main class="flex-column">
       <section class="result main-content flex-column">
         <%- include('../partials/partial-result.ejs', {
-          location: location,
-          weather: weather,
+          city: city,
           country: country,
+          weather: weather,
+          countryData: countryData,
           request: request,
           items: items
         }) %>
         <% if (typeof user !== 'undefined') { %>
           <button class="button open-modal">SAVE TRIP</button>
         <% } %>
+        <% if (tripId) { %>
+          <form action="/trips?_method=DELETE" method="POST">
+            <input type="hidden" name="tripId" value="<%= tripId %>">
+            <button type="submit" class="button">DELETE TRIP</button>
+          </form>
+        <% } %>
       </section>
       <section class="modal">
         <div class="modal-content">
           <form class="flex-column" action="/trips" method="POST">
             <label for="trip-name">Please enter name for your trip</label>
-            <input class="input" type="text" name="trip_name" placeholder="My trip to <%= location.city %>, <%= location.country %> <%= request.start_date %> - <%= request.end_date %>" value="My trip to <%= location.city %>, <%= location.country %> <%= request.start_date %> - <%= request.end_date %>">
-            <input type="hidden" name="city" value="<%= location.city %>">
-            <input type="hidden" name="country" value="<%= location.country %>">
+            <input class="input" type="text" name="trip_name" placeholder="Please enter name for your trip" value="My trip to <%= city %>, <%= country %> <%= request.start_date %> - <%= request.end_date %>">
+            <input type="hidden" name="city" value="<%= city %>">
+            <input type="hidden" name="country" value="<%= country %>">
             <input class="input" type="hidden" name="start_date" value="<%= request.start_date %>">
             <input class="input" type="hidden" name="end_date" value="<%= request.end_date %>">
-            <input type="hidden" name="capital" value="<%= country.capital %>">
-            <input type="hidden" name="population" value="<%= country.population %>">
-            <input type="hidden" name="borders" value="<%= country.borders %>">
-            <input type="hidden" name="currencies" value="<%= country.currencies %>">
-            <input type="hidden" name="languages" value="<%= country.languages %>">
-            <input type="hidden" name="flag_url" value="<%= country.flag_url %>">
+            <input type="hidden" name="capital" value="<%= countryData.capital %>">
+            <input type="hidden" name="population" value="<%= countryData.population %>">
+            <input type="hidden" name="borders" value="<%= countryData.borders %>">
+            <input type="hidden" name="currencies" value="<%= countryData.currencies %>">
+            <input type="hidden" name="languages" value="<%= countryData.languages %>">
+            <input type="hidden" name="flag_url" value="<%= countryData.flag_url %>">
             <input type="hidden" name="vacation_type" value="<%= request.vacation_type %>"> 
-            <input type="hidden" name="activities" value="<%= request.activities %>"> 
+            <input type="hidden" name="activity_type" value="<%= request.activity_type %>"> 
+            <% weather.forEach( day => { %>
+              <input type="hidden" name="weather" value="<%= day.day %>, <%= day.summary %>, <%= day.temperature %>, <%= day.precipType %>, <%= day.icon_url %>">
+            <% }) %>
 
             <button class="button">SAVE TRIP</button>
 

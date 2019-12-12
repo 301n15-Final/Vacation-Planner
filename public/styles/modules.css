@@ -7,14 +7,26 @@
   font-size: 14pt;
   font-weight: 600;
   padding: 1rem 0;
+  color: #ED4E14;
+  margin-top: 1rem;
+}
+
+.scroll-x {
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+  width: 100%;
+  overflow-x: auto;
+  flex-wrap: wrap;
 }
 
 ul.items{
-text-align: left;
+  text-align: left;
 }
 
 .country-info img {
-  max-width: 25%;
+  align-self: center;
+  max-width: 35%;
 }
 
 .country-info * {
@@ -28,6 +40,17 @@ text-align: left;
 
 .register a {
   font-weight: 600;
+}
+
+/* ABOUT US PAGE */
+.about a > img {
+  width: 2em;
+  height: 2em;
+}
+
+.about section > img {
+  margin-bottom: 1rem;
+  max-width: 250px;
 }
 
 /* FORMS */
@@ -54,6 +77,32 @@ form label {
   align-items: center;
 }
 
+.country-info {
+  margin: 1em 0;
+  align-items: flex-start;
+  text-align: left;
+  justify-content: center;
+  margin-left: 0.5rem;
+  padding-bottom: 0;
+}
+
+.country-info ul {
+  margin-left: 1em;
+}
+
+.forecast-list {
+  text-align: left;
+}
+
+.forecast-list > section {
+  margin: 1.3em;
+}
+
+.date-temp-icon {
+  display: flex;
+  flex-direction: row;
+}
+
 .modal {
   display: none; 
   position: fixed;
@@ -73,6 +122,26 @@ form label {
   padding: 2rem 1.5rem;
   border-radius: 3px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.6);
+}
+
+.trip-dates {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-evenly;
+}
+
+.left, .right {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.trip-dates label {
+  width: 35%;
+  margin: 0.7rem 0 0 0;
+  padding: 0.5rem;
+  text-align: center;
 }
 
 .button {
@@ -111,7 +180,8 @@ form label {
 }
 
 .icon {
-  width: 40px;
+  width: 32px;
+  margin-right: 5px;
 }
 
 .medium {
@@ -120,6 +190,20 @@ form label {
 
 .red {
   color: #d63031;
+}
+
+/* TRIPS PAGE */
+.trip {
+  width: 100%;
+  padding: 0 1rem 1rem 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid black;
+  border-radius: 3px;
+  box-shadow: 2px 2px 5px 1px rgba(0,0,0,0.3);
+}
+
+.trip h3 {
+  align-self: flex-start;
 }
 
 /* TEMP PREFERENCES */
@@ -170,11 +254,23 @@ form label {
   -webkit-appearance: slider-vertical;
 }
 
+.justify {
+  text-align: justify;
+}
+
 
 @media (min-width: 800px) {
   #summer-winter-container {
     flex-direction: row;
     justify-content: space-evenly;
     width: 100%;
+  }
+
+}
+
+@media (max-width: 800px) {
+  .trip-dates {
+    flex-direction: column;
+    justify-content: center;
   }
 }

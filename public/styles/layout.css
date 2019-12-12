@@ -39,15 +39,22 @@ nav {
   width: 100%;
   margin: 0;
   padding: 4rem 0 2rem 0;
-  background: rgba(253, 203, 110, 0.9);
+  background-color: rgba(253, 203, 110, 0.9);
+  background-image: url('../img/palm_tree.png');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: 0 4rem;
+  background-size: 7rem 7rem;
   text-align: center;
   border-radius: 3px;
 }
 
 nav ul li {
+  display: inline-block;
   padding: 0.7rem;
   color: #2d3436;
   font-weight: 900;
+  border-radius: 5px;
 }
 
 nav ul a {
@@ -64,12 +71,14 @@ nav ul a {
   color: #2d3436;
 }
 
-.about a>img{
-width: 2em;
-height: 2em;
-}
-
 /* MAIN */
 main {
   margin-top: 6rem;
+  margin-bottom: 5rem;
+}
+
+@media (min-width: 800px) {
+  nav {
+    background-position: 6rem 4rem;
+  }
 }

@@ -12,12 +12,12 @@
   <main class="flex-column">
     <section class="main-content flex-column">
       <h2>Welcome to your Vacation Planner!</h2>
-      <h3>Our Mission:</h3>
+      <h3><b>Our Mission:</b></h3>
       <p>
         We are committed to provide the best travel information for your upcoming trips. Making your vacation planning
         experience as smooth, stress-free, and fun as possible!
       </p>
-      <h3>How to:</h3>
+      <h3><b>How to:</b></h3>
       <p>Our app takes your trip information and generates weather forecast and useful country facts for you. We will
         also suggest a travel packing list for you based on your travel preferences.</p>
       <h3>Click "Start" below and tell us
@@ -30,10 +30,17 @@
         <form class="flex-column" action="/" method="POST">
           <label for="city">Enter the location</label>
           <input class="input" type="text" name="city" placeholder="Enter city of your destination" required>
-          <label for="start_date">Enter start date of your vacation</label>
-          <input class="input" type="date" name="start_date" required>
-          <label for="end_date">Enter end date of your vacation</label>
-          <input class="input" type="date" name="end_date" required>
+          <label for="trip-dates">Select the dates of your trip.</label>
+          <section class="trip-dates">
+            <section class="left">
+              <label for="start_date">Starts:</label>
+              <input id="start-date" class="input" type="date" name="start_date" required>
+            </section>
+            <section class="right">
+              <label for="end_date">Ends:</label>
+              <input id="end-date" class="input" type="date" name="end_date" required>
+            </section>
+          </section>
           <label for="vacation_type">Vacation Type</label>
           <select class="input" name="vacation_type">
             <option value="tropical">Tropical</option>
@@ -41,8 +48,8 @@
             <option value="pool/beach">Pool/Beach</option>
             <option value="active adventure">Active Adventure</option>
           </select>
-          <label for="activities">Select Activities</label>
-          <select class="input" name="activities">
+          <label for="activity_type">Select Activities</label>
+          <select class="input" name="activity_type">
             <option value="water-based">Water-based</option>
             <option value="land-based">Land-based</option>
             <option value="high intensity">High intensity</option>
