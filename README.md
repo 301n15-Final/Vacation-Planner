@@ -58,6 +58,7 @@
   DATABASE_URL - postgreSQL url  
   GEOCODE_API_KEY - google API key  
   WEATHER_API - Dark Sky API key  
+  CURRENCY_API_KEY - Open Exchange Rates API key  
   SESSION_SECRET - secret keyword for bcrypt password hash (could be anything)  
 
 

@@ -1,5 +1,9 @@
 body {
-  background: #fffaeb;
+  background-color: #b8dbff;
+  background-image: url('../img/portrait_background.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   font-family: 'Raleway', sans-serif;
 }
 
