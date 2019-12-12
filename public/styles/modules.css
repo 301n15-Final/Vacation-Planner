@@ -33,8 +33,32 @@ ul.items {
   padding-bottom: 0.8rem;
 }
 
-input[type=checkbox]:checked + label {
+.items input[type=checkbox]:checked + label {
   text-decoration: line-through;
+}
+
+.items input[type=checkbox] {
+  opacity: 0;
+}
+
+.items input[type="checkbox"] + label:before {
+  border: 1px solid rgb(83, 83, 83);
+  border-radius: 3px;
+  content: "\00a0";
+  display: inline-block;
+  height: 12pt;
+  width: 12pt;
+  margin: 3px 12px 3px -19px;
+}
+
+.items input[type="checkbox"]:checked + label:before {
+  color: rgb(83, 83, 83);
+  content: "\2713";
+  text-align: center;
+}
+
+.items label {
+  margin-right: 0.5rem;
 }
 
 /* LOGIN AND REGISTER PAGES */
