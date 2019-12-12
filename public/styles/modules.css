@@ -50,6 +50,7 @@ ul.items{
 
 .about section > img {
   margin-bottom: 1rem;
+  max-width: 250px;
 }
 
 /* FORMS */
