@@ -30,13 +30,17 @@
         <form class="flex-column" action="/" method="POST">
           <label for="city">Enter the location</label>
           <input class="input" type="text" name="city" placeholder="Enter city of your destination" required>
-
-          <label for="start_date">Enter start date of your vacation</label>
-          <input id="start-date" class="input" type="date" name="start_date" required>
-          
-          <label for="end_date">Enter end date of your vacation</label>
-          <input id="end-date" class="input" type="date" name="end_date" required>
-
+          <label for="trip-dates">Select the dates of your trip.</label>
+          <section class="trip-dates">
+            <section class="left">
+              <label for="start_date">Starts:</label>
+              <input id="start-date" class="input" type="date" name="start_date" required>
+            </section>
+            <section class="right">
+              <label for="end_date">Ends:</label>
+              <input id="end-date" class="input" type="date" name="end_date" required>
+            </section>
+          </section>
           <label for="vacation_type">Vacation Type</label>
           <select class="input" name="vacation_type">
             <option value="tropical">Tropical</option>
