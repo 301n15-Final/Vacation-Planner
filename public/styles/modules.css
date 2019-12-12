@@ -33,6 +33,7 @@ ul.items {
   padding-bottom: 0.8rem;
 }
 
+/* RESULT PAGE CHECKBOXES */
 .items input[type=checkbox]:checked + label {
   text-decoration: line-through;
 }
@@ -58,7 +59,7 @@ ul.items {
 }
 
 .items label {
-  margin-right: 0.5rem;
+  margin-right: 0.7rem;
 }
 
 /* LOGIN AND REGISTER PAGES */
