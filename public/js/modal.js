@@ -15,11 +15,6 @@ $('.open-modal').on('click', () => {
   });
 });
 
-$('#start-date').click(function(event){
-  event.preventDefault();
-  $('#start-date').click();
-});
-
 $('#start-date').focusout(() => {
   if($('#start-date').val()){
     // let startDate = new Date($('#start-date').val());
