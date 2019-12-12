@@ -1,7 +1,7 @@
 'use strict';
 
 let $modalEl = $('.modal');
-let today = new Date().toJSON().slice(0, 10);
+
 
 $('.open-modal').on('click', () => {
   $modalEl.fadeIn(300);
@@ -16,31 +16,42 @@ $('.open-modal').on('click', () => {
 });
 
 $('#start-date').focusout(() => {
-  let startDate = new Date($('#start-date').val()).toJSON().slice(0, 10);
-  console.log('startDate: ', startDate);
+  if($('#start-date').val()){
+    // let startDate = new Date($('#start-date').val());
+    let startDate = $('#start-date').val() + ' 23:59:59';
+    let today = new Date();
+    console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
+    console.log('startDate: ', startDate);
+    console.log('today: ', today);
 
-  let validStartDate = compareDate(today, startDate);
-  console.log('valid start date? ', validStartDate);
-  if(!validStartDate){
-    alert('The start date must be today\'s date or later.\nPlease re-enter your trip\'s start date.');
-    $('#start-date').val('');
-    $('#start-date').focus();
+    let validStartDate = compareDate(today, startDate);
+    console.log('valid start date? ', validStartDate);
+    console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
+    if(!validStartDate){
+      alert('The start date must be today\'s date or later.\nPlease re-enter your trip\'s start date.');
+      $('#start-date').val('');
+      $('#start-date').focus();
+    }
   }
 });
 
 $('#end-date').focusout(() => {
-  let startDate = new Date($('#start-date').val()).toJSON().slice(0, 10);
-  let endDate = new Date($('#end-date').val()).toJSON().slice(0, 10);
-  console.log('startDate: ', endDate);
+  if($('#end-date').val()){
 
-  let validEndDate = compareDate(startDate, endDate);
-  if(!validEndDate){
-    alert('The start date must be later than the end date.\nPlease re-enter your trip\'s start and end dates.');
-    $('input[type=date]').val('');
-    $('#start-date').focus();
+    let startDate = $('#start-date').val() + ' 23:59:59';
+    let endDate = $('#end-date').val() + ' 23:59:59';
+    console.log('startDate: ', startDate);
+    console.log('endDate: ', endDate);
+
+    let validEndDate = compareDate(startDate, endDate);
+    if(!validEndDate){
+      alert('The start date must be later than the end date.\nPlease re-enter your trip\'s start and end dates.');
+      $('input[type=date]').val('');
+      $('#start-date').focus();
+    }
   }
 });
 
 function compareDate(date1, date2){
-  return date2 > date1;
+  return Date.parse(date2) >= Date.parse(date1);
 }
