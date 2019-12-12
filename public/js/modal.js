@@ -2,7 +2,6 @@
 
 let $modalEl = $('.modal');
 
-
 $('.open-modal').on('click', () => {
   $modalEl.fadeIn(300);
   $('input[name=city]').focus();
@@ -23,7 +22,6 @@ $('#start-date').focusout(() => {
     console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
     console.log('startDate: ', startDate);
     console.log('today: ', today);
-
     let validStartDate = compareDate(today, startDate);
     console.log('valid start date? ', validStartDate);
     console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
@@ -37,12 +35,10 @@ $('#start-date').focusout(() => {
 
 $('#end-date').focusout(() => {
   if($('#end-date').val()){
-
     let startDate = $('#start-date').val() + ' 23:59:59';
     let endDate = $('#end-date').val() + ' 23:59:59';
     console.log('startDate: ', startDate);
     console.log('endDate: ', endDate);
-
     let validEndDate = compareDate(startDate, endDate);
     if(!validEndDate){
       alert('The start date must be later than the end date.\nPlease re-enter your trip\'s start and end dates.');
