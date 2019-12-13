@@ -73,31 +73,41 @@ async function saveItems(trip_id, item) {
       await client.query(sql, [trip_id, itemId.rows[0].id]);
     }
   } catch (err) {
-    console.log('inside save items', err);
+    console.log(err);
   }
 }
 
 async function getItems(trip_id) {
-  const sql = `SELECT standard_packing_item.name AS item
-  FROM trip_items
-  JOIN standard_packing_item
-  ON trip_items.standard_packing_item_id = standard_packing_item.id
-  JOIN trip
-  ON trip_items.trip_id = trip.id
-  WHERE trip.id = $1`;
   try {
-    let items = await client.query(sql, [trip_id]);
-    console.log(items.rows);
-    return items.rows.map(item => item.item);
+    let sql = `SELECT standard_packing_item.name AS item
+    FROM trip_items
+    JOIN standard_packing_item
+    ON trip_items.standard_packing_item_id = standard_packing_item.id
+    JOIN trip
+    ON trip_items.trip_id = trip.id
+    WHERE trip.id = $1`;
+    const standard_items = await client.query(sql, [trip_id]);
+
+    sql = `SELECT custom_packing_item.name AS item
+    FROM trip_custom_packing_item
+    JOIN custom_packing_item
+    ON trip_custom_packing_item.custom_packing_item_id = custom_packing_item.id
+    JOIN trip
+    ON trip_custom_packing_item.trip_id = trip.id
+    WHERE trip.id = $1`;
+    const custom_items = await client.query(sql, [trip_id]);
+
+    const items = [...standard_items.rows, ...custom_items.rows];
+
+    return items.map(item => item.item);
   } catch (err) {
-    console.log('inside get items', err);
+    console.log(err);
   }
 }
 
 Trip.saveTripHandler = async function(req, res) {
   try {
     const r = req.body;
-    console.log(r);
     const country = await getCountryId(r);
     const user = await req.user;
     const tripID = await saveTrip(r, user.id, country);
