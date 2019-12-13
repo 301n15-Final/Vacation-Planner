@@ -4,6 +4,7 @@ const tripId = $('input[name=tripId]').val();
 const $checkboxes = $('input[type=checkbox]');
 const checked = [];
 
+// EVENT HANDLERS
 // After every click save checked checkboxes to local storage
 function saveToLocalStorage(e) {
   checked.length = 0;
@@ -18,6 +19,7 @@ function saveToLocalStorage(e) {
   localStorage.setItem(`trip${tripId}`, checkedToJSON);
 }
 
+// Restore saved checkboxes from local storage
 function restoreFromLocalStorage() {
   if(localStorage.getItem(`trip${tripId}`) && tripId) {
     const savedCheckboxesJSON = localStorage.getItem(`trip${tripId}`);
@@ -30,8 +32,35 @@ function restoreFromLocalStorage() {
   }
 }
 
+// get current items from the DOM
+function getCurrentItems() {
+  const items = [];
+  $('.items li').each(function() {
+    items.push( $(this).find('label').text() );
+  });
+  return items;
+}
 
+// Delete items when user clicks on 'X'
+function deleteItem(e) {
+  if( $(e.target).is( $('.delete') )) {
+    $(e.target).parent().remove();
+  }
+}
+
+// Append current items to the form
+function saveCurrentItems() {
+  const items = getCurrentItems();
+  $('<input />').attr('type', 'hidden')
+    .attr('name', `items`)
+    .attr('value', `${items}`)
+    .appendTo('.export');
+}
+
+// EVENT LISTENERS
 $('.items').on('click', saveToLocalStorage);
+$('.items').on('click', deleteItem);
+$('.export').submit(saveCurrentItems);
 $( () => restoreFromLocalStorage() );
 
 

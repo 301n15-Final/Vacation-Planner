@@ -17,6 +17,7 @@
           weather: weather,
           countryData: countryData,
           request: request,
+          tripId: tripId,
           items: items
         }) %>
         <% if (typeof user !== 'undefined') { %>
@@ -31,7 +32,7 @@
       </section>
       <section class="modal">
         <div class="modal-content">
-          <form class="flex-column" action="/trips" method="POST">
+          <form class="flex-column export" action="/trips" method="POST">
             <label for="trip-name">Please enter the name for your trip</label>
             <input class="input" type="text" name="trip_name" placeholder="Please enter name for your trip" value="My trip to <%= city %>, <%= country %> <%= request.start_date %> - <%= request.end_date %>">
             <input type="hidden" name="city" value="<%= city %>">
