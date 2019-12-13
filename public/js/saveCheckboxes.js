@@ -3,7 +3,6 @@
 const tripId = $('input[name=tripId]').val();
 const $checkboxes = $('input[type=checkbox]');
 const checked = [];
-let buttonsHidden = true;
 
 // EVENT HANDLERS
 // After every click save checked checkboxes to local storage
@@ -42,21 +41,21 @@ function getCurrentItems() {
   return items;
 }
 
-function toggleDeleteItems() {
-  if(buttonsHidden) {
-    $('.delete').fadeIn(100).css('display', 'inline-block');
-    buttonsHidden = false;
-  } else {
-    $('.delete').fadeOut(100).css('display', 'none');
-    buttonsHidden = true;
+// Show Delete button when user selects checkbox
+function showButton(e) {
+  if( $(e.target).is( $checkboxes )) {
+    $('.edit').show();
   }
 }
 
-// Delete items when user clicks on 'X'
-function deleteItem(e) {
-  if( $(e.target).is( $('.delete') )) {
-    $(e.target).parent().remove();
-  }
+// Delete selected items
+function deleteItems() {
+  $('.items li').each(function() {
+    if($(this).find($checkboxes).prop('checked') === true) {
+      $(this).find($checkboxes).parent().remove();
+      $('.edit').hide();
+    }
+  });
 }
 
 // Append current items to the form
@@ -70,8 +69,8 @@ function saveCurrentItems() {
 
 // EVENT LISTENERS
 $('.items').on('click', saveToLocalStorage);
-$('.items').on('click', deleteItem);
-$('.edit').on('click', toggleDeleteItems);
+$('.items').on('click', showButton);
+$('.edit').on('click', deleteItems);
 $('.export').submit(saveCurrentItems);
 $( () => restoreFromLocalStorage() );
 
