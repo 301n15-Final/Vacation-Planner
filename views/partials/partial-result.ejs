@@ -1,42 +1,44 @@
 <% if(typeof name === 'undefined') { %>
   <h2 id="trip-name">Your trip to <%= city %> <br>
     <%= request.start_date %> - <%= request.end_date %></h2>
-<% } else { %>
-  <h2 id="trip-name"><%= name %></h2>
-<% } %>
+    <% } else { %>
+      <h2 id="trip-name"><%= name %></h2>
+      <% } %>
+      
+  <section class="no-print">
+    <h3>Information about your destination:</h3>
 
-  <h3>Information about your destination:</h3>
-
-  <div class="country-info flex-row">
-    <img src="<%= countryData.flag_url %>" alt="flag of <%= countryData.country %>">
-    <ul>
-      <li><b>Country: </b><%= country %></li>
-      <li><b>Capital: </b><%= countryData.capital %> </li>
-      <li><b>Population: </b><%= countryData.population %></li>
-      <li><b>Borders: </b><%= countryData.borders %></li>
-      <li><b>Currencies: </b><%= countryData.currencies %></li>
-      <li><b>Languages: </b><%= countryData.languages %></li>
-    </ul>
-  </div>
-    <h3>For the dates of your trip, the daily historical averages are as follows:</h3>
-    <ul class="forecast-list scroll-x">
-    <% weather.forEach( day => { %>
-      <section>
-        <div class="date-temp-icon">
-          <li><img class="icon" src="<%= day.icon_url %>" alt="weather icon"> </li>
-          <div>
-            <li><%= day.day %> </li>
-            <li>Average temperature: <%= day.temperature %> &deg;F</li>
+    <div class="country-info flex-row">
+      <img src="<%= countryData.flag_url %>" alt="flag of <%= countryData.country %>">
+      <ul>
+        <li><b>Country: </b><%= country %></li>
+        <li><b>Capital: </b><%= countryData.capital %> </li>
+        <li><b>Population: </b><%= countryData.population %></li>
+        <li><b>Borders: </b><%= countryData.borders %></li>
+        <li><b>Currencies: </b><%= countryData.currencies %></li>
+        <li><b>Languages: </b><%= countryData.languages %></li>
+      </ul>
+    </div>
+      <h3>For the dates of your trip, the daily historical averages are as follows:</h3>
+      <ul class="forecast-list scroll-x">
+      <% weather.forEach( day => { %>
+        <section>
+          <div class="date-temp-icon">
+            <li><img class="icon" src="<%= day.icon_url %>" alt="weather icon"> </li>
+            <div>
+              <li><%= day.day %> </li>
+              <li>Average temperature: <%= day.temperature %> &deg;F</li>
+            </div>
           </div>
-        </div>
-        <li><%= day.summary %></li>
-      </section>
-      <% }) %>
-   </ul>
-
-  <h3>For your trip we suggest you bring:</h3>
+          <li><%= day.summary %></li>
+        </section>
+        <% }) %>
+    </ul>
+    <h3>For your trip, we suggest you bring:</h3>
+    <a class="print-list" href="javascript:window.print()">Print Packing List</a>
+  </section>
 <ul class="items scroll-x">
   <% items.forEach( item => { %>
-  <li><input type="checkbox"><label><%= item %></label></li>
+    <li class="packing-item"><input type="checkbox"><label><%= item %></label></li>
   <% }) %>
 </ul>

@@ -18,6 +18,8 @@
   width: 100%;
   overflow-x: auto;
   flex-wrap: wrap;
+  padding-left: 3%;
+  padding-top: 3%;
 }
 
 ul.items {
