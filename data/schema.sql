@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS login, traveler, activity_type, vacation_type, standard_packing_item, custom_packing_item, country, weather, trip, standard_packing_item_activity_type, standard_packing_item_vacation_type, trip_packing_item;
+DROP TABLE IF EXISTS login, traveler, activity_type, vacation_type, standard_packing_item, custom_packing_item, country, weather, trip_items, trip, standard_packing_item_activity_type, standard_packing_item_vacation_type, trip_packing_item;
 
 CREATE TABLE traveler (
   id SERIAL PRIMARY KEY,

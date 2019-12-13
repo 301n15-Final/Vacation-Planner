@@ -6,9 +6,6 @@ const client = new pg.Client(process.env.DATABASE_URL);
 client.connect();
 client.on('error', err => console.log(err));
 
-const Results = require('./results');
-const getItems = Results.getItems;
-
 const Trip = {};
 
 // Check if country exists, if not - save and return
@@ -37,20 +34,50 @@ async function saveTrip(r, userId, country) {
     (SELECT id FROM activity_type WHERE LOWER(name) = $8))
   RETURNING trip.id AS id;`;
 
-  const tripId = await client.query(sql, [userId, r.trip_name, r.city, country.id, r.start_date, r.end_date, r.vacation_type, r.activity_type]);
-  return tripId.rows[0].id;
+  try {
+    const tripId = await client.query(sql, [userId, r.trip_name, r.city, country.id, r.start_date, r.end_date, r.vacation_type, r.activity_type]);
+    return tripId.rows[0].id;
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 async function saveWeather(trip_id, weather) {
   const sql = `INSERT INTO weather (trip_id, day, summary, temperature, precipType, icon_url)
   VALUES ($1, $2, $3, $4, $5, $6);`;
-  await client.query(sql, [trip_id, ...weather]);
+  try {
+    await client.query(sql, [trip_id, ...weather]);
+  } catch (err) {
+    console.log('inside save weather', err);
+  }
 }
 
 async function saveItems(trip_id, item) {
   const sql = `INSERT INTO trip_items (trip_id, standard_packing_item_id)
-  VALUES ($1, $2);`;
-  await client.query(sql, [trip_id, item]);
+  VALUES ($1,
+    (SELECT id FROM standard_packing_item WHERE name LIKE $2));`;
+  try {
+    await client.query(sql, [trip_id, item]);
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+async function getItems(trip_id) {
+  console.log('getItems called');
+  const sql = `SELECT standard_packing_item.name AS item
+  FROM trip_items
+  JOIN standard_packing_item
+  ON trip_items.standard_packing_item_id = standard_packing_item.id
+  JOIN trip
+  ON trip_items.trip_id = trip.id
+  WHERE trip.id = $1`;
+  try {
+    let items = await client.query(sql, [trip_id]);
+    return items.map(item => item.name);
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 Trip.saveTripHandler = async function(req, res) {
@@ -60,7 +87,7 @@ Trip.saveTripHandler = async function(req, res) {
     const country = await getCountryId(r);
     const user = await req.user;
     const tripID = await saveTrip(r, user.id, country);
-    const weather = r.weather.map( day => day.split(', '));
+    const weather = Array.isArray(r.weather) ? r.weather.map( day => day.split(', ')) : [r.weather.split(', ')];
     await weather.forEach(day => saveWeather(tripID, day));
     await r.items.split(',').forEach(item => saveItems(tripID, item));
 
@@ -105,7 +132,7 @@ Trip.showSavedTrip = async function(req, res) {
     const countryData = await client.query(sql, [trip.rows[0].country_id]);
 
     // Getting items
-    const items = await getItems(trip.rows[0]);
+    const items = await getItems(tripId);
 
     // Getting weather
     sql = `SELECT * FROM weather WHERE trip_id = $1;`;
