@@ -64,9 +64,6 @@ ul.items {
   cursor: pointer;
 }
 
-.delete span:hover {
-}
-
 /* LOGIN AND REGISTER PAGES */
 .register {
   padding-top: 2rem;
