@@ -50,7 +50,13 @@ function showButton(e) {
         areChecked ++;
       }
     });
-    areChecked > 0 ? $('.edit').show() : $('.edit').hide();
+    if(areChecked > 0) {
+      $('.edit').show();
+      $('.add').hide();
+    } else {
+      $('.edit').hide();
+      $('.add').show();
+    }
   }
 }
 
@@ -60,6 +66,7 @@ function deleteItems() {
     if($(this).find($checkboxes).prop('checked') === true) {
       $(this).find($checkboxes).parent().remove();
       $('.edit').hide();
+      $('.add').show();
     }
   });
 }
