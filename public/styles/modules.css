@@ -15,15 +15,16 @@
   display: flex;
   flex-direction: column;
   height: 300px;
-  width: 94%;
+  width: 96%;
   overflow-x: auto;
   flex-wrap: wrap;
-  padding-left: 3%;
+  padding-left: 2%;
   padding-bottom: 1%;
 }
 
 ul.items {
   text-align: left;
+  margin-top: 1rem;
 }
 
 /* RESULT PAGE CHECKBOXES */
@@ -65,6 +66,10 @@ ul.items {
 
 .items label {
   margin-right: 0.3rem;
+}
+
+.packing-item {
+  padding-right: 5%;
 }
 
 /* LOGIN AND REGISTER PAGES */
@@ -136,7 +141,7 @@ form label {
 }
 
 .forecast-list > section {
-  margin: 0.7em 1em;
+  margin: 0.7em 1.3em 0.7em 0;
 }
 
 .date-temp-icon {
