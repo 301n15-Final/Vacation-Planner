@@ -1,17 +1,40 @@
-var summerSlider = document.getElementById('summer-low');
-var summerOutput = document.getElementById('summer-temp');
-summerOutput.innerHTML = summerSlider.value;
+const $summerSlider = $('#summer-low');
+const $summerOutput = $('#summer-temp');
+const $winterSlider = $('#winter-high');
+const $winterOutput = $('#winter-temp');
+let summerTemp = $summerSlider.val();
+let winterTemp = $winterSlider.val();
 
-summerSlider.oninput = function() {
-  summerOutput.innerHTML = this.value;
-  console.log('summer low temp: ', this.value);
-};
+// EVENT HANDLERS
+function changeSummerTemp() {
+  $summerOutput.html( $(this).val() );
+  summerTemp = $(this).val();
+}
 
-var winterSlider = document.getElementById('winter-high');
-var winterOutput = document.getElementById('winter-temp');
-winterOutput.innerHTML = winterSlider.value;
+function changeWinterTemp() {
+  $winterOutput.html( $(this).val() );
+  winterTemp = $(this).val();
+}
 
-winterSlider.oninput = function() {
-  winterOutput.innerHTML = this.value;
-  console.log('winter high temp: ', this.value);
-};
+function sendTemperature() {
+  $('<input />').attr('type', 'hidden')
+    .attr('name', `summerTemp`)
+    .attr('value', `${summerTemp}`)
+    .appendTo('.register');
+  $('<input />').attr('type', 'hidden')
+    .attr('name', `winterTemp`)
+    .attr('value', `${winterTemp}`)
+    .appendTo('.register');
+}
+
+
+// EVENT LISTENERS
+$summerSlider.on('input', changeSummerTemp);
+$winterSlider.on('input', changeWinterTemp);
+$('button').on('click', sendTemperature);
+
+// ON PAGE LOAD
+$( () => {
+  $summerOutput.html( $summerSlider.val() );
+  $winterOutput.html( $winterSlider.val() );
+});

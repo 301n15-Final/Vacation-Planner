@@ -44,6 +44,7 @@ async function saveLogin(id, email, password) {
 
 async function registerUser(req, res) {
   try {
+    console.log('register user, req.body', req.body);
     const emailFound = await checkUniqueEmail(req.body);
     if (emailFound) {
       res.render('./pages/register', { email: req.body.email });
