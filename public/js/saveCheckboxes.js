@@ -32,6 +32,7 @@ function restoreFromLocalStorage() {
   }
 }
 
+// get current items from the DOM
 function getCurrentItems() {
   const items = [];
   $('.items li').each(function() {
@@ -40,6 +41,14 @@ function getCurrentItems() {
   return items;
 }
 
+// Delete items when user clicks on 'X'
+function deleteItem(e) {
+  if( $(e.target).is( $('.delete') )) {
+    $(e.target).parent().remove();
+  }
+}
+
+// Append current items to the form
 function saveCurrentItems() {
   const items = getCurrentItems();
   $('<input />').attr('type', 'hidden')
@@ -50,6 +59,7 @@ function saveCurrentItems() {
 
 // EVENT LISTENERS
 $('.items').on('click', saveToLocalStorage);
+$('.items').on('click', deleteItem);
 $('.export').submit(saveCurrentItems);
 $( () => restoreFromLocalStorage() );
 
