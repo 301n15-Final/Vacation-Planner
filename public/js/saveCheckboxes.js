@@ -32,13 +32,18 @@ function restoreFromLocalStorage() {
   }
 }
 
-// get current items from the DOM
+// Get current items from the DOM
 function getCurrentItems() {
   const items = [];
   $('.items li').each(function() {
     items.push( $(this).find('label').text() );
   });
   return items;
+}
+
+function toggleDeleteItems() {
+  $('.delete').fadeToggle();
+
 }
 
 // Delete items when user clicks on 'X'
@@ -60,6 +65,7 @@ function saveCurrentItems() {
 // EVENT LISTENERS
 $('.items').on('click', saveToLocalStorage);
 $('.items').on('click', deleteItem);
+$('.edit').on('click', toggleDeleteItems);
 $('.export').submit(saveCurrentItems);
 $( () => restoreFromLocalStorage() );
 

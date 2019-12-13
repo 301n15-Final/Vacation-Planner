@@ -36,14 +36,14 @@
         <% }) %>
     </ul>
     <h3>For your trip, we suggest you bring:</h3>
-    <a class="print-list" href="javascript:window.print()">Print Packing List</a>
+    <button class="button-small edit">Edit List</button> <a class="print-list" href="javascript:window.print()"><button class="button-small">Print List</button></a>
   </section>
 <ul class="items scroll-x">
   <% items.forEach( item => { %>
     <% if(tripId) { %>
       <li class="packing-item"><input type="checkbox"><label><%= item %></label></li>
     <% } else { %>
-      <li class="packing-item"><label class="spacious"><%= item %></label><span class="delete">&#10060;</span></li>
+      <li class="packing-item"><span class="delete">&#10060;</span><label class="spacious"><%= item %></label></li>
     <% } %>
   <% }) %>
 </ul>

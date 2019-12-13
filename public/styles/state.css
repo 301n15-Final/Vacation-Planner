@@ -7,13 +7,14 @@ nav ul li:hover {
   color: #fffaeb;
 }
 
-.button:hover {
+.button:hover, .button-small:hover {
   background: #dc5838;
 }
 
 #menu:active, 
 nav ul li:active,
-.button:active {
+.button:active,
+.button-small:active {
   transform: translateY(2px);
 }
 
