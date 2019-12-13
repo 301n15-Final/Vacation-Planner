@@ -53,18 +53,32 @@ async function saveWeather(trip_id, weather) {
 }
 
 async function saveItems(trip_id, item) {
-  const sql = `INSERT INTO trip_items (trip_id, standard_packing_item_id)
-  VALUES ($1,
-    (SELECT id FROM standard_packing_item WHERE name LIKE $2));`;
   try {
-    await client.query(sql, [trip_id, item]);
+    let sql = `SELECT id FROM standard_packing_item WHERE name LIKE $1;`;
+    let itemId = await client.query(sql, [item]);
+    if(itemId.rowCount > 0) {
+      sql = `INSERT INTO trip_items (trip_id, standard_packing_item_id)
+      VALUES ($1, $2);`;
+      await client.query(sql, [trip_id, itemId.rows[0].id]);
+    } else {
+      sql = `SELECT id FROM custom_packing_item WHERE name LIKE $1;`;
+      itemId = await client.query(sql, [item]);
+      if(itemId.rowCount < 1) {
+        sql = `INSERT INTO custom_packing_item (name)
+        VALUES ($1) RETURNING id;`;
+        itemId = await client.query(sql, [item]);
+      } else {
+        sql = `INSERT INTO trip_custom_packing_item (trip_id, custom_packing_item_id)
+        VALUES ($1, $2);`;
+      }
+      await client.query(sql, [trip_id, itemId.rows[0].id]);
+    }
   } catch (err) {
-    console.log(err);
+    console.log('inside save items', err);
   }
 }
 
 async function getItems(trip_id) {
-  console.log('getItems called');
   const sql = `SELECT standard_packing_item.name AS item
   FROM trip_items
   JOIN standard_packing_item
@@ -77,7 +91,7 @@ async function getItems(trip_id) {
     console.log(items.rows);
     return items.rows.map(item => item.item);
   } catch (err) {
-    console.log(err);
+    console.log('inside get items', err);
   }
 }
 
@@ -90,6 +104,7 @@ Trip.saveTripHandler = async function(req, res) {
     const tripID = await saveTrip(r, user.id, country);
     const weather = Array.isArray(r.weather) ? r.weather.map( day => day.split(', ')) : [r.weather.split(', ')];
     await weather.forEach(day => saveWeather(tripID, day));
+
     await r.items.split(',').forEach(item => saveItems(tripID, item));
 
     res.status(200).redirect('/trips');
