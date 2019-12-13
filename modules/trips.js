@@ -67,10 +67,9 @@ async function saveItems(trip_id, item) {
         sql = `INSERT INTO custom_packing_item (name)
         VALUES ($1) RETURNING id;`;
         itemId = await client.query(sql, [item]);
-      } else {
-        sql = `INSERT INTO trip_custom_packing_item (trip_id, custom_packing_item_id)
-        VALUES ($1, $2);`;
       }
+      sql = `INSERT INTO trip_custom_packing_item (trip_id, custom_packing_item_id)
+      VALUES ($1, $2);`;
       await client.query(sql, [trip_id, itemId.rows[0].id]);
     }
   } catch (err) {

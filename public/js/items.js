@@ -74,19 +74,22 @@ function deleteItems() {
 function enterItem() {
   const $enterItem = $('.enter-item');
   $enterItem.empty();
-
-  $('<input />', {
+  let inputEl = $('<input />', {
     type: 'text',
     name: 'item',
     placeholder: 'Enter item name',
     class: 'add-item'
-  }).appendTo($enterItem);
+  });
+
+  inputEl.appendTo($enterItem);
 
   $('<button />', {
     text: 'add',
     class: 'button-small',
     click: addItem
   }).appendTo($enterItem);
+
+  inputEl.focus();
 
 }
 
