@@ -48,7 +48,8 @@ ul.items {
 
 .items input[type="checkbox"]:checked + label:before {
   color: rgb(83, 83, 83);
-  content: "\2713";
+  color: #08BD29;
+  content: "\2714";
   text-align: center;
 }
 

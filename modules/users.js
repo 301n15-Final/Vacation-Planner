@@ -51,7 +51,7 @@ async function registerUser(req, res) {
       const travelerId = await saveTraveler(req.body); // save user into traveler table
       const hashedPassword = await bcrypt.hash(req.body.password, 10); // hash password
       await saveLogin(travelerId, req.body.email, hashedPassword); // save user into login table
-      res.redirect('/profile');
+      res.redirect('/');
     }
   } catch (err) {
     res.redirect('/register');
