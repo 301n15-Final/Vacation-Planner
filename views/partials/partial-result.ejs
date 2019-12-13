@@ -1,6 +1,6 @@
 <% if(typeof name === 'undefined') { %>
   <h2 id="trip-name">Your trip to <%= city %> <br>
-    <%= request.start_date %> - <%= request.end_date %></h2>
+    <%= request.start_date %> through <%= request.end_date %></h2>
     <% } else { %>
       <h2 id="trip-name"><%= name %></h2>
       <% } %>
