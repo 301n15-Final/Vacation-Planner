@@ -58,7 +58,7 @@ Trip.saveTripHandler = async function(req, res) {
 
     res.status(200).redirect('/trips');
   } catch (err) {
-    console.log(err);
+    res.status(500).render('pages/error', { err: err });
   }
 };
 
@@ -74,7 +74,7 @@ Trip.getSavedTrips = async function(req, res) {
     let data = await client.query(sql, [user.id]);
     return res.status(200).render('pages/trips', {trips: data.rows});
   } catch (err) {
-    console.log(err);
+    res.status(500).render('pages/error', { err: err });
   }
 };
 

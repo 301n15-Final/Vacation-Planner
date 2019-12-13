@@ -19,7 +19,7 @@ function saveToLocalStorage(e) {
 }
 
 function restoreFromLocalStorage() {
-  if(localStorage.getItem(`trip${tripId}`) !== null) {
+  if(localStorage.getItem(`trip${tripId}`) && tripId) {
     const savedCheckboxesJSON = localStorage.getItem(`trip${tripId}`);
     const savedCheckboxes = JSON.parse(savedCheckboxesJSON);
     $('.items li').each(function() {
