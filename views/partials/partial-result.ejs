@@ -26,7 +26,7 @@
           <div class="date-temp-icon">
             <li><img class="result-weather-icon" src="<%= day.icon_url %>" alt="weather icon"> </li>
             <div>
-              <li><%= day.day %> </li>
+              <li><b><%= day.day %></b></li>
               <li>Average temperature: <%= day.temperature %> &deg;F</li>
             </div>
           </div>
@@ -37,16 +37,16 @@
     </ul>
     <h3>For your trip, we suggest you bring:</h3>
     <% if(!tripId) { %>
-      <button class="button-small edit">Edit List</button> 
+      <button class="button-small edit">Delete Selected</button> 
     <% } %>
     <a class="print-list" href="javascript:window.print()"><button class="button-small">Print List</button></a>
   </section>
 <ul class="items scroll-x">
   <% items.forEach( item => { %>
     <% if(tripId) { %>
-      <li class="packing-item"><input type="checkbox"><label><%= item %></label></li>
+      <li class="packing-item select"><input type="checkbox"><label><%= item %></label></li>
     <% } else { %>
-      <li class="packing-item"><span class="delete">&#10060;</span><label class="spacious"><%= item %></label></li>
+      <li class="packing-item delete"><input type="checkbox"><label><%= item %></label></li>
     <% } %>
   <% }) %>
 </ul>

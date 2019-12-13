@@ -15,18 +15,23 @@
   display: flex;
   flex-direction: column;
   height: 300px;
-  width: 94%;
+  width: 96%;
   overflow-x: auto;
   flex-wrap: wrap;
-  padding-left: 3%;
+  padding-left: 2%;
   padding-bottom: 1%;
 }
 
 ul.items {
   text-align: left;
+  margin-top: 1rem;
 }
 
 /* RESULT PAGE CHECKBOXES */
+.edit {
+  display: none;
+}
+
 .items input[type=checkbox]:checked + label {
   text-decoration: line-through;
 }
@@ -46,9 +51,16 @@ ul.items {
   margin: 3px 12px 3px -19px;
 }
 
-.items input[type="checkbox"]:checked + label:before {
-  color: rgb(83, 83, 83);
-  content: "\2713";
+.select input[type="checkbox"]:checked + label:before {
+  /* color: rgb(83, 83, 83); */
+  color: #08BD29;
+  content: "\2714";
+  text-align: center;
+}
+
+.delete input[type="checkbox"]:checked + label:before {
+  color: rgb(189, 35, 8);
+  content: "\2716";
   text-align: center;
 }
 
@@ -56,12 +68,8 @@ ul.items {
   margin-right: 0.3rem;
 }
 
-/* RESULT PAGE DELETE */
-.delete {
-  display: none;
-  font-size: 8pt;
-  margin-right: 0.3rem;
-  cursor: pointer;
+.packing-item {
+  padding-right: 5%;
 }
 
 /* LOGIN AND REGISTER PAGES */
@@ -133,7 +141,7 @@ form label {
 }
 
 .forecast-list > section {
-  margin: 1.3em;
+  margin: 0.7em 1.3em 0.7em 0;
 }
 
 .date-temp-icon {
