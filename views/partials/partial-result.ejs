@@ -7,7 +7,6 @@
       
   <section class="no-print">
     <h3>Information about your destination:</h3>
-
     <div class="country-info flex-row">
       <img src="<%= countryData.flag_url %>" alt="flag of <%= countryData.country %>">
       <ul>
@@ -29,7 +28,6 @@
               <li><%= day.day %> </li>
               <li>Average temperature: <%= day.temperature %> &deg;F</li>
             </div>
-          </div>
           <li><%= day.summary %></li>
         </section>
         <% }) %>
