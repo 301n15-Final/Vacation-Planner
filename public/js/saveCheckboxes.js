@@ -3,6 +3,7 @@
 const tripId = $('input[name=tripId]').val();
 const $checkboxes = $('input[type=checkbox]');
 const checked = [];
+let buttonsHidden = true;
 
 // EVENT HANDLERS
 // After every click save checked checkboxes to local storage
@@ -42,8 +43,13 @@ function getCurrentItems() {
 }
 
 function toggleDeleteItems() {
-  $('.delete').fadeToggle();
-
+  if(buttonsHidden) {
+    $('.delete').fadeIn(100).css('display', 'inline-block');
+    buttonsHidden = false;
+  } else {
+    $('.delete').fadeOut(100).css('display', 'none');
+    buttonsHidden = true;
+  }
 }
 
 // Delete items when user clicks on 'X'

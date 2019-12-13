@@ -61,6 +61,10 @@ ul.items {
   display: none;
   font-size: 8pt;
   margin-right: 0.3rem;
+  cursor: pointer;
+}
+
+.delete span:hover {
 }
 
 /* LOGIN AND REGISTER PAGES */
