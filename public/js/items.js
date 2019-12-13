@@ -97,22 +97,22 @@ function addItem() {
   let $class;
   tripId ? $class = 'select' : $class = 'delete';
 
+  if( $('.add-item').val() !== '' ) {
+    let labelEl = $('<label />', {
+      text: `${$('.add-item').val()}`
+    });
+    let checkboxEl = $('<input />', {
+      type: 'checkbox'
+    });
+    let liEl = $('<li />', {
+      class: `packing-item ${$class}`
+    });
 
-  let labelEl = $('<label />', {
-    text: `${$('.add-item').val()}`
-  });
-  let checkboxEl = $('<input />', {
-    type: 'checkbox'
-  });
-  let liEl = $('<li />', {
-    class: `packing-item ${$class}`
-  });
+    checkboxEl.appendTo(liEl);
+    labelEl.appendTo(liEl);
+    liEl.appendTo('.items');
+  }
 
-  checkboxEl.appendTo(liEl);
-  labelEl.appendTo(liEl);
-  liEl.appendTo('.items');
-
-  console.log( $('.add-item').val() );
   $('.enter-item').empty();
 }
 // Append current items to the form

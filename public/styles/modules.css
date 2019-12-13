@@ -52,7 +52,6 @@ ul.items {
 }
 
 .select input[type="checkbox"]:checked + label:before {
-  /* color: rgb(83, 83, 83); */
   color: #08BD29;
   content: "\2714";
   text-align: center;
@@ -88,6 +87,10 @@ ul.items {
   border-radius: 3px;
   border: none;
   padding: 0.5rem 1rem;
+}
+
+.add-item {
+  margin-right: 0.5rem;
 }
 
 
