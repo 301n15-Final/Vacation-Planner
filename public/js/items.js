@@ -43,10 +43,10 @@ function getCurrentItems() {
 
 // Show Delete button when user selects checkbox
 function showButton(e) {
-  if( $(e.target).is( $checkboxes )) {
+  if( $(e.target).is( $('input[type=checkbox]') )) {
     let areChecked = 0;
     $('.items li').each(function() {
-      if($(this).find($checkboxes).prop('checked') === true) {
+      if($(this).find( $('input[type=checkbox]') ).prop('checked') === true) {
         areChecked ++;
       }
     });
@@ -63,14 +63,55 @@ function showButton(e) {
 // Delete selected items
 function deleteItems() {
   $('.items li').each(function() {
-    if($(this).find($checkboxes).prop('checked') === true) {
-      $(this).find($checkboxes).parent().remove();
+    if($(this).find( $('input[type=checkbox]') ).prop('checked') === true) {
+      $(this).find( $('input[type=checkbox]') ).parent().remove();
       $('.edit').hide();
       $('.add').show();
     }
   });
 }
 
+function enterItem() {
+  const $enterItem = $('.enter-item');
+  $enterItem.empty();
+
+  $('<input />', {
+    type: 'text',
+    name: 'item',
+    placeholder: 'Enter item name',
+    class: 'add-item'
+  }).appendTo($enterItem);
+
+  $('<button />', {
+    text: 'add',
+    class: 'button-small',
+    click: addItem
+  }).appendTo($enterItem);
+
+}
+
+function addItem() {
+  let $class;
+  tripId ? $class = 'select' : $class = 'delete';
+
+
+  let labelEl = $('<label />', {
+    text: `${$('.add-item').val()}`
+  });
+  let checkboxEl = $('<input />', {
+    type: 'checkbox'
+  });
+  let liEl = $('<li />', {
+    class: `packing-item ${$class}`
+  });
+
+  checkboxEl.appendTo(liEl);
+  labelEl.appendTo(liEl);
+  liEl.appendTo('.items');
+
+  console.log( $('.add-item').val() );
+  $('.enter-item').empty();
+}
 // Append current items to the form
 function saveCurrentItems() {
   const items = getCurrentItems();
@@ -84,6 +125,7 @@ function saveCurrentItems() {
 $('.items').on('click', saveToLocalStorage);
 $('.items').on('click', showButton);
 $('.edit').on('click', deleteItems);
+$('.add').on('click', enterItem);
 $('.export').submit(saveCurrentItems);
 $( () => restoreFromLocalStorage() );
 

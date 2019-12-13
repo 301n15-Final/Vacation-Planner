@@ -72,6 +72,25 @@ ul.items {
   padding-right: 5%;
 }
 
+.enter-item {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+.enter-item > input {
+  width: 80%;
+  box-sizing: border-box;
+  height: 2rem;
+  border-radius: 3px;
+  border: none;
+  padding: 0.5rem 1rem;
+}
+
+
 /* LOGIN AND REGISTER PAGES */
 .register {
   padding-top: 2rem;
