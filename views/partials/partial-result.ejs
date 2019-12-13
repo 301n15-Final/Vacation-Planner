@@ -36,7 +36,10 @@
         <% }) %>
     </ul>
     <h3>For your trip, we suggest you bring:</h3>
-    <button class="button-small edit">Edit List</button> <a class="print-list" href="javascript:window.print()"><button class="button-small">Print List</button></a>
+    <% if(!tripId) { %>
+      <button class="button-small edit">Edit List</button> 
+    <% } %>
+    <a class="print-list" href="javascript:window.print()"><button class="button-small">Print List</button></a>
   </section>
 <ul class="items scroll-x">
   <% items.forEach( item => { %>
