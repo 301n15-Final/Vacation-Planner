@@ -190,6 +190,10 @@ Trip.deleteTrip = async function(req, res) {
     sql = `DELETE FROM trip_items WHERE trip_id = $1;`;
     await client.query(sql, [tripId]);
 
+    // deleting trip_custom_packing_item items
+    sql = `DELETE FROM trip_custom_packing_item WHERE trip_id = $1;`;
+    await client.query(sql, [tripId]);
+
     // deleting trip info
     sql = `DELETE FROM trip WHERE id = $1;`;
     await client.query(sql, [tripId]);
