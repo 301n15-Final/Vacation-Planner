@@ -223,6 +223,11 @@ form label {
   font-size: 14pt;
 }
 
+.spacious {
+  font-size: 12pt;
+  line-height: 1.8;
+}
+
 .red {
   color: #d63031;
 }
