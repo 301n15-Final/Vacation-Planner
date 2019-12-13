@@ -157,8 +157,16 @@ Trip.showSavedTrip = async function(req, res) {
 Trip.deleteTrip = async function(req, res) {
   try {
     const tripId = req.body.tripId;
+
+    // deleting weather
     let sql = `DELETE FROM weather WHERE trip_id = $1;`;
     await client.query(sql, [tripId]);
+
+    // deleting trip items
+    sql = `DELETE FROM trip_items WHERE trip_id = $1;`;
+    await client.query(sql, [tripId]);
+
+    // deleting trip info
     sql = `DELETE FROM trip WHERE id = $1;`;
     await client.query(sql, [tripId]);
 
