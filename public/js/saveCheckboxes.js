@@ -44,7 +44,13 @@ function getCurrentItems() {
 // Show Delete button when user selects checkbox
 function showButton(e) {
   if( $(e.target).is( $checkboxes )) {
-    $('.edit').show();
+    let areChecked = 0;
+    $('.items li').each(function() {
+      if($(this).find($checkboxes).prop('checked') === true) {
+        areChecked ++;
+      }
+    });
+    areChecked > 0 ? $('.edit').show() : $('.edit').hide();
   }
 }
 
