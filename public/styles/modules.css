@@ -59,6 +59,7 @@ ul.items {
 .delete {
   font-size: 8pt;
   margin-right: 0.6rem;
+  cursor: pointer;
 }
 
 /* LOGIN AND REGISTER PAGES */
@@ -237,6 +238,7 @@ form label {
 /* TRIPS PAGE */
 .trip {
   width: 100%;
+  background: #dfe6e9;
   padding: 0 1rem 1rem 1rem;
   margin-bottom: 1rem;
   border: 1px solid black;
