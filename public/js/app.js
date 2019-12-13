@@ -1,3 +1,5 @@
+'use strict';
+
 const $summerSlider = $('#summer-low');
 const $summerOutput = $('#summer-temp');
 const $winterSlider = $('#winter-high');
@@ -21,12 +23,12 @@ function sendTemperature() {
     .attr('name', `summerTemp`)
     .attr('value', `${summerTemp}`)
     .appendTo('.register');
+
   $('<input />').attr('type', 'hidden')
     .attr('name', `winterTemp`)
     .attr('value', `${winterTemp}`)
     .appendTo('.register');
 }
-
 
 // EVENT LISTENERS
 $summerSlider.on('input', changeSummerTemp);
