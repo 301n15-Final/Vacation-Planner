@@ -72,7 +72,7 @@ app.post('/', resultsHandler);
 
 app.get('/login', checkNotAuthenticated, (req, res) => res.status(200).render('pages/login'));
 app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
-  successRedirect: '/profile',
+  successRedirect: '/',
   failureRedirect: '/login',
   failureFlash: true
 }));

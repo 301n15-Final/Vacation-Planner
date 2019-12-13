@@ -27,6 +27,10 @@ ul.items {
 }
 
 /* RESULT PAGE CHECKBOXES */
+.edit {
+  display: none;
+}
+
 .items input[type=checkbox]:checked + label {
   text-decoration: line-through;
 }
@@ -46,22 +50,21 @@ ul.items {
   margin: 3px 12px 3px -19px;
 }
 
-.items input[type="checkbox"]:checked + label:before {
-  color: rgb(83, 83, 83);
-  content: "\2713";
+.select input[type="checkbox"]:checked + label:before {
+  /* color: rgb(83, 83, 83); */
+  color: #08BD29;
+  content: "\2714";
+  text-align: center;
+}
+
+.delete input[type="checkbox"]:checked + label:before {
+  color: rgb(189, 35, 8);
+  content: "\2716";
   text-align: center;
 }
 
 .items label {
   margin-right: 0.3rem;
-}
-
-/* RESULT PAGE DELETE */
-.delete {
-  display: none;
-  font-size: 8pt;
-  margin-right: 0.3rem;
-  cursor: pointer;
 }
 
 /* LOGIN AND REGISTER PAGES */

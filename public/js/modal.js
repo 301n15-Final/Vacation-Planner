@@ -27,6 +27,8 @@ $('#start-date').focusout(() => {
       alert('The start date must be today\'s date or later.\nPlease re-enter your trip\'s start date.');
       $('#start-date').val('');
       $('#start-date').focus();
+    } else {
+      $('#end-date').val( $('#start-date').val() );
     }
   }
 });
