@@ -38,8 +38,12 @@
     <h3>For your trip, we suggest you bring:</h3>
     <% if(!tripId) { %>
       <button class="button-small edit">Delete Selected</button> 
+      <button class="button-small add">Add Item</button> 
     <% } %>
     <a class="print-list" href="javascript:window.print()"><button class="button-small">Print List</button></a>
+    <div class="enter-item">
+      <!-- Add Item goes in here -->
+    </div>
   </section>
 <ul class="items scroll-x">
   <% items.forEach( item => { %>

@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS login, traveler, activity_type, vacation_type, standard_packing_item, custom_packing_item, country, weather, trip_items, trip, standard_packing_item_activity_type, standard_packing_item_vacation_type, trip_packing_item;
+DROP TABLE IF EXISTS login, traveler, activity_type, vacation_type, standard_packing_item, custom_packing_item, country, weather, trip_items, trip, standard_packing_item_activity_type, standard_packing_item_vacation_type, trip_custom_packing_item;
 
 CREATE TABLE traveler (
   id SERIAL PRIMARY KEY,
@@ -36,8 +36,6 @@ CREATE TABLE standard_packing_item (
 
 CREATE TABLE custom_packing_item (
   id SERIAL PRIMARY KEY,
-  traveler_id INTEGER NOT NULL,
-  FOREIGN KEY (traveler_id) REFERENCES traveler(id),
   name VARCHAR(255) UNIQUE
 );
 
@@ -100,10 +98,11 @@ CREATE TABLE standard_packing_item_vacation_type (
   FOREIGN KEY (vacation_type_id) REFERENCES vacation_type(id)
 );
 
-CREATE TABLE trip_packing_item (
+CREATE TABLE trip_custom_packing_item (
   trip_id INTEGER NOT NULL,
   FOREIGN KEY (trip_id) REFERENCES trip(id),  
-  packing_item_name VARCHAR(255) NOT NULL
+  custom_packing_item_id INTEGER NOT NULL,
+  FOREIGN KEY (custom_packing_item_id) REFERENCES custom_packing_item(id)
 );
 
 INSERT INTO vacation_type (name)

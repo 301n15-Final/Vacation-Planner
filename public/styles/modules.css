@@ -52,7 +52,6 @@ ul.items {
 }
 
 .select input[type="checkbox"]:checked + label:before {
-  /* color: rgb(83, 83, 83); */
   color: #08BD29;
   content: "\2714";
   text-align: center;
@@ -71,6 +70,29 @@ ul.items {
 .packing-item {
   padding-right: 5%;
 }
+
+.enter-item {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+.enter-item > input {
+  width: 80%;
+  box-sizing: border-box;
+  height: 2rem;
+  border-radius: 3px;
+  border: none;
+  padding: 0.5rem 1rem;
+}
+
+.add-item {
+  margin-right: 0.5rem;
+}
+
 
 /* LOGIN AND REGISTER PAGES */
 .register {
