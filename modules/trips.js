@@ -48,7 +48,7 @@ async function saveWeather(trip_id, weather) {
   try {
     await client.query(sql, [trip_id, ...weather]);
   } catch (err) {
-    console.log('inside save weather', err);
+    console.log(err);
   }
 }
 
@@ -74,7 +74,8 @@ async function getItems(trip_id) {
   WHERE trip.id = $1`;
   try {
     let items = await client.query(sql, [trip_id]);
-    return items.map(item => item.name);
+    console.log(items.rows);
+    return items.rows.map(item => item.item);
   } catch (err) {
     console.log(err);
   }
