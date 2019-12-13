@@ -42,6 +42,7 @@ ul.items {
   display: inline-block;
   height: 12pt;
   width: 12pt;
+  line-height: 12pt;
   margin: 3px 12px 3px -19px;
 }
 
@@ -57,8 +58,10 @@ ul.items {
 
 /* RESULT PAGE DELETE */
 .delete {
+  display: none;
   font-size: 8pt;
-  margin-right: 0.6rem;
+  margin-right: 0.3rem;
+  cursor: pointer;
 }
 
 /* LOGIN AND REGISTER PAGES */
@@ -106,12 +109,11 @@ form label {
 }
 
 .country-info {
-  margin: 1em 0;
+  flex-direction: column;
   text-align: left;
-  justify-content: center;
+  margin: 1em 0;
   margin-left: 0.5rem;
   padding-bottom: 0;
-  align-items: flex-start;
 }
 
 .country-info ul {
@@ -119,12 +121,11 @@ form label {
 }
 
 .country-info img {
-  align-self: top;
-  max-width: 35%;
+  max-width: 45%;
 }
 
 .country-info * {
-  padding-bottom: 0.8rem
+  padding-bottom: 0.6rem
 }
 
 .forecast-list {
@@ -162,23 +163,23 @@ form label {
 }
 
 .trip-dates {
-  display: flex;
   flex-direction: row;
-  width: 100%;
   justify-content: space-evenly;
+  width: 100%;
 }
 
 .left, .right {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
+  width: 100%;
 }
 
 .trip-dates label {
   width: 35%;
   margin: 0.7rem 0 0 0;
   padding: 0.5rem;
-  text-align: center;
+  text-align: left;
 }
 
 .button {
@@ -195,12 +196,26 @@ form label {
   outline: none;
 }
 
+.button-small {
+  box-sizing: border-box;
+  height: 2rem;
+  border-radius: 3px;
+  border: none;
+  padding: 0.5rem 1rem;
+  background: #e17055;
+  color: white;
+  cursor: pointer;
+  font-size: 100%;
+  outline: none;
+}
+
 .main-content {
   margin: 1rem 2rem;
   background: #fff2c9;
   padding: 3rem 2rem;
   border-radius: 3px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.6);
+  line-height: 1.5em;
 }
 
 .input {
@@ -221,6 +236,11 @@ form label {
   margin-right: 5px;
 }
 
+.result-weather-icon {
+  width: 40px;
+  margin-right: 5px;
+}
+
 .medium {
   font-size: 14pt;
 }
@@ -237,6 +257,7 @@ form label {
 /* TRIPS PAGE */
 .trip {
   width: 100%;
+  background: #dfe6e9;
   padding: 0 1rem 1rem 1rem;
   margin-bottom: 1rem;
   border: 1px solid black;
@@ -306,11 +327,30 @@ form label {
     justify-content: space-evenly;
     width: 100%;
   }
-}
-
-@media (max-width: 800px) {
-  .trip-dates {
-    flex-direction: column;
+  
+  .country-info {
+    flex-direction: row;
     justify-content: center;
+    align-items: flex-start;
+  }
+  
+  .country-info img {
+    align-self: top;
+    max-width: 35%;
+  }
+  
+  .trip-dates {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .left, .right {
+    flex-direction: row;
+  }
+
+  .trip-dates label {
+    text-align: center;
   }
 }

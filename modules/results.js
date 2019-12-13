@@ -140,7 +140,7 @@ Results.resultsHandler = async function(req, res) {
       const days = getDays(req.body); //count number of vacation days
       let countryData = await getCountryData(geo.countryCode); //get country info
       const currency = await getCurrency(countryData); //get currency exchange rate
-      const currencyStr = countryData.currencies.map( (el, idx) => el + (currency[idx] ? ` <b>(1 USD = ${currency[idx]} ${countryData.currencyCodes[idx]})</b>` : '')).join(', ');
+      const currencyStr = countryData.currencies.map( (el, idx) => el + (currency[idx] ? ` <b>(1 USD = ${currency[idx]} ${countryData.currencyCodes[idx]})</b>` : '')).join(',<br>');
       // eslint-disable-next-line require-atomic-updates
       countryData.currencies = currencyStr;
       const weather = await getForecast(days, geo.location); //get forecast info

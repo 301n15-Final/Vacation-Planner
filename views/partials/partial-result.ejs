@@ -1,6 +1,6 @@
 <% if(typeof name === 'undefined') { %>
   <h2 id="trip-name">Your trip to <%= city %> <br>
-    <%= request.start_date %> - <%= request.end_date %></h2>
+    <%= request.start_date %> through <%= request.end_date %></h2>
     <% } else { %>
       <h2 id="trip-name"><%= name %></h2>
       <% } %>
@@ -22,25 +22,31 @@
       <ul class="forecast-list scroll-x">
       <% weather.forEach( day => { %>
         <section>
+
           <div class="date-temp-icon">
-            <li><img class="icon" src="<%= day.icon_url %>" alt="weather icon"> </li>
+            <li><img class="result-weather-icon" src="<%= day.icon_url %>" alt="weather icon"> </li>
             <div>
               <li><%= day.day %> </li>
               <li>Average temperature: <%= day.temperature %> &deg;F</li>
             </div>
+          </div>
           <li><%= day.summary %></li>
+
         </section>
         <% }) %>
     </ul>
     <h3>For your trip, we suggest you bring:</h3>
-    <a class="print-list" href="javascript:window.print()">Print Packing List</a>
+    <% if(!tripId) { %>
+      <button class="button-small edit">Edit List</button> 
+    <% } %>
+    <a class="print-list" href="javascript:window.print()"><button class="button-small">Print List</button></a>
   </section>
 <ul class="items scroll-x">
   <% items.forEach( item => { %>
     <% if(tripId) { %>
       <li class="packing-item"><input type="checkbox"><label><%= item %></label></li>
     <% } else { %>
-      <li class="packing-item"><label class="spacious"><%= item %></label><span class="delete">&#10060;</span></li>
+      <li class="packing-item"><span class="delete">&#10060;</span><label class="spacious"><%= item %></label></li>
     <% } %>
   <% }) %>
 </ul>

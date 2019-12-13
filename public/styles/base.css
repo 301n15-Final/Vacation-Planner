@@ -1,9 +1,9 @@
 body {
-  background-color: #b8dbff;
   background-image: url('../img/portrait_background.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
+  min-height: 100%;
   font-family: 'Raleway', sans-serif;
 }
 
@@ -38,7 +38,7 @@ b {
 
 @media (orientation: landscape) {
   body {
-    background-image: url("../img/background.jpeg");
+    background-image: url("../img/background.jpg");
     background-repeat: no-repeat;
     background-size: cover;
   }
