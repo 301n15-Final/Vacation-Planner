@@ -79,6 +79,13 @@ CREATE TABLE weather (
   icon_url VARCHAR(255)
 );
 
+CREATE TABLE trip_items (
+  trip_id INTEGER NOT NULL,
+  FOREIGN KEY (trip_id) REFERENCES trip(id),
+  standard_packing_item_id INTEGER NOT NULL,
+  FOREIGN KEY (standard_packing_item_id) REFERENCES standard_packing_item(id)
+);
+
 CREATE TABLE standard_packing_item_activity_type (
   standard_packing_item_id INTEGER NULL,
   FOREIGN KEY (standard_packing_item_id) REFERENCES standard_packing_item(id),  

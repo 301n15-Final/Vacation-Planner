@@ -47,14 +47,22 @@ async function saveWeather(trip_id, weather) {
   await client.query(sql, [trip_id, ...weather]);
 }
 
+async function saveItems(trip_id, item) {
+  const sql = `INSERT INTO trip_items (trip_id, standard_packing_item_id)
+  VALUES ($1, $2);`;
+  await client.query(sql, [trip_id, item]);
+}
+
 Trip.saveTripHandler = async function(req, res) {
   try {
     const r = req.body;
+    console.log(r);
     const country = await getCountryId(r);
     const user = await req.user;
     const tripID = await saveTrip(r, user.id, country);
     const weather = r.weather.map( day => day.split(', '));
     await weather.forEach(day => saveWeather(tripID, day));
+    await r.items.split(',').forEach(item => saveItems(tripID, item));
 
     res.status(200).redirect('/trips');
   } catch (err) {
