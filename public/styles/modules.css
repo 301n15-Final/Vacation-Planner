@@ -18,19 +18,47 @@
   width: 100%;
   overflow-x: auto;
   flex-wrap: wrap;
+  padding-left: 3%;
+  padding-top: 3%;
 }
 
-ul.items{
+ul.items {
   text-align: left;
 }
 
-.country-info img {
-  align-self: center;
-  max-width: 35%;
+/* RESULT PAGE CHECKBOXES */
+.items input[type=checkbox]:checked + label {
+  text-decoration: line-through;
 }
 
-.country-info * {
-  padding-bottom: 0.8rem;
+.items input[type=checkbox] {
+  opacity: 0;
+}
+
+.items input[type="checkbox"] + label:before {
+  border: 1px solid rgb(83, 83, 83);
+  border-radius: 3px;
+  content: "\00a0";
+  display: inline-block;
+  height: 12pt;
+  width: 12pt;
+  margin: 3px 12px 3px -19px;
+}
+
+.items input[type="checkbox"]:checked + label:before {
+  color: rgb(83, 83, 83);
+  content: "\2713";
+  text-align: center;
+}
+
+.items label {
+  margin-right: 0.3rem;
+}
+
+/* RESULT PAGE DELETE */
+.delete {
+  font-size: 8pt;
+  margin-right: 0.6rem;
 }
 
 /* LOGIN AND REGISTER PAGES */
@@ -79,15 +107,24 @@ form label {
 
 .country-info {
   margin: 1em 0;
-  align-items: flex-start;
   text-align: left;
   justify-content: center;
   margin-left: 0.5rem;
   padding-bottom: 0;
+  align-items: flex-start;
 }
 
 .country-info ul {
   margin-left: 1em;
+}
+
+.country-info img {
+  align-self: top;
+  max-width: 35%;
+}
+
+.country-info * {
+  padding-bottom: 0.8rem
 }
 
 .forecast-list {
@@ -188,6 +225,11 @@ form label {
   font-size: 14pt;
 }
 
+.spacious {
+  font-size: 12pt;
+  line-height: 1.8;
+}
+
 .red {
   color: #d63031;
 }
@@ -258,14 +300,12 @@ form label {
   text-align: justify;
 }
 
-
 @media (min-width: 800px) {
   #summer-winter-container {
     flex-direction: row;
     justify-content: space-evenly;
     width: 100%;
   }
-
 }
 
 @media (max-width: 800px) {

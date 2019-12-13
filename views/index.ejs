@@ -14,15 +14,11 @@
       <h2>Welcome to your Vacation Planner!</h2>
       <h3><b>Our Mission:</b></h3>
       <p>
-        We are committed to provide the best travel information for your upcoming trips. Making your vacation planning
-        experience as smooth, stress-free, and fun as possible!
+        We are committed to provide the best travel information for your upcoming trips. Making your vacation planning experience as smooth, stress-free, and fun as possible!
       </p>
       <h3><b>How to:</b></h3>
-      <p>Our app takes your trip information and generates weather forecast and useful country facts for you. We will
-        also suggest a travel packing list for you based on your travel preferences.</p>
-      <h3>Click "Start" below and tell us
-        about your
-        trip!</h3>
+      <p>Our app takes your trip information and generates weather forecast and useful country facts for you. We will also suggest a packing list for you based on your travel preferences.</p>
+      <h3>Click "Start" below and tell us about your trip!</h3>
       <button class="button open-modal">START</button>
     </section>
     <section class="modal">
@@ -34,11 +30,11 @@
           <section class="trip-dates">
             <section class="left">
               <label for="start_date">Starts:</label>
-              <input id="start-date" class="input" type="date" name="start_date" required>
+              <input id="start-date" class="input" type="date" name="start_date" max="2999-12-31" required>
             </section>
             <section class="right">
               <label for="end_date">Ends:</label>
-              <input id="end-date" class="input" type="date" name="end_date" required>
+              <input id="end-date" class="input" type="date" name="end_date" max="2999-12-31" required>
             </section>
           </section>
           <label for="vacation_type">Vacation Type</label>
