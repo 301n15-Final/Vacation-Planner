@@ -16,3 +16,27 @@ nav ul li:active,
 .button:active {
   transform: translateY(2px);
 }
+
+@media print {
+  .no-print, header, footer {
+    display: none;
+  }
+
+  @page {
+    size: auto;
+    margin: 1in;
+  }
+
+  .scroll-x {
+    display: block;
+    width: 7in;
+    height: 9in;
+    overflow: visible;
+    column-width: 14em;
+    column-gap: 3em;
+  }
+}
+
+@media screen {
+  
+}
