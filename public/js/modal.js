@@ -2,18 +2,19 @@
 
 let $modalEl = $('.modal');
 
+function closeModal(event) {
+  if($(event.target).is($modalEl)){
+    if(confirm('Are you sure you want to cancel this form?')){
+      $modalEl.fadeOut(300);
+      $(window).off('click', closeModal);
+    }
+  }
+}
+
 $('.open-modal').on('click', () => {
   $modalEl.fadeIn(300);
   $('input[name=city]').focus();
-
-  $(window).on('click', (event) => {
-    if($(event.target).is($modalEl)){
-      if(confirm('Are you sure you want to cancel this form?')){
-        $(window).unbind().click();
-        $modalEl.fadeOut(300);
-      }
-    }
-  });
+  $(window).on('click', closeModal);
 });
 
 $('#start-date').focusout(() => {
