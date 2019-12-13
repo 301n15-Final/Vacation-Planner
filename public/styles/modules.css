@@ -157,9 +157,9 @@ form label {
 
 .trip-dates {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   width: 100%;
-  justify-content: space-evenly;
+  justify-content: center;
 }
 
 .left, .right {
@@ -213,6 +213,11 @@ form label {
 
 .icon {
   width: 32px;
+  margin-right: 5px;
+}
+
+.result-weather-icon {
+  width: 40px;
   margin-right: 5px;
 }
 
@@ -300,8 +305,8 @@ form label {
 
 @media (max-width: 800px) {
   .trip-dates {
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: space-evenly;
   }
 
   .country-info {
