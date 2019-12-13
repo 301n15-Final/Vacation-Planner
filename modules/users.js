@@ -23,7 +23,7 @@ async function saveTraveler(r) {
   let sql = `INSERT INTO traveler (first_name, last_name, summer_temp_lowest, fall_temp_lowest)
   VALUES ($1, $2, $3, $4) RETURNING id;`;
   try {
-    const data = await client.query(sql, [r.first_name, r.last_name, 50, 50]);
+    const data = await client.query(sql, [r.first_name, r.last_name, r.summerTemp, r.winterTemp]);
     return data.rows[0].id;
   } catch (err) {
     console.log(err);
@@ -51,7 +51,7 @@ async function registerUser(req, res) {
       const travelerId = await saveTraveler(req.body); // save user into traveler table
       const hashedPassword = await bcrypt.hash(req.body.password, 10); // hash password
       await saveLogin(travelerId, req.body.email, hashedPassword); // save user into login table
-      res.redirect('/');
+      res.redirect('/login');
     }
   } catch (err) {
     res.redirect('/register');
