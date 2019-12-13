@@ -1,6 +1,6 @@
 <% if(typeof name === 'undefined') { %>
   <h2 id="trip-name">Your trip to <%= city %> <br>
-    <%= request.start_date %> - <%= request.end_date %></h2>
+    <%= request.start_date %> through <%= request.end_date %></h2>
     <% } else { %>
       <h2 id="trip-name"><%= name %></h2>
       <% } %>
@@ -22,13 +22,16 @@
       <ul class="forecast-list scroll-x">
       <% weather.forEach( day => { %>
         <section>
+
           <div class="date-temp-icon">
-            <li><img class="icon" src="<%= day.icon_url %>" alt="weather icon"> </li>
+            <li><img class="result-weather-icon" src="<%= day.icon_url %>" alt="weather icon"> </li>
             <div>
               <li><%= day.day %> </li>
               <li>Average temperature: <%= day.temperature %> &deg;F</li>
             </div>
+          </div>
           <li><%= day.summary %></li>
+
         </section>
         <% }) %>
     </ul>
