@@ -73,8 +73,7 @@
  **_/about_** - information about developers  
 
 ## Database Entity Relationship Diagram:
-  ### Created on lucidchart.com
-  <img src="./public/img/mvp_erd.png" alt="MVP Entity Relationship Diagram" width="600"/> 
+  <img src="./public/img/erd.png" alt="Entity Relationship Diagram" width="600"/> 
 
 ## Credits and Collaborations  
 [Icons](https://icons8.com/)  
